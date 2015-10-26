@@ -1,5 +1,5 @@
 {
-  "name": "Oscar",
+  "name": "oscar",
   "version": "1.0.0",
   "description": "sandbox",
   "main": "index.js",
@@ -12,5 +12,13 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ositoozy/3dworld-template.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ositoozy/3dworld-template/issues"
+  },
+  "homepage": "https://github.com/Ositoozy/3dworld-template#readme"
 }

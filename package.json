@@ -1,0 +1,16 @@
+{
+  "name": "Oscar",
+  "version": "1.0.0",
+  "description": "sandbox",
+  "main": "index.js",
+  "devDependencies": {
+    "http-server": "^0.7.4"
+  },
+  "scripts": {
+    "prestart": "npm install http-server",
+    "start": "http-server -a localhost -p 8080"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {}
+}

@@ -1,7 +1,7 @@
-sandbox
-=======
+installation
+============
 
-install node globally then run npm start
+	npm start
 
 A local server will start running in port 8080
 (Can be adjusted by specifying a different http-server port)

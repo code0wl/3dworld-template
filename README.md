@@ -6,13 +6,6 @@ installation
 A local server will start running in port 8080
 (Can be adjusted by specifying a different http-server port)
 
-
-dev dependencies
-================
-
-http-server (node package module)
-
-
 Features
 ========
 

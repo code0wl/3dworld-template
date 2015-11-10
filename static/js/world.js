@@ -1,4 +1,7 @@
-(function(){
+/* global $ */
+/* global Stats */
+/* global THREE */
+(function(doc, win){
 
     'use strict';
 
@@ -11,13 +14,13 @@
         new_data_interval : 300000, // 5min
         data_size_height : 4,
         data_size_width : 4,
-        full_screen_width: window.innerWidth,
-        full_screen_height: window.innerHeight
+        full_screen_width: win.innerWidth,
+        full_screen_height: win.innerHeight
     };
 
     // three.js scene
     var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera( 25, window.innerWidth / window.innerHeight, .1, 10000 );
+    var camera = new THREE.PerspectiveCamera( 25, win.innerWidth / win.innerHeight, .1, 10000 );
 
     //globals
     var cameraControl,
@@ -26,16 +29,12 @@
     composer,
     sceneBG, cameraBG,
     stats,
-    control,
     latLongToVector3,
-    BarCube,
     renderer,
     sphere,
     clock,
-    composer,
     fetchJSONFile,
     addCanvas,
-    ambientLight,
     world,
     canvas;
 
@@ -59,7 +58,7 @@
         // size hack FIX ME
         renderer = new THREE.WebGLRenderer();
         renderer.setClearColor(0x000000, 1.0);
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setSize(win.innerWidth, win.innerHeight);
         renderer.shadowMapEnabled = true;
             
         // world
@@ -90,17 +89,17 @@
         addStatsObject();
 
         // add background
-        cameraBG = new THREE.OrthographicCamera(-window.innerWidth, window.innerWidth, window.innerHeight, -window.innerHeight, -10000, 10000);
+        cameraBG = new THREE.OrthographicCamera(-win.innerWidth, win.innerWidth, win.innerHeight, -win.innerHeight, -10000, 10000);
         cameraBG.position.z = 50;
         sceneBG = new THREE.Scene();
 
         var materialColor = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture("static/images/space.jpg"), depthTest: false });
         var bgPlane = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), materialColor);
         bgPlane.position.z = -100;
-        bgPlane.scale.set(window.innerWidth * 2, window.innerHeight * 2, 1);
+        bgPlane.scale.set(win.innerWidth * 2, win.innerHeight * 2, 1);
         sceneBG.add(bgPlane);
 
-        $('.country-list').html(defaults.default_html)
+        doc.querySelector('.country-list').innerHTML = defaults.default_html;
 
         // add these passes to the composer
         document.body.appendChild( renderer.domElement );
@@ -151,7 +150,6 @@
             container.css({'height': defaults.full_screen_height, 'overflow': 'auto'});
 
             var html = '<details> <ul>',
-                   i = 0,
                    x,
                    y;
 
@@ -235,7 +233,7 @@
 
     //@start lights
     function ambientLight() {
-        ambientLight = new THREE.AmbientLight(defaults.global_illumination);
+        var ambientLight = new THREE.AmbientLight(defaults.global_illumination);
         ambientLight.name='ambient';
         return ambientLight;
     };
@@ -361,15 +359,15 @@
 
     //@start handleResize
     function handleResize() {
-        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.aspect = win.innerWidth / win.innerHeight;
         camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setSize(win.innerWidth, win.innerHeight);
     };
     //@end handleResize
 
 
-    //render when window is ready
-    window.onload = moduleInit();
-    window.addEventListener('resize', handleResize, false);
+    //render when win is ready
+    win.onload = moduleInit();
+    win.addEventListener('resize', handleResize, false);
 
-})();
+})(document, window);

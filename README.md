@@ -27,3 +27,7 @@ Roadmap
 
 - Real time day and night cycle
 - Animations for dots of data on change
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/code0wl/3dworld-template/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+

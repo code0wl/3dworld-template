@@ -1,7 +1,4 @@
-/* global $ */
-/* global Stats */
-/* global THREE */
-(function(doc, win){
+(function (doc, win) {
 
     'use strict';
 
@@ -9,34 +6,34 @@
         earth_spin_speed: 0.0003,
         clouds_spin_speed: 0.0004,
         global_illumination: 0x222222, //0x222222
-        default_html      : '<div class="data-countries"></div>',
-        data_path         : 'static/js/data/data.json',
-        new_data_interval : 300000, // 5min
-        data_size_height : 4,
-        data_size_width : 4,
+        default_html: '<div class="data-countries"></div>',
+        data_path: 'static/js/data/data.json',
+        new_data_interval: 300000, // 5min
+        data_size_height: 4,
+        data_size_width: 4,
         full_screen_width: win.innerWidth,
         full_screen_height: win.innerHeight
     };
 
     // three.js scene
     var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera( 25, win.innerWidth / win.innerHeight, .1, 10000 );
+    var camera = new THREE.PerspectiveCamera(25, win.innerWidth / win.innerHeight, .1, 10000);
 
     //globals
     var cameraControl,
-    cloudMesh,
-    cityLights,
-    composer,
-    sceneBG, cameraBG,
-    stats,
-    latLongToVector3,
-    renderer,
-    sphere,
-    clock,
-    fetchJSONFile,
-    addCanvas,
-    world,
-    canvas;
+        cloudMesh,
+        cityLights,
+        composer,
+        sceneBG, cameraBG,
+        stats,
+        latLongToVector3,
+        renderer,
+        sphere,
+        clock,
+        fetchJSONFile,
+        addCanvas,
+        world,
+        canvas;
 
     //@start init
     function moduleInit() {
@@ -47,7 +44,7 @@
         camera.position.x = 80;
         camera.position.y = 30;
         camera.position.z = 1;
-        camera.name='main-camera';
+        camera.name = 'main-camera';
         camera.lookAt(scene.position);
 
         // controls (using orbit library)
@@ -60,17 +57,17 @@
         renderer.setClearColor(0x000000, 1.0);
         renderer.setSize(win.innerWidth, win.innerHeight);
         renderer.shadowMapEnabled = true;
-            
+
         // world
-        sphere = new THREE.Mesh( globeGenerate(), worldTexture() );
+        sphere = new THREE.Mesh(globeGenerate(), worldTexture());
         sphere.name = 'earth';
-        scene.add( sphere );
+        scene.add(sphere);
 
         // create overlay
         var overlayGeometry = new THREE.SphereGeometry(15.1, 32, 32);
         var overlayMaterial = createOverlayMaterial();
         var overlayMesh = new THREE.Mesh(overlayGeometry, overlayMaterial);
-        overlayMesh.name= 'overlay';
+        overlayMesh.name = 'overlay';
         scene.add(overlayMesh);
 
         //lights
@@ -78,7 +75,7 @@
 
         // clouds
         sphere.add(cloudsRender());
-        
+
         // now add some better lighting
         scene.add(ambientLight());
 
@@ -93,7 +90,11 @@
         cameraBG.position.z = 50;
         sceneBG = new THREE.Scene();
 
-        var materialColor = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture("static/images/space.jpg"), depthTest: false });
+        var materialColor = new THREE.MeshBasicMaterial({
+            map: THREE.ImageUtils.loadTexture("static/images/space.jpg"),
+            depthTest: false
+        });
+
         var bgPlane = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), materialColor);
         bgPlane.position.z = -100;
         bgPlane.scale.set(win.innerWidth * 2, win.innerHeight * 2, 1);
@@ -102,31 +103,31 @@
         doc.querySelector('.country-list').innerHTML = defaults.default_html;
 
         // add these passes to the composer
-        document.body.appendChild( renderer.domElement );
+        document.body.appendChild(renderer.domElement);
         composerRender();
         render();
 
-    };
-    //@end init
+    }
 
+    //@end init
 
 
     //@start get data
     fetchJSONFile = function (path, callback) {
         var httpRequest = new XMLHttpRequest();
-        httpRequest.onreadystatechange = function() {
-          if (httpRequest.readyState == 4 && httpRequest.status == 200) {
-            var data = JSON.parse(httpRequest.responseText);
-            if (callback) {
-              callback(data);
+        httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                var data = JSON.parse(httpRequest.responseText);
+                if (callback) {
+                    callback(data);
+                }
             }
-          }
         };
 
         httpRequest.open('GET', path);
         httpRequest.send();
 
-        setInterval(function(){
+        setInterval(function () {
             httpRequest.open('GET', path);
             httpRequest.send();
         }, defaults.new_data_interval);
@@ -134,9 +135,8 @@
     //@end get data
 
 
-
     //@start use data
-    addCanvas = function () {  
+    addCanvas = function () {
 
         canvas = document.createElement("canvas");
         canvas.width = 4096;
@@ -144,28 +144,28 @@
 
         var context = canvas.getContext('2d');
 
-        fetchJSONFile(defaults.data_path, function(data){
+        fetchJSONFile(defaults.data_path, function (data) {
 
-            var container = $('.data-countries');
-            container.css({'height': defaults.full_screen_height, 'overflow': 'auto'});
+            var container = document.querySelector('.data-countries');
+            container.style.height = defaults.full_screen_height;
+            container.style.overflow = 'auto';
 
             var html = '<details> <ul>',
-                   x,
-                   y;
+                x,
+                y;
 
-            $.each(data.earth, function(key, value){
-                
-                html += '<li> <h3>' + key + '<span class="total-rev">' + value.TotalRevenue + '</h3></span></li>';
-                
-                if (value.Sales.length > 0) {
+            Object.keys(data.earth).map(function (key) {
+
+                html += '<li> <h3>' + key + '<span class="total-rev">' + data.earth[key].TotalRevenue + '</h3></span></li>';
+
+                if (data.earth[key].Sales.length > 0) {
                     html += '<ul>';
-                    $.each(value.Sales, function(key, value){  
 
-                        html += '<li>' + value.city + ' <span class="total-rev">' + value.orderValue + '</span><p> Lat: ' + value.lat + ', Long:' + value.lng + '</p></li>';
-                        
-                        x = ( (canvas.width / 360) * ( 180  + parseFloat(value.lng) ) );
-                        y = ( (canvas.height / 180) * ( 90 - parseFloat(value.lat) ) );
+                    data.earth[key].Sales.map(function (key, index) {
+                        html += '<li>' + key.city + ' <span class="total-rev">' + key.orderValue + '</span><p> Lat: ' + key.lat + ', Long:' + key.lng + '</p></li>';
 
+                        x = ( (canvas.width / 360) * ( 180 + parseFloat(key.lng) ) );
+                        y = ( (canvas.height / 180) * ( 90 - parseFloat(key.lat) ) );
 
                         // var material = new THREE.MeshBasicMaterial( {color: 'red'} );
                         // var geometry = new THREE.BoxGeometry( 200, 500, 200 );
@@ -176,79 +176,73 @@
                         // cube.position.z = 1000;
 
                         // scene.add( cube );
-                        
+
                         context.rect(x, y, defaults.data_size_width, defaults.data_size_height);
                         context.fillStyle = 'orange';
                         context.fill();
-                        
+
                     });
 
-                  html += '</ul>';
-              }
-            
-          });
+                    html += '</ul>';
+                }
 
-          html += '</ul></details>';
-          container.html(html);
+            });
+
+            html += '</ul></details>';
+            container.innerHTML = html;
 
         });
-        // debug to see canvas is being created document.body.appendChild(canvas);
+
         return canvas;
     };
     //@end use data
 
-
-
     //@start convert data to 3d
     latLongToVector3 = function (lat, lon, radius, heigth) {
-        var phi = (lat)*Math.PI/180;
-        var theta = (lon-180)*Math.PI/180;
- 
-        var x = -(radius+heigth) * Math.cos(phi) * Math.cos(theta);
-        var y = (radius+heigth) * Math.sin(phi);
-        var z = (radius+heigth) * Math.cos(phi) * Math.sin(theta);
- 
-        return new THREE.Vector3(x,y,z);
-    }
+        var phi = (lat) * Math.PI / 180;
+        var theta = (lon - 180) * Math.PI / 180;
+
+        var x = -(radius + heigth) * Math.cos(phi) * Math.cos(theta);
+        var y = (radius + heigth) * Math.sin(phi);
+        var z = (radius + heigth) * Math.cos(phi) * Math.sin(theta);
+
+        return new THREE.Vector3(x, y, z);
+    };
     //@end convert data to 3d
-
-
 
     //@start clouds
     function cloudsRender() {
         var geometry = new THREE.SphereGeometry(15.15, 32, 32);
         var material = new THREE.MeshPhongMaterial({
-            map         : THREE.ImageUtils.loadTexture('static/images/planets/fair_clouds_4k.png'),
-            side        : THREE.DoubleSide,
-            opacity     : 0.5,
-            transparent : true,
-            depthWrite  : false
+            map: THREE.ImageUtils.loadTexture('static/images/planets/fair_clouds_4k.png'),
+            side: THREE.DoubleSide,
+            opacity: 0.5,
+            transparent: true,
+            depthWrite: false
         });
         cloudMesh = new THREE.Mesh(geometry, material);
         return cloudMesh;
-    };
+    }
+
     //@start clouds
-
-
 
     //@start lights
     function ambientLight() {
         var ambientLight = new THREE.AmbientLight(defaults.global_illumination);
-        ambientLight.name='ambient';
+        ambientLight.name = 'ambient';
         return ambientLight;
-    };
+    }
 
     function directionalLight() {
         var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
         directionalLight.position.x = 100;
         directionalLight.position.y = 10;
         directionalLight.position.z = -50;
-        directionalLight.name='directional';
+        directionalLight.name = 'directional';
         return directionalLight;
-    };
+    }
+
     //@end lights
-
-
 
     //@start composer
     function composerRender() {
@@ -263,16 +257,16 @@
         composer.addPass(renderPass);
         composer.addPass(effectCopy);
         return composer;
-    };
+    }
+
     //@end composer
-
-
 
     //@start: earth
     function globeGenerate() {
         world = new THREE.SphereGeometry(15, 32, 32);
         return world;
-    };
+    }
+
     function worldTexture() {
         var worldMatertial = new THREE.MeshPhongMaterial({
             map: THREE.ImageUtils.loadTexture('static/images/planets/earthmap4k.jpg'),
@@ -284,28 +278,26 @@
             normalScale: new THREE.Vector2(0.5, 0.7)
         });
         return worldMatertial;
-    };
-    //@end: earth
+    }
 
-    
+    //@end: earth
 
     //@start city lights
     function cityLightsRender() {
         var geometry = new THREE.SphereGeometry(15.01, 32, 32);
 
         var material = new THREE.MeshBasicMaterial({
-            map         : THREE.ImageUtils.loadTexture('static/images/planets/city_lights_4k.png'),
-            transparent : true,
-            opacity     : .37,
-            lights      : true
+            map: THREE.ImageUtils.loadTexture('static/images/planets/city_lights_4k.png'),
+            transparent: true,
+            opacity: .37,
+            lights: true
         });
 
         cityLights = new THREE.Mesh(geometry, material);
         return cityLights;
-    };
+    }
+
     //@end city lights
-
-
 
     //@start: texture overlay
     function createOverlayMaterial() {
@@ -316,21 +308,21 @@
         olMaterial.opacity = 1;
         return olMaterial;
     }
-    //@end: texture overlay
 
+    //@end: texture overlay
 
 
     //@start render loop
     function render() {
-        
+
         scene.getObjectByName('overlay').material.map.needsUpdate = true;
         cameraControl.update();
-        
+
         cloudMesh.rotation.y += defaults.clouds_spin_speed;
         sphere.rotation.y += defaults.earth_spin_speed;
         cityLights.rotation.y += defaults.earth_spin_speed;
         scene.getObjectByName('overlay').rotation.y += defaults.earth_spin_speed;
-        
+
         requestAnimationFrame(render);
         renderer.render(scene, camera);
         camera.lookAt(scene.position);
@@ -339,10 +331,9 @@
 
         renderer.autoClear = false;
         composer.render();
-    };
+    }
+
     //@end render loop
-
-
 
     //@start stats
     function addStatsObject() {
@@ -352,19 +343,18 @@
         stats.domElement.style.left = 0;
         stats.domElement.style.top = 0;
         document.body.appendChild(stats.domElement);
-    };
+    }
+
     //@end stats
-
-
 
     //@start handleResize
     function handleResize() {
         camera.aspect = win.innerWidth / win.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(win.innerWidth, win.innerHeight);
-    };
-    //@end handleResize
+    }
 
+    //@end handleResize
 
     //render when win is ready
     win.onload = moduleInit();

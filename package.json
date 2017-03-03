@@ -1,24 +1,30 @@
 {
-  "name": "oscar",
-  "version": "1.0.0",
-  "description": "sandbox",
-  "main": "index.js",
-  "devDependencies": {
-    "http-server": "^0.7.4"
-  },
-  "scripts": {
-    "prestart": "npm install http-server",
-    "start": "http-server -a localhost -p 8080"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Ositoozy/3dworld-template.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Ositoozy/3dworld-template/issues"
-  },
-  "homepage": "https://github.com/Ositoozy/3dworld-template#readme"
+    "name": "oscar",
+    "version": "1.0.0",
+    "description": "sandbox",
+    "main": "index.js",
+    "scripts": {
+        "prestart": "npm install http-server",
+        "start": "http-server -a localhost -p 8080"
+    },
+    "author": "",
+    "license": "ISC",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Ositoozy/3dworld-template.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Ositoozy/3dworld-template/issues"
+    },
+    "homepage": "https://github.com/Ositoozy/3dworld-template#readme",
+    "dependencies": {
+        "rxjs": "^5.0.2"
+    },
+    "devDependencies": {
+        "ts-loader": "^1.3.3",
+        "typescript": "^2.1.4",
+        "typings": "^2.1.0",
+        "webpack": "^1.14.0",
+        "webpack-dev-server": "^1.16.2"
+    }
 }

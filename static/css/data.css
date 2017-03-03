@@ -1,44 +1,57 @@
-html, body {padding: 0; margin: 0;}
+html,
+body {
+    cursor: grab;
+    padding: 0;
+    margin: 0;
+}
+
+canvas {
+    cursor: -webkit-grab !important;
+}
+
+canvas:active {
+    cursor: -webkit-grabbing !important;
+}
 
 .country-list {
-	position: absolute;
-	top: 0;
-	right: 0;
-	background: rgba(0,0,0,.3);
-	padding: 10px 20px;
-	z-index: 9999;
-	color: #fff;
-	margin: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgba(0, 0, 0, .3);
+    padding: 10px 20px;
+    z-index: 9999;
+    color: #fff;
+    margin: 0;
 }
 
 .data-countries ul {
-	padding: 0;
-	margin: 0;
+    padding: 0;
+    margin: 0;
 }
 
 .country-list li {
-	list-style: none;
-	margin: 5px 0;
+    list-style: none;
+    margin: 5px 0;
 }
 
 .country-list li:hover {
-	background: rgba(255,255,255, .4);
+    background: rgba(255, 255, 255, .4);
 }
 
 .total-rev {
-	float: right;
-	color: lightgreen;
-	padding-left: 20px;
+    float: right;
+    color: lightgreen;
+    padding-left: 20px;
 }
 
 h3 {
-	padding: 0;
-	font-size: 18px;
-	margin: 5px 0;
-	font-weight: normal;
+    padding: 0;
+    font-size: 18px;
+    margin: 5px 0;
+    font-weight: normal;
 }
 
-details{
-	margin-bottom: 10px;
-	font-size: 13px;
+details {
+    margin-bottom: 10px;
+    font-size: 13px;
 }

@@ -1,22 +1,21 @@
 declare const THREE: any;
 declare const Stats: any;
 
+// this.rotationSpeed = 0.0003;
+// this.cloudRotationSpeed= 0.0004;
+// this.global_illumination = 0x222222;
+// this.default_html = '<div class="data-countries"></div>';
+// this.data_path = 'static/js/data/data.json';
+// this.new_data_interval = 300000;
+// this.data_size_height = 4;
+// this.data_size_width = 4;
+// this.full_screen_width = window.innerWidth;
+// this.full_screen_height = window.innerHeigh;
+
 (function (doc: any, win: any) {
 
     'use strict';
 
-    var defaults = {
-        earth_spin_speed: 0.0003,
-        clouds_spin_speed: 0.0004,
-        global_illumination: 0x222222, //0x222222
-        default_html: '<div class="data-countries"></div>',
-        data_path: 'static/js/data/data.json',
-        new_data_interval: 300000, // 5min
-        data_size_height: 4,
-        data_size_width: 4,
-        full_screen_width: win.innerWidth,
-        full_screen_height: win.innerHeight
-    };
 
     // three.js scene
     var scene = new THREE.Scene();

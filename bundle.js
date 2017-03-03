@@ -62,7 +62,7 @@
 	    var scene = new THREE.Scene();
 	    var camera = new THREE.PerspectiveCamera(25, win.innerWidth / win.innerHeight, .1, 10000);
 	    //globals
-	    var cameraControl, cloudMesh, cityLights, composer, sceneBG, cameraBG, stats, latLongToVector3, renderer, sphere, clock, fetchJSONFile, addCanvas, world, canvas;
+	    var cameraControl, cloudMesh, cityLights, composer, sceneBG, cameraBG, latLongToVector3, renderer, sphere, clock, fetchJSONFile, addCanvas, world, canvas;
 	    //@start init
 	    function moduleInit() {
 	        clock = new THREE.Clock();
@@ -272,32 +272,6 @@
 	        return olMaterial;
 	    }
 	    //@end: texture overlay
-	    //@start render loop
-	    function render() {
-	        scene.getObjectByName('overlay').material.map.needsUpdate = true;
-	        cameraControl.update();
-	        cloudMesh.rotation.y += defaults.clouds_spin_speed;
-	        sphere.rotation.y += defaults.earth_spin_speed;
-	        cityLights.rotation.y += defaults.earth_spin_speed;
-	        scene.getObjectByName('overlay').rotation.y += defaults.earth_spin_speed;
-	        requestAnimationFrame(render);
-	        renderer.render(scene, camera);
-	        camera.lookAt(scene.position);
-	        stats.update();
-	        renderer.autoClear = false;
-	        composer.render();
-	    }
-	    //@end render loop
-	    //@start stats
-	    function addStatsObject() {
-	        stats = new Stats();
-	        stats.setMode(0);
-	        stats.domElement.style.position = 'absolute';
-	        stats.domElement.style.left = 0;
-	        stats.domElement.style.top = 0;
-	        document.body.appendChild(stats.domElement);
-	    }
-	    //@end stats
 	    //@start handleResize
 	    function handleResize() {
 	        camera.aspect = win.innerWidth / win.innerHeight;

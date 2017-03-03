@@ -4,6 +4,7 @@ export class Clock {
 
     constructor() {
         this.time = new Date();
+        console.log(this.time);
     }
 
 }

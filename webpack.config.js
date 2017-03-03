@@ -1,5 +1,5 @@
 module.exports = {
-    entry: './src/main.ts',
+    entry: './src/modules/world.ts',
     output: { filename: 'bundle.js' },
     resolve: {
         extensions: ['.js', '.ts', '']

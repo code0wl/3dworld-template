@@ -6,4 +6,4 @@ var Shader = (function () {
     return Shader;
 }());
 exports.Shader = Shader;
-//# sourceMappingURL=world.class.js.map
+//# sourceMappingURL=shader.class.js.map

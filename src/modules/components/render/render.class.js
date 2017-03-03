@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var RenderLoop = (function () {
     function RenderLoop() {
         scene.getObjectByName('overlay').material.map.needsUpdate = true;

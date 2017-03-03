@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var Globe = (function () {
     function Globe(options) {
         this.rotationSpeed = options.rotationSpeed;

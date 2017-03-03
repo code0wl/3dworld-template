@@ -1,25 +1,16 @@
-declare const THREE: any;
-declare const Stats: any;
+import { Globe } from './components/globe/globe.class';
+import { GlobeOptions } from './components/globe/globe.model';
 
-// this.rotationSpeed = 0.0003;
-// this.cloudRotationSpeed= 0.0004;
-// this.global_illumination = 0x222222;
-// this.default_html = '<div class="data-countries"></div>';
-// this.data_path = 'static/js/data/data.json';
-// this.new_data_interval = 300000;
-// this.data_size_height = 4;
-// this.data_size_width = 4;
-// this.full_screen_width = window.innerWidth;
-// this.full_screen_height = window.innerHeigh;
+const options: GlobeOptions = {
+    rotationSpeed: 0.0003,
+    cloudRotationSpeed: 0.0004,
+    globalIllumination: 0x222222,
+    domClass: '<div class="data-countries"></div>',
+    dataURL: 'static/js/data/data.json',
+    dataPolling: 300000,
+};
 
-(function (doc: any, win: any) {
-
-    'use strict';
-
-
-    // three.js scene
-    var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(25, win.innerWidth / win.innerHeight, .1, 10000);
+const Earth = new Globe(options);
 
     //globals
     var cameraControl,
@@ -56,7 +47,7 @@ declare const Stats: any;
         // size hack FIX ME
         renderer = new THREE.WebGLRenderer();
         renderer.setClearColor(0x000000, 1.0);
-        renderer.setSize(win.innerWidth, win.innerHeight);
+        renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.shadowMapEnabled = true;
 
         // world
@@ -87,7 +78,7 @@ declare const Stats: any;
         addStatsObject();
 
         // add background
-        cameraBG = new THREE.OrthographicCamera(-win.innerWidth, win.innerWidth, win.innerHeight, -win.innerHeight, -10000, 10000);
+        cameraBG = new THREE.OrthographicCamera(-window.innerWidth, window.innerWidth, window.innerHeight, -window.innerHeight, -10000, 10000);
         cameraBG.position.z = 50;
         sceneBG = new THREE.Scene();
 
@@ -98,7 +89,7 @@ declare const Stats: any;
 
         var bgPlane = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), materialColor);
         bgPlane.position.z = -100;
-        bgPlane.scale.set(win.innerWidth * 2, win.innerHeight * 2, 1);
+        bgPlane.scale.set(window.innerWidth * 2, window.innerHeight * 2, 1);
         sceneBG.add(bgPlane);
 
         doc.querySelector('.country-list').innerHTML = defaults.default_html;
@@ -313,17 +304,3 @@ declare const Stats: any;
     //@end: texture overlay
 
 
-    //@start handleResize
-    function handleResize() {
-        camera.aspect = win.innerWidth / win.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(win.innerWidth, win.innerHeight);
-    }
-
-    //@end handleResize
-
-    //render when win is ready
-    win.onload = moduleInit();
-    win.addEventListener('resize', handleResize, false);
-
-})(document, window);

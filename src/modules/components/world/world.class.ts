@@ -5,12 +5,14 @@ import { Layer } from '../layer/layer.class';
 import { Lighting } from '../lighting/lighting.class';
 import Light = THREE.Light;
 import { Benchmark } from '../benchmark/benchmark.class';
+import { DataFetch } from '../data/fetch.class';
 export class World {
 
     public properties: WorldOptions;
     public sphere: THREE.Mesh;
     public clouds: Cloud;
     public layer: Layer;
+    public data: DataFetch;
     public benchmark: any;
     public lighting: Lighting;
     public globe: THREE.SphereGeometry;
@@ -24,6 +26,7 @@ export class World {
         this.lighting = new Lighting();
         this.sphere.add(this.clouds.render(this));
         this.hasBenchmark(options.benchmark);
+        this.data = new DataFetch(this, options.dataURL);
     }
 
     private hasBenchmark(benchmark) {
@@ -32,7 +35,7 @@ export class World {
         }
     }
 
-    private decoratePlanet(): THREE.MeshPhongMaterial {
+    private decoratePlanet(): any {
         const worldMatertial = new THREE.MeshPhongMaterial({
             map: THREE.ImageUtils.loadTexture('../../../static/images/planets/earthmap4k.jpg'),
             bumpMap: THREE.ImageUtils.loadTexture('../../../static/images/planets/earthbump4k.jpg'),

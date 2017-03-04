@@ -27,10 +27,7 @@ var cameraControl,
     sceneBG, cameraBG,
     latLongToVector3,
     renderer,
-    clock,
-    fetchJSONFile,
-    addCanvas,
-    canvas;
+    clock;
 
 //@start init
 function moduleInit() {
@@ -98,93 +95,6 @@ function moduleInit() {
 
 }
 
-//@end init
-
-
-//@start get data
-fetchJSONFile = function (path, callback) {
-    var httpRequest = new XMLHttpRequest();
-    httpRequest.onreadystatechange = function () {
-        if (httpRequest.readyState == 4 && httpRequest.status == 200) {
-            var data = JSON.parse(httpRequest.responseText);
-            if (callback) {
-                callback(data);
-            }
-        }
-    };
-
-    httpRequest.open('GET', path);
-    httpRequest.send();
-
-    setInterval(function () {
-        httpRequest.open('GET', path);
-        httpRequest.send();
-    }, earth.properties.pollingInterval);
-};
-//@end get data
-
-
-//@start use data
-addCanvas = function () {
-
-    canvas = document.createElement("canvas");
-    canvas.width = 4096;
-    canvas.height = 2048;
-
-    var context = canvas.getContext('2d');
-
-    fetchJSONFile(earth.properties.dataURL, (data) => {
-
-        const container: any = document.querySelector('.data-countries');
-        container.style.height = earth.properties.height;
-        container.style.overflow = 'auto';
-
-        var html = '<details> <ul>',
-            x,
-            y;
-
-        Object.keys(data.earth).map(function (key) {
-
-            html += '<li> <h3>' + key + '<span class="total-rev">' + data.earth[key].TotalRevenue + '</h3></span></li>';
-
-            if (data.earth[key].Sales.length > 0) {
-                html += '<ul>';
-
-                data.earth[key].Sales.map(function (key, index) {
-                    html += '<li>' + key.city + ' <span class="total-rev">' + key.orderValue + '</span><p> Lat: ' + key.lat + ', Long:' + key.lng + '</p></li>';
-
-                    x = ( (canvas.width / 360) * ( 180 + parseFloat(key.lng) ) );
-                    y = ( (canvas.height / 180) * ( 90 - parseFloat(key.lat) ) );
-
-                    // var material = new THREE.MeshBasicMaterial( {color: 'red'} );
-                    // var geometry = new THREE.BoxGeometry( 200, 500, 200 );
-                    // var cube = new THREE.Mesh( geometry, material );
-
-                    // cube.position.x = x;
-                    // cube.position.y = y;
-                    // cube.position.z = 1000;
-
-                    // scene.add( cube );
-
-                    context.rect(x, y, earth.properties.data_size_width, earth.properties.data_size_height);
-                    context.fillStyle = 'orange';
-                    context.fill();
-
-                });
-
-                html += '</ul>';
-            }
-
-        });
-
-        html += '</ul></details>';
-        container.innerHTML = html;
-
-    });
-
-    return canvas;
-};
-//@end use data
 
 //@start convert data to 3d
 latLongToVector3 = function (lat, lon, radius, heigth) {
@@ -198,10 +108,6 @@ latLongToVector3 = function (lat, lon, radius, heigth) {
     return new THREE.Vector3(x, y, z);
 };
 //@end convert data to 3d
-
-//@start lights
-
-//@end lights
 
 //@start composer
 function composerRender() {
@@ -223,7 +129,7 @@ function composerRender() {
 //@start: texture overlay
 function createOverlayMaterial() {
     var olMaterial = new THREE.MeshPhongMaterial();
-    olMaterial.map = new THREE.Texture(addCanvas());
+    olMaterial.map = new THREE.Texture(earth.data.addCanvas());
     olMaterial.transparent = true;
     olMaterial.lights = true;
     olMaterial.opacity = 1;
@@ -254,18 +160,6 @@ function render() {
 }
 
 //@end render loop
-
-//@start stats
-function addStatsObject() {
-    stats = new Stats();
-    stats.setMode(0);
-    stats.domElement.style.position = 'absolute';
-    stats.domElement.style.left = 0;
-    stats.domElement.style.top = 0;
-    document.body.appendChild(stats.domElement);
-}
-
-//@end stats
 
 //@start handleResize
 function handleResize() {

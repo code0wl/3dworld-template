@@ -1,1 +1,1 @@
-{"version":3,"file":"world.class.js","sourceRoot":"","sources":["world.class.ts"],"names":[],"mappings":";;AAAA,uCAAuC;AACvC;IAEI;IAEA,CAAC;IAEL,YAAC;AAAD,CAAC,AAND,IAMC;AANY,sBAAK"}
+{"version":3,"file":"world.class.js","sourceRoot":"","sources":["world.class.ts"],"names":[],"mappings":";;AAEA;IAII,eAAY,OAAqB;QAC7B,IAAI,CAAC,UAAU,GAAG,OAAO,CAAC;IAC9B,CAAC;IAEL,YAAC;AAAD,CAAC,AARD,IAQC;AARY,sBAAK"}

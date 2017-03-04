@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// to create and and instantiate worlds
 var World = (function () {
-    function World() {
+    function World(options) {
+        this.properties = options;
     }
     return World;
 }());

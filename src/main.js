@@ -1,16 +1,19 @@
-'use strict';
-var defaults = {
-    earth_spin_speed: 0.0003,
-    clouds_spin_speed: 0.0004,
-    global_illumination: 0x222222,
-    default_html: '<div class="data-countries"></div>',
-    data_path: 'static/js/data/data.json',
-    new_data_interval: 300000,
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var world_class_1 = require("./modules/components/world/world.class");
+var worldOptions = {
+    spinSpeed: 0.0003,
+    cloudsSpinSpeed: 0.0004,
+    globalLighting: 0x222222,
+    domNode: "<div class=\"data-countries\"></div>",
+    dataURL: 'static/js/data/data.json',
+    pollingInterval: 30000,
     data_size_height: 4,
     data_size_width: 4,
-    full_screen_width: window.innerWidth,
-    full_screen_height: window.innerHeight
+    width: window.innerWidth,
+    height: window.innerHeight
 };
+var earth = new world_class_1.World(worldOptions);
 // three.js scene
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(25, window.innerWidth / window.innerHeight, .1, 10000);
@@ -66,7 +69,7 @@ function moduleInit() {
     bgPlane.position.z = -100;
     bgPlane.scale.set(window.innerWidth * 2, window.innerHeight * 2, 1);
     sceneBG.add(bgPlane);
-    document.querySelector('.country-list').innerHTML = defaults.default_html;
+    document.querySelector('.country-list').innerHTML = earth.properties.domNode;
     // add these passes to the composer
     document.body.appendChild(renderer.domElement);
     composerRender();
@@ -89,7 +92,7 @@ fetchJSONFile = function (path, callback) {
     setInterval(function () {
         httpRequest.open('GET', path);
         httpRequest.send();
-    }, defaults.new_data_interval);
+    }, earth.properties.pollingInterval);
 };
 //@end get data
 //@start use data
@@ -98,9 +101,9 @@ addCanvas = function () {
     canvas.width = 4096;
     canvas.height = 2048;
     var context = canvas.getContext('2d');
-    fetchJSONFile(defaults.data_path, function (data) {
+    fetchJSONFile(earth.properties.dataURL, function (data) {
         var container = document.querySelector('.data-countries');
-        container.style.height = defaults.full_screen_height;
+        container.style.height = earth.properties.full_screen_height;
         container.style.overflow = 'auto';
         var html = '<details> <ul>', x, y;
         Object.keys(data.earth).map(function (key) {
@@ -118,7 +121,7 @@ addCanvas = function () {
                     // cube.position.y = y;
                     // cube.position.z = 1000;
                     // scene.add( cube );
-                    context.rect(x, y, defaults.data_size_width, defaults.data_size_height);
+                    context.rect(x, y, earth.properties.data_size_width, earth.properties.data_size_height);
                     context.fillStyle = 'orange';
                     context.fill();
                 });
@@ -157,7 +160,7 @@ function cloudsRender() {
 //@start clouds
 //@start lights
 function ambientLight() {
-    var ambientLight = new THREE.AmbientLight(defaults.global_illumination);
+    var ambientLight = new THREE.AmbientLight(earth.properties.globalLighting);
     ambientLight.name = 'ambient';
     return ambientLight;
 }
@@ -229,10 +232,10 @@ function createOverlayMaterial() {
 function render() {
     scene.getObjectByName('overlay').material.map.needsUpdate = true;
     cameraControl.update();
-    cloudMesh.rotation.y += defaults.clouds_spin_speed;
-    sphere.rotation.y += defaults.earth_spin_speed;
-    cityLights.rotation.y += defaults.earth_spin_speed;
-    scene.getObjectByName('overlay').rotation.y += defaults.earth_spin_speed;
+    cloudMesh.rotation.y += earth.properties.cloudsSpinSpeed;
+    sphere.rotation.y += earth.properties.spinSpeed;
+    cityLights.rotation.y += earth.properties.spinSpeed;
+    scene.getObjectByName('overlay').rotation.y += earth.properties.spinSpeed;
     requestAnimationFrame(render);
     renderer.render(scene, camera);
     camera.lookAt(scene.position);

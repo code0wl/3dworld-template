@@ -1,8 +1,11 @@
 // to create and and instantiate worlds
+import { WorldOptions } from './world.model';
 export class World {
 
-    constructor() {
+    public properties: WorldOptions;
 
+    constructor(options: WorldOptions) {
+        this.properties = options;
     }
 
 }

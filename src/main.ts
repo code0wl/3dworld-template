@@ -1,4 +1,3 @@
-(function (doc: any, win: any) {
 
     'use strict';
 
@@ -11,13 +10,13 @@
         new_data_interval: 300000, // 5min
         data_size_height: 4,
         data_size_width: 4,
-        full_screen_width: win.innerWidth,
-        full_screen_height: win.innerHeight
+        full_screen_width: window.innerWidth,
+        full_screen_height: window.innerHeight
     };
 
     // three.js scene
     var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(25, win.innerWidth / win.innerHeight, .1, 10000);
+    var camera = new THREE.PerspectiveCamera(25, window.innerWidth / window.innerHeight, .1, 10000);
 
     //globals
     var cameraControl,
@@ -55,7 +54,7 @@
         // size hack FIX ME
         renderer = new THREE.WebGLRenderer();
         renderer.setClearColor(0x000000, 1.0);
-        renderer.setSize(win.innerWidth, win.innerHeight);
+        renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.shadowMapEnabled = true;
 
         // world
@@ -86,7 +85,7 @@
         addStatsObject();
 
         // add background
-        cameraBG = new THREE.OrthographicCamera(-win.innerWidth, win.innerWidth, win.innerHeight, -win.innerHeight, -10000, 10000);
+        cameraBG = new THREE.OrthographicCamera(-window.innerWidth, window.innerWidth, window.innerHeight, -window.innerHeight, -10000, 10000);
         cameraBG.position.z = 50;
         sceneBG = new THREE.Scene();
 
@@ -97,10 +96,10 @@
 
         var bgPlane = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), materialColor);
         bgPlane.position.z = -100;
-        bgPlane.scale.set(win.innerWidth * 2, win.innerHeight * 2, 1);
+        bgPlane.scale.set(window.innerWidth * 2, window.innerHeight * 2, 1);
         sceneBG.add(bgPlane);
 
-        doc.querySelector('.country-list').innerHTML = defaults.default_html;
+        document.querySelector('.country-list').innerHTML = defaults.default_html;
 
         // add these passes to the composer
         document.body.appendChild(renderer.domElement);
@@ -349,15 +348,14 @@
 
     //@start handleResize
     function handleResize() {
-        camera.aspect = win.innerWidth / win.innerHeight;
+        camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
-        renderer.setSize(win.innerWidth, win.innerHeight);
+        renderer.setSize(window.innerWidth, window.innerHeight);
     }
 
     //@end handleResize
 
-    //render when win is ready
-    win.onload = moduleInit();
-    win.addEventListener('resize', handleResize, false);
+    //render when window is ready
+    window.onload = moduleInit();
+    window.addEventListener('resize', handleResize, false);
 
-})(document, window);

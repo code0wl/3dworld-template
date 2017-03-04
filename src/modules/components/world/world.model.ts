@@ -3,9 +3,10 @@ export interface WorldOptions {
     cloudsSpinSpeed: number;
     globalLighting: number;
     domNode: string;
-    dataURL: 'static/js/data/data.json';
+    dataURL: string;
     pollingInterval: number;
     width: number;
+    name: string;
     data_size_height: number,
     data_size_width: number,
     height: number;

@@ -1,7 +1,9 @@
 export class Cloud {
 
-    public render(world) {
-        const geometry = new THREE.SphereGeometry(15.15, 32, 32);
+    public cloudMesh: THREE.Mesh;
+
+    public render(): THREE.Mesh {
+        const geometry = new THREE.SphereGeometry(30.30, 32, 32);
         const material = new THREE.MeshPhongMaterial({
             map: THREE.ImageUtils.loadTexture('../../../static/images/planets/fair_clouds_4k.png'),
             side: THREE.DoubleSide,
@@ -9,9 +11,8 @@ export class Cloud {
             transparent: true,
             depthWrite: false
         });
-        const cloudMesh = new THREE.Mesh(geometry, material);
-        cloudMesh.rotation.y += world.properties.cloudsSpinSpeed;
-        return cloudMesh;
+        this.cloudMesh = new THREE.Mesh(geometry, material);
+        return this.cloudMesh;
     }
 
 }

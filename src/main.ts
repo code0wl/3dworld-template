@@ -1,4 +1,3 @@
-declare const THREE: any;
 declare const Stats: any;
 
 (function (doc: any, win: any) {

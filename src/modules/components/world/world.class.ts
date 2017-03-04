@@ -1,11 +1,18 @@
 // to create and and instantiate worlds
 import { WorldOptions } from './world.model';
 import { Cloud } from '../cloud/cloud.class';
+import { Layer } from '../layer/layer.class';
+import { Lighting } from '../lighting/lighting.class';
+import Light = THREE.Light;
+import { Benchmark } from '../benchmark/benchmark.class';
 export class World {
 
     public properties: WorldOptions;
     public sphere: THREE.Mesh;
     public clouds: Cloud;
+    public layer: Layer;
+    public benchmark: any;
+    public lighting: Lighting;
     public globe: THREE.SphereGeometry;
 
     constructor(options: WorldOptions) {
@@ -13,7 +20,16 @@ export class World {
         this.clouds = new Cloud();
         this.sphere = new THREE.Mesh(this.globeGenerate(), this.decoratePlanet());
         this.sphere.name = 'earth';
+        this.layer = new Layer();
+        this.lighting = new Lighting();
         this.sphere.add(this.clouds.render(this));
+        this.hasBenchmark(options.benchmark);
+    }
+
+    private hasBenchmark(benchmark) {
+        if (benchmark) {
+            this.benchmark = new Benchmark();
+        }
     }
 
     private decoratePlanet(): THREE.MeshPhongMaterial {

@@ -11,11 +11,11 @@ const worldOptions: WorldOptions = {
     data_size_height: 4,
     data_size_width: 4,
     width: window.innerWidth,
+    benchmark: true,
     height: window.innerHeight
 };
 
 const earth = new World(worldOptions);
-
 
 // three.js scene
 var scene = new THREE.Scene();
@@ -23,11 +23,8 @@ var camera = new THREE.PerspectiveCamera(25, window.innerWidth / window.innerHei
 
 //globals
 var cameraControl,
-    cloudMesh,
-    cityLights,
     composer,
     sceneBG, cameraBG,
-    stats,
     latLongToVector3,
     renderer,
     clock,
@@ -59,7 +56,6 @@ function moduleInit() {
     renderer.shadowMapEnabled = true;
 
     // world
-
     scene.add(earth.sphere);
 
     // create overlay
@@ -70,16 +66,13 @@ function moduleInit() {
     scene.add(overlayMesh);
 
     //lights
-    scene.add(cityLightsRender());
+    scene.add(earth.layer.earthLights());
 
     // now add some better lighting
-    scene.add(ambientLight());
+    scene.add(earth.lighting.ambientLight(earth));
 
     // add sunlight
-    scene.add(directionalLight());
-
-    //addStats to render (FPS)
-    addStatsObject();
+    scene.add(earth.lighting.directionalLight());
 
     // add background
     cameraBG = new THREE.OrthographicCamera(-window.innerWidth, window.innerWidth, window.innerHeight, -window.innerHeight, -10000, 10000);
@@ -207,20 +200,6 @@ latLongToVector3 = function (lat, lon, radius, heigth) {
 //@end convert data to 3d
 
 //@start lights
-function ambientLight() {
-    var ambientLight = new THREE.AmbientLight(earth.properties.globalLighting);
-    ambientLight.name = 'ambient';
-    return ambientLight;
-}
-
-function directionalLight() {
-    var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    directionalLight.position.x = 100;
-    directionalLight.position.y = 10;
-    directionalLight.position.z = -50;
-    directionalLight.name = 'directional';
-    return directionalLight;
-}
 
 //@end lights
 
@@ -238,25 +217,8 @@ function composerRender() {
     composer.addPass(effectCopy);
     return composer;
 }
-
 //@end composer
 
-//@start city lights
-function cityLightsRender() {
-    var geometry = new THREE.SphereGeometry(15.01, 32, 32);
-
-    var material = new THREE.MeshBasicMaterial({
-        map: THREE.ImageUtils.loadTexture('static/images/planets/city_lights_4k.png'),
-        transparent: true,
-        opacity: .37,
-        lights: true
-    });
-
-    cityLights = new THREE.Mesh(geometry, material);
-    return cityLights;
-}
-
-//@end city lights
 
 //@start: texture overlay
 function createOverlayMaterial() {
@@ -278,14 +240,14 @@ function render() {
     cameraControl.update();
 
     earth.sphere.rotation.y += earth.properties.spinSpeed;
-    cityLights.rotation.y += earth.properties.spinSpeed;
+    earth.layer.earthLightsMesh.rotation.y += earth.properties.spinSpeed;
     scene.getObjectByName('overlay').rotation.y += earth.properties.spinSpeed;
 
     requestAnimationFrame(render);
     renderer.render(scene, camera);
     camera.lookAt(scene.position);
 
-    stats.update();
+    earth.benchmark.stats.update();
 
     renderer.autoClear = false;
     composer.render();
@@ -315,6 +277,6 @@ function handleResize() {
 //@end handleResize
 
 //render when window is ready
-window.onload = moduleInit();
+moduleInit();
 window.addEventListener('resize', handleResize, false);
 

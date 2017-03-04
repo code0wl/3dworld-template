@@ -1,11 +1,11 @@
 import { GlobeOptions } from './globe.model';
-import THREELib from "three-js";
+import * as THREE from "three-js"; // return THREE JS
 
 export class Globe {
 
-    public scene: THREELib.scene;
-    public THREE: THREELib;
-    public camera: THREELib.camera;
+    public scene: THREE.scene;
+    public THREE: THREE;
+    public camera: THREE.camera;
 
     private readonly dataURL;
     private rotationSpeed;
@@ -13,11 +13,10 @@ export class Globe {
     private globalIllumination;
     private domClass;
     private dataPolling;
-    private renderer: THREELib.renderer;
+    private renderer: THREE.renderer;
 
     constructor(options: GlobeOptions) {
-        this.THREE = THREELib();
-        console.log(this.THREE, 'wtf');3
+        this.THREE = THREE();
         this.rotationSpeed = options.rotationSpeed;
         this.cloudRotationSpeed = options.rotationSpeed;
         this.globalIllumination = options.globalIllumination;
@@ -29,8 +28,8 @@ export class Globe {
 
     // TODO: change height, width to auto
     private createScene() {
-        this.scene = new THREE.Scene();
-        this.camera = new THREE.PerspectiveCamera(25, window.innerWidth / window.innerHeight, .1, 10000);
+        this.scene = new this.THREE.Scene();
+        this.camera = new this.THREE.PerspectiveCamera(25, window.innerWidth / window.innerHeight, .1, 10000);
         window.addEventListener('resize', this.handleResize, false);
     }
 

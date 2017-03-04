@@ -1,6 +1,6 @@
 node_modules
 .idea
 bundle.js
-js.map
+*.js.map
 src/**/*.js;
 *.iml

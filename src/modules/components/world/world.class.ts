@@ -22,7 +22,7 @@ export class World {
         this.clouds = new Cloud();
         this.sphere = new THREE.Mesh(this.globeGenerate(), this.decoratePlanet());
         this.sphere.name = 'earth';
-        this.layer = new Layer();
+        this.layer = new Layer(this);
         this.lighting = new Lighting();
         this.sphere.add(this.clouds.render(this));
         this.hasBenchmark(options.benchmark);

@@ -57,8 +57,7 @@ function moduleInit() {
 
     // create overlay
     var overlayGeometry = new THREE.SphereGeometry(15.1, 32, 32);
-    var overlayMaterial = createOverlayMaterial();
-    var overlayMesh = new THREE.Mesh(overlayGeometry, overlayMaterial);
+    var overlayMesh = new THREE.Mesh(overlayGeometry, earth.layer.createOverlayMaterial());
     overlayMesh.name = 'overlay';
     scene.add(overlayMesh);
 
@@ -124,20 +123,6 @@ function composerRender() {
     return composer;
 }
 //@end composer
-
-
-//@start: texture overlay
-function createOverlayMaterial() {
-    var olMaterial = new THREE.MeshPhongMaterial();
-    olMaterial.map = new THREE.Texture(earth.data.addCanvas());
-    olMaterial.transparent = true;
-    olMaterial.lights = true;
-    olMaterial.opacity = 1;
-    return olMaterial;
-}
-
-//@end: texture overlay
-
 
 //@start render loop
 function render() {

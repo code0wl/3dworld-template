@@ -30,11 +30,9 @@ var cameraControl,
     stats,
     latLongToVector3,
     renderer,
-    sphere,
     clock,
     fetchJSONFile,
     addCanvas,
-    world,
     canvas;
 
 //@start init
@@ -61,9 +59,8 @@ function moduleInit() {
     renderer.shadowMapEnabled = true;
 
     // world
-    sphere = new THREE.Mesh(globeGenerate(), worldTexture());
-    sphere.name = 'earth';
-    scene.add(sphere);
+
+    scene.add(earth.sphere);
 
     // create overlay
     var overlayGeometry = new THREE.SphereGeometry(15.1, 32, 32);
@@ -74,9 +71,6 @@ function moduleInit() {
 
     //lights
     scene.add(cityLightsRender());
-
-    // clouds
-    sphere.add(cloudsRender());
 
     // now add some better lighting
     scene.add(ambientLight());
@@ -149,7 +143,7 @@ addCanvas = function () {
     fetchJSONFile(earth.properties.dataURL, (data) => {
 
         const container: any = document.querySelector('.data-countries');
-        container.style.height = earth.properties.full_screen_height;
+        container.style.height = earth.properties.height;
         container.style.overflow = 'auto';
 
         var html = '<details> <ul>',
@@ -212,22 +206,6 @@ latLongToVector3 = function (lat, lon, radius, heigth) {
 };
 //@end convert data to 3d
 
-//@start clouds
-function cloudsRender() {
-    var geometry = new THREE.SphereGeometry(15.15, 32, 32);
-    var material = new THREE.MeshPhongMaterial({
-        map: THREE.ImageUtils.loadTexture('static/images/planets/fair_clouds_4k.png'),
-        side: THREE.DoubleSide,
-        opacity: 0.5,
-        transparent: true,
-        depthWrite: false
-    });
-    cloudMesh = new THREE.Mesh(geometry, material);
-    return cloudMesh;
-}
-
-//@start clouds
-
 //@start lights
 function ambientLight() {
     var ambientLight = new THREE.AmbientLight(earth.properties.globalLighting);
@@ -262,27 +240,6 @@ function composerRender() {
 }
 
 //@end composer
-
-//@start: earth
-function globeGenerate() {
-    world = new THREE.SphereGeometry(15, 32, 32);
-    return world;
-}
-
-function worldTexture() {
-    var worldMatertial = new THREE.MeshPhongMaterial({
-        map: THREE.ImageUtils.loadTexture('static/images/planets/earthmap4k.jpg'),
-        bumpMap: THREE.ImageUtils.loadTexture('static/images/planets/earthbump4k.jpg'),
-        bumpScale: 5,
-        normalMap: THREE.ImageUtils.loadTexture('static/images/planets/earth_normalmap_flat4k.jpg'),
-        specularMap: THREE.ImageUtils.loadTexture('static/images/planets/earthspec4k.jpg'),
-        specular: new THREE.Color(0x333333),
-        normalScale: new THREE.Vector2(0.5, 0.7)
-    });
-    return worldMatertial;
-}
-
-//@end: earth
 
 //@start city lights
 function cityLightsRender() {
@@ -320,8 +277,7 @@ function render() {
     scene.getObjectByName('overlay').material.map.needsUpdate = true;
     cameraControl.update();
 
-    cloudMesh.rotation.y += earth.properties.cloudsSpinSpeed;
-    sphere.rotation.y += earth.properties.spinSpeed;
+    earth.sphere.rotation.y += earth.properties.spinSpeed;
     cityLights.rotation.y += earth.properties.spinSpeed;
     scene.getObjectByName('overlay').rotation.y += earth.properties.spinSpeed;
 

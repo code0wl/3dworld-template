@@ -13,12 +13,11 @@ export class Composer {
     }
 
     private configureRenderer() {
-        // add background
         this.cameraBG = new THREE.OrthographicCamera(-window.innerWidth, window.innerWidth, window.innerHeight, -window.innerHeight, -10000, 10000);
         this.cameraBG.position.z = 50;
         this.sceneBG = new THREE.Scene();
         const materialColor = new THREE.MeshBasicMaterial({
-            map: THREE.ImageUtils.loadTexture("../../../../static/images/space.jpg"),
+            map: THREE.ImageUtils.loadTexture("../../../static/images/space.jpg"),
             depthTest: false
         });
 
@@ -34,7 +33,6 @@ export class Composer {
     }
 
     public render() {
-
         const bgPass = new THREE.RenderPass(this.sceneBG, this.cameraBG);
         const renderPass = new THREE.RenderPass(this.world.scene, this.world.camera.camera);
         const effectCopy = new THREE.ShaderPass(THREE.CopyShader);

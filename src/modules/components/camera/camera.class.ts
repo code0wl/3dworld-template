@@ -13,14 +13,7 @@ export class Camera {
         this.cameraControl = new THREE.OrbitControls(this.camera);
         this.cameraControl.minDistance = 55;
         this.cameraControl.maxDistance = 80;
-
         this.camera.name = 'main-camera';
-        this.cameraBackground();
-    }
-
-    private cameraBackground() {
-        this.cameraBG = new THREE.OrthographicCamera(-window.innerWidth, window.innerWidth, window.innerHeight, -window.innerHeight, -10000, 10000);
-        this.cameraBG.position.z = 50;
     }
 
 }

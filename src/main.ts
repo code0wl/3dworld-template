@@ -50,8 +50,8 @@ function moduleInit() {
 
 //@start render loop
 function render() {
-
-    earth.scene.getObjectByName('overlay').material.map.needsUpdate = true;
+    const obj = earth.scene.getChildByName('overlay') as any;
+    obj.material.map.needsUpdate = true;
     earth.camera.cameraControl.update();
 
     earth.sphere.rotation.y += earth.properties.spinSpeed;

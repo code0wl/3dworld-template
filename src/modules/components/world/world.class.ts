@@ -53,7 +53,7 @@ export class World {
             specularMap: THREE.ImageUtils.loadTexture('../../../static/images/planets/earthspec4k.jpg'),
             specular: new THREE.Color(0x333333),
             normalScale: new THREE.Vector2(0.5, 0.7)
-        });
+        } as THREE.MeshBasicMaterialParameters);
     }
 
     private globeGenerate() {

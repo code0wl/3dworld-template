@@ -1,9 +1,9 @@
 export class Clock {
 
-    private time: Date;
+    private clock: THREE.Clock;
 
     constructor() {
-        this.time = new Date();
+        const clock = new THREE.Clock();
     }
 
 }

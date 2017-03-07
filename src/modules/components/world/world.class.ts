@@ -38,13 +38,23 @@ export class World {
         this.layer = new Layer(this);
     }
 
-    private hasBenchmark(benchmark) {
+    public initialise(): void {
+        this.camera.camera.lookAt(this.scene.position);
+        this.scene.add(this.sphere);
+        this.scene.add(this.layer.earthLights());
+        this.scene.add(this.lighting.ambientLight(this));
+        this.scene.add(this.lighting.directionalLight());
+        document.querySelector('.country-list').innerHTML = this.properties.domNode; // TODO clean up
+        this.composer.render();
+    }
+
+    private hasBenchmark(benchmark): void {
         if (benchmark) {
             this.benchmark = new Benchmark();
         }
     }
 
-    private decoratePlanet(): any {
+    private decoratePlanet(): THREE.MeshPhongMaterial {
         return new THREE.MeshPhongMaterial({
             map: THREE.ImageUtils.loadTexture('../../../static/images/planets/earthmap4k.jpg'),
             bumpMap: THREE.ImageUtils.loadTexture('../../../static/images/planets/earthbump4k.jpg'),
@@ -56,7 +66,7 @@ export class World {
         } as THREE.MeshBasicMaterialParameters);
     }
 
-    private globeGenerate() {
+    private globeGenerate(): THREE.SphereGeometry {
         this.globe = new THREE.SphereGeometry(15, 32, 32);
         return this.globe;
     }

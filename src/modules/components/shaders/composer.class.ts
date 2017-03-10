@@ -3,7 +3,7 @@ export class Composer {
 
     private composer: THREE.EffectComposer;
     private world: World;
-    private sceneBG: THREE.Scene;
+    public sceneBG: THREE.Scene;
     private cameraBG: THREE.OrthographicCamera;
     public renderer: THREE.WebGLRenderer;
 

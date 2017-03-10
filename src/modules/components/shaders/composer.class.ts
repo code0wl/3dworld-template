@@ -1,11 +1,11 @@
 import { World } from '../world/world.class';
 export class Composer {
 
+    public sceneBG: THREE.Scene;
+    public renderer: THREE.WebGLRenderer;
+    private cameraBG: THREE.OrthographicCamera;
     private composer: THREE.EffectComposer;
     private world: World;
-    public sceneBG: THREE.Scene;
-    private cameraBG: THREE.OrthographicCamera;
-    public renderer: THREE.WebGLRenderer;
 
     constructor(world) {
         this.world = world;

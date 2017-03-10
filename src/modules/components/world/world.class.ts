@@ -16,12 +16,12 @@ export class World {
     public data: DataFetch;
     public scene: THREE.Scene;
     public benchmark: any;
+    public sphere: THREE.Mesh;
+
     private lighting: Lighting;
     private composer: Composer;
     private globe: THREE.SphereGeometry;
-
     private properties: WorldOptions;
-    private sphere: THREE.Mesh;
     private clouds: Cloud;
 
     constructor(options: WorldOptions) {

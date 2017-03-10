@@ -13,15 +13,14 @@ export class Composer {
     }
 
     private configureRenderer() {
-        this.cameraBG = new THREE.OrthographicCamera(-window.innerWidth, window.innerWidth, window.innerHeight, -window.innerHeight, -10000, 10000);
-        this.cameraBG.position.z = 50;
         this.sceneBG = new THREE.Scene();
         const materialColor = new THREE.MeshBasicMaterial({
-            map: THREE.ImageUtils.loadTexture("../../../static/images/space.jpg"),
-            depthTest: false
+            map: THREE.ImageUtils.loadTexture('../../../../static/images/space.jpg'),
+            depthTest: false,
+            depthWrite: false
         });
 
-        const bgPlane = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), materialColor);
+        const bgPlane = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), materialColor);
         bgPlane.position.z = -100;
         bgPlane.scale.set(this.world.properties.width * 2, this.world.properties.height * 2, 1);
         this.sceneBG.add(bgPlane);

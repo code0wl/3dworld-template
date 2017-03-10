@@ -11,17 +11,18 @@ import { Camera } from '../camera/camera.class';
 
 export class World {
 
-    public properties: WorldOptions;
-    public sphere: THREE.Mesh;
-    public clouds: Cloud;
     public layer: Layer;
     public camera: Camera;
     public data: DataFetch;
     public scene: THREE.Scene;
     public benchmark: any;
-    public lighting: Lighting;
-    public composer: Composer;
-    public globe: THREE.SphereGeometry;
+    private lighting: Lighting;
+    private composer: Composer;
+    private globe: THREE.SphereGeometry;
+
+    private properties: WorldOptions;
+    private sphere: THREE.Mesh;
+    private clouds: Cloud;
 
     constructor(options: WorldOptions) {
         this.properties = options;
@@ -44,6 +45,7 @@ export class World {
         this.scene.add(this.layer.earthLights());
         this.scene.add(this.lighting.ambientLight(this));
         this.scene.add(this.lighting.directionalLight());
+        this.scene.add(this.composer.sceneBG);
         document.querySelector('.country-list').innerHTML = this.properties.domNode; // TODO clean up
         this.composer.render();
     }

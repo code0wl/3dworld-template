@@ -4,6 +4,7 @@ export class Clock {
 
     constructor() {
         const clock = new THREE.Clock();
+        console.log(clock);
     }
 
 }

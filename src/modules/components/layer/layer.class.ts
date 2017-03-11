@@ -26,7 +26,7 @@ export class Layer {
     }
 
     public createOverlayMaterial() {
-        var olMaterial = new THREE.MeshPhongMaterial();
+        const olMaterial = new THREE.MeshPhongMaterial();
         olMaterial.map = new THREE.Texture(this.world.data.addCanvas());
         olMaterial.transparent = true;
         olMaterial.lights = true;

@@ -15,14 +15,14 @@ export class World {
     public camera: Camera;
     public data: DataFetch;
     public scene: THREE.Scene;
+    public properties: WorldOptions;
     public benchmark: any;
+    public composer: Composer;
     public sphere: THREE.Mesh;
+    public clouds: Cloud;
 
     private lighting: Lighting;
-    private composer: Composer;
     private globe: THREE.SphereGeometry;
-    private properties: WorldOptions;
-    private clouds: Cloud;
 
     constructor(options: WorldOptions) {
         this.properties = options;
@@ -45,8 +45,7 @@ export class World {
         this.scene.add(this.layer.earthLights());
         this.scene.add(this.lighting.ambientLight(this));
         this.scene.add(this.lighting.directionalLight());
-        this.scene.add(this.composer.sceneBG);
-        document.querySelector('.country-list').innerHTML = this.properties.domNode; // TODO clean up
+        document.querySelector('.country-list').innerHTML = this.properties.domNode;
         this.composer.render();
     }
 

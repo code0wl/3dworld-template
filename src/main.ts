@@ -6,8 +6,7 @@ const earth = new World(worldOptions);
 //@start init
 earth.initialise();
 render();
-
-earth.scene.add(this.world.scene.background);
+earth.composer.renderer.render(this.sceneBG, this.cameraBG);
 //@start render loop
 function render() {
     const obj = earth.scene.getChildByName('overlay') as any;

@@ -34,7 +34,7 @@ export class World {
         this.clouds = new Cloud();
         this.sphere = new THREE.Mesh(this.globeGenerate(), this.decoratePlanet());
         this.sphere.name = options.name;
-        this.composer = new Composer(this);
+        this.composer = new Composer();
         this.lighting = new Lighting();
         this.sphere.add(this.clouds.render());
         this.hasBenchmark(options.benchmark);

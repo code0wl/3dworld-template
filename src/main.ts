@@ -24,6 +24,5 @@ function render() {
     earth.benchmark.stats.update();
     document.body.appendChild(earth.composer.renderer.domElement);
     earth.composer.renderer.autoClear = false;
-    earth.composer.render();
     earth.clouds.cloudMesh.rotation.y += earth.properties.cloudsSpinSpeed;
 }

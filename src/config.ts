@@ -1,7 +1,7 @@
 import { WorldOptions } from './modules/components/world/world.model';
 
 export const worldOptions: WorldOptions = {
-    spinSpeed: 0.0001,
+    spinSpeed: 0.0000864000, // seconds in an day
     cloudsSpinSpeed: 0.0002,
     globalLighting: 0x222222,
     domNode: `<div class="data-countries"></div>`, // extract to external module

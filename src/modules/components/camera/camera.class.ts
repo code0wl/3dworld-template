@@ -15,5 +15,4 @@ export class Camera {
         this.cameraControl.maxDistance = 80;
         this.camera.name = 'main-camera';
     }
-
 }

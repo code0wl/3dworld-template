@@ -3,11 +3,13 @@ import { WorldOptions } from './world.model';
 import { Cloud } from '../cloud/cloud.class';
 import { Layer } from '../layer/layer.class';
 import { Lighting } from '../lighting/lighting.class';
-import Light = THREE.Light;
 import { Benchmark } from '../benchmark/benchmark.class';
 import { DataFetch } from '../data/fetch.class';
 import { Composer } from '../shaders/composer.class';
 import { Camera } from '../camera/camera.class';
+import { Clock } from '../clock/clock.class';
+import { Control } from '../control/control.class';
+import Vector3 = THREE.Vector3;
 
 export class World {
 
@@ -17,10 +19,12 @@ export class World {
     public scene: THREE.Scene;
     public properties: WorldOptions;
     public benchmark: any;
+    public control: Control;
     public composer: Composer;
     public sphere: THREE.Mesh;
     public clouds: Cloud;
 
+    private time: Clock;
     private lighting: Lighting;
     private globe: THREE.SphereGeometry;
 
@@ -37,16 +41,16 @@ export class World {
         this.scene = new THREE.Scene();
         this.data = new DataFetch(this, options.dataURL);
         this.layer = new Layer(this);
+        this.time = new Clock();
+        this.control = new Control();
     }
 
     public initialise(): void {
-        this.camera.camera.lookAt(this.scene.position);
         this.scene.add(this.sphere);
         this.scene.add(this.layer.earthLights());
         this.scene.add(this.lighting.ambientLight(this));
         this.scene.add(this.lighting.directionalLight());
         document.querySelector('.country-list').innerHTML = this.properties.domNode;
-        this.composer.render();
     }
 
     private hasBenchmark(benchmark): void {

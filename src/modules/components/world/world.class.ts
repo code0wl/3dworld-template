@@ -43,6 +43,7 @@ export class World {
         this.layer = new Layer(this);
         this.time = new Clock();
         this.control = new Control();
+        this.render = this.render.bind(this);
     }
 
     public initialise(): void {
@@ -51,6 +52,7 @@ export class World {
         this.scene.add(this.lighting.ambientLight(this));
         this.scene.add(this.lighting.directionalLight());
         document.querySelector('.country-list').innerHTML = this.properties.domNode;
+        this.render();
     }
 
     private hasBenchmark(benchmark): void {
@@ -74,6 +76,26 @@ export class World {
     private globeGenerate(): THREE.SphereGeometry {
         this.globe = new THREE.SphereGeometry(15, 32, 32);
         return this.globe;
+    }
+
+    private render() {
+        const obj = this.scene.getChildByName('overlay') as any;
+        obj.material.map.needsUpdate = true;
+        this.camera.cameraControl.update();
+
+        this.sphere.rotation.y += this.properties.spinSpeed;
+        this.layer.earthLightsMesh.rotation.y += this.properties.spinSpeed;
+        this.scene.getObjectByName('overlay').rotation.y += this.properties.spinSpeed;
+
+        this.composer.renderer.render(this.scene, this.camera.camera);
+        this.camera.camera.lookAt(this.scene.position);
+
+        this.benchmark.stats.update();
+        document.body.appendChild(this.composer.renderer.domElement);
+        this.composer.renderer.autoClear = false;
+        this.clouds.cloudMesh.rotation.y += this.properties.cloudsSpinSpeed;
+
+        requestAnimationFrame(this.render);
     }
 
 }

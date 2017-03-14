@@ -4,6 +4,7 @@ export interface WorldOptions {
     globalLighting: number;
     domNode: string;
     dataURL: string;
+    startRotation: number;
     pollingInterval: number;
     width: number;
     name: string;

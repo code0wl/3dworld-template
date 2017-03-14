@@ -16,13 +16,13 @@ export class World {
     public camera: Camera;
     public data: DataFetch;
     public scene: THREE.Scene;
-    public properties: WorldOptions;
     public benchmark: any;
     public control: Control;
     public composer: Composer;
     public sphere: THREE.Mesh;
     public clouds: Cloud;
 
+    public properties: WorldOptions;
     private time: Clock;
     private lighting: Lighting;
     private globe: THREE.SphereGeometry;

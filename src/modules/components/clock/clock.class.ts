@@ -1,4 +1,5 @@
 import DateTimeFormat = Intl.DateTimeFormat;
+
 export class Clock {
 
     private time: any;
@@ -17,10 +18,6 @@ export class Clock {
         this.clock = document.createElement('div');
         this.clock.classList.add('clock');
         document.body.appendChild(this.clock);
-    }
-
-    private tomorrowBegins() {
-        return this.time.getTime() - 86400000;
     }
 
 }

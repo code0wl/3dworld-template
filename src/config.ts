@@ -1,8 +1,9 @@
 import { WorldOptions } from './modules/components/world/world.model';
 
 export const worldOptions: WorldOptions = {
-    spinSpeed: 0.0000864000, // seconds in an day
+    spinSpeed: 0.000086400,
     cloudsSpinSpeed: 0.0002,
+    startRotation: 1200, //TODO: this is bad
     globalLighting: 0x222222,
     domNode: `<div class="data-countries"></div>`, // extract to external module
     dataURL: 'static/js/data/data.json',
@@ -11,6 +12,6 @@ export const worldOptions: WorldOptions = {
     name: 'earth',
     data_size_width: 4,
     width: window.innerWidth,
-    benchmark: true,
-    height: window.innerHeight
+    height: window.innerHeight,
+    benchmark: true
 };

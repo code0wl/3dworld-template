@@ -47,7 +47,7 @@ export class World {
 
     public init(): void {
         this.scene.add(this.sphere);
-        this.scene.add(this.layer.earthLights());
+        this.scene.add(this.layer.earthLights);
         this.scene.add(this.lighting.ambientLight(this));
         this.scene.add(this.lighting.directionalLight());
         document.querySelector('.country-list').innerHTML = this.properties.domNode;
@@ -75,7 +75,6 @@ export class World {
     private setStartingRotation(start: number): void {
         this.sphere.rotation.y = start;
         this.scene.getObjectByName('overlay').rotation.y = start;
-        this.layer.earthLightsMesh.y = start;
     }
 
     private globeGenerate(): THREE.SphereGeometry {
@@ -91,7 +90,7 @@ export class World {
         this.time.update();
 
         this.sphere.rotation.y += this.properties.spinSpeed;
-        this.layer.earthLightsMesh.rotation.y += this.properties.spinSpeed;
+        this.layer.earthLights.rotation.y += this.properties.spinSpeed;
         obj.rotation.y += this.properties.spinSpeed;
         this.clouds.cloudMesh.rotation.y += this.properties.cloudsSpinSpeed;
 

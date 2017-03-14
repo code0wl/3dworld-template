@@ -42,7 +42,7 @@ export class World {
         this.layer = new Layer(this);
         this.time = new Clock();
         this.control = new Control();
-        this.render = this.render.bind(this);
+        this.setStartingRotation(options.startRotation);
     }
 
     public init(): void {
@@ -72,12 +72,18 @@ export class World {
         } as THREE.MeshBasicMaterialParameters);
     }
 
+    private setStartingRotation(start: number): void {
+        this.sphere.rotation.y = start;
+        this.scene.getObjectByName('overlay').rotation.y = start;
+        this.layer.earthLightsMesh.rotation.y = start;
+    }
+
     private globeGenerate(): THREE.SphereGeometry {
         this.globe = new THREE.SphereGeometry(15, 32, 32);
         return this.globe;
     }
 
-    private render() {
+    private render(): void {
         const obj = this.scene.getChildByName('overlay') as any;
         obj.material.map.needsUpdate = true;
         this.camera.cameraControl.update();
@@ -86,7 +92,8 @@ export class World {
 
         this.sphere.rotation.y += this.properties.spinSpeed;
         this.layer.earthLightsMesh.rotation.y += this.properties.spinSpeed;
-        this.scene.getObjectByName('overlay').rotation.y += this.properties.spinSpeed;
+        obj.rotation.y += this.properties.spinSpeed;
+        this.clouds.cloudMesh.rotation.y += this.properties.cloudsSpinSpeed;
 
         this.composer.renderer.render(this.scene, this.camera.camera);
         this.camera.camera.lookAt(this.scene.position);
@@ -94,9 +101,10 @@ export class World {
         this.benchmark.stats.update();
         document.body.appendChild(this.composer.renderer.domElement);
         this.composer.renderer.autoClear = false;
-        this.clouds.cloudMesh.rotation.y += this.properties.cloudsSpinSpeed;
 
-        requestAnimationFrame(this.render);
+        requestAnimationFrame(() => {
+            this.render();
+        });
     }
 
 }

@@ -1,5 +1,6 @@
 import MeshBasicMaterial = THREE.MeshBasicMaterial;
 import { World } from '../world/world.class';
+import Vector3 = THREE.Vector3;
 
 export class Layer {
 
@@ -34,22 +35,22 @@ export class Layer {
         return olMaterial;
     }
 
-    public overlay() {
+    public overlay(): void {
         const overlayGeometry = new THREE.SphereGeometry(15.1, 32, 32);
         const overlayMesh = new THREE.Mesh(overlayGeometry, this.createOverlayMaterial());
         overlayMesh.name = 'overlay';
         this.world.scene.add(overlayMesh);
     }
 
-    public latLongToVector3(lat, lon, radius, heigth) {
+    public latLongToVector3(lat, lon, radius, height): Vector3 {
         const phi = (lat) * Math.PI / 180;
         const theta = (lon - 180) * Math.PI / 180;
 
-        const x = -(radius + heigth) * Math.cos(phi) * Math.cos(theta);
-        const y = (radius + heigth) * Math.sin(phi);
-        const z = (radius + heigth) * Math.cos(phi) * Math.sin(theta);
+        const x = -(radius + height) * Math.cos(phi) * Math.cos(theta);
+        const y = (radius + height) * Math.sin(phi);
+        const z = (radius + height) * Math.cos(phi) * Math.sin(theta);
 
         return new THREE.Vector3(x, y, z);
-    };
+    }
 
 }

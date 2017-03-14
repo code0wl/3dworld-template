@@ -2,21 +2,21 @@ import DateTimeFormat = Intl.DateTimeFormat;
 export class Clock {
 
     private time: any;
+    private clock: HTMLDivElement;
 
     constructor() {
-        this.time = new Date().getUTCMonth();
         this.setWorldToday();
     }
 
-    private setWorldToday() {
-        const clock = document.createElement('div');
-        clock.classList.add('clock');
-        clock.innerText = `${this.time}`;
-        document.body.appendChild(clock);
+    public update() {
+        this.time = new Date();
+        this.clock.innerText = `${this.time}`;
     }
 
-    public get remainingTime(): number {
-        return this.tomorrowBegins();
+    private setWorldToday() {
+        this.clock = document.createElement('div');
+        this.clock.classList.add('clock');
+        document.body.appendChild(this.clock);
     }
 
     private tomorrowBegins() {

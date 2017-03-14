@@ -82,6 +82,8 @@ export class World {
         obj.material.map.needsUpdate = true;
         this.camera.cameraControl.update();
 
+        this.time.update();
+
         this.sphere.rotation.y += this.properties.spinSpeed;
         this.layer.earthLightsMesh.rotation.y += this.properties.spinSpeed;
         this.scene.getObjectByName('overlay').rotation.y += this.properties.spinSpeed;

@@ -75,7 +75,7 @@ export class World {
     private setStartingRotation(start: number): void {
         this.sphere.rotation.y = start;
         this.scene.getObjectByName('overlay').rotation.y = start;
-        this.layer.earthLightsMesh.rotation.y = start;
+        this.layer.earthLightsMesh.y = start;
     }
 
     private globeGenerate(): THREE.SphereGeometry {

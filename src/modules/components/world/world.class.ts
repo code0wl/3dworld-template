@@ -1,4 +1,3 @@
-// to create and and instantiate worlds
 import { WorldOptions } from './world.model';
 import { Cloud } from '../cloud/cloud.class';
 import { Layer } from '../layer/layer.class';
@@ -46,7 +45,7 @@ export class World {
         this.render = this.render.bind(this);
     }
 
-    public initialise(): void {
+    public init(): void {
         this.scene.add(this.sphere);
         this.scene.add(this.layer.earthLights());
         this.scene.add(this.lighting.ambientLight(this));

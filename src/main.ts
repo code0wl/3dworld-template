@@ -4,4 +4,4 @@ import { worldOptions } from './config';
 const earth = new World(worldOptions);
 
 //@start init
-earth.initialise();
+earth.init();

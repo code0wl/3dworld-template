@@ -85,13 +85,13 @@ export class World {
     private render(): void {
         const obj = this.scene.getChildByName('overlay') as any;
         obj.material.map.needsUpdate = true;
+        obj.rotation.y += this.properties.spinSpeed;
         this.camera.cameraControl.update();
 
         this.time.update();
 
         this.sphere.rotation.y += this.properties.spinSpeed;
         this.layer.earthLights.rotation.y += this.properties.spinSpeed;
-        obj.rotation.y += this.properties.spinSpeed;
         this.clouds.cloudMesh.rotation.y += this.properties.cloudsSpinSpeed;
 
         this.composer.renderer.render(this.scene, this.camera.camera);

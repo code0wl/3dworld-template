@@ -12,7 +12,7 @@ export class Layer {
     }
 
     public get earthLights(): THREE.Mesh {
-        const geometry = new THREE.SphereGeometry(15.01, 32, 32);
+        const geometry = new THREE.SphereGeometry(15.2, 32, 32);
 
         const material = new THREE.MeshBasicMaterial({
             map: THREE.ImageUtils.loadTexture('../../../static/images/planets/city_lights_4k.png'),
@@ -23,19 +23,16 @@ export class Layer {
         return new THREE.Mesh(geometry, material);
     }
 
-    public createOverlayMaterial() {
-        const olMaterial = new THREE.MeshPhongMaterial();
-        olMaterial.map = new THREE.Texture(this.world.data.addCanvas());
-        olMaterial.transparent = true;
-        olMaterial.lights = true;
-        olMaterial.opacity = 1;
-        return olMaterial;
-    }
-
-    public overlay(): void {
+    private overlay(): void {
         const overlayGeometry = new THREE.SphereGeometry(15.1, 32, 32);
-        const overlayMesh = new THREE.Mesh(overlayGeometry, this.createOverlayMaterial());
+        const overlayMesh = new THREE.Mesh(overlayGeometry, new THREE.MeshPhongMaterial({
+            map: new THREE.Texture(this.world.data.addCanvas()),
+            transparent: true,
+            opacity: .37,
+            lights: true
+        }));
         overlayMesh.name = 'overlay';
+
         this.world.scene.add(overlayMesh);
     }
 

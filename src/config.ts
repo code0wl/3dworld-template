@@ -1,7 +1,7 @@
 import { WorldOptions } from './modules/components/world/world.model';
 
 export const worldOptions: WorldOptions = {
-    spinSpeed: .005, //0.000086400
+    spinSpeed: .000086400,
     cloudsSpinSpeed: 0.0002,
     startRotation: 10, //TODO: this is bad
     globalLighting: 0x222222,

@@ -9,9 +9,9 @@ export class Lighting {
         return this.light;
     }
 
-    public directionalLight() {
+    public directionalLight(start) {
         this.directionLight = new THREE.DirectionalLight(0xffffff, 1);
-        this.directionLight.position.x = 100;
+        this.directionLight.position.x = start;
         this.directionLight.position.y = 10;
         this.directionLight.position.z = -50;
         this.directionLight.name = 'directional';

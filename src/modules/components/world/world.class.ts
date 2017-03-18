@@ -40,13 +40,12 @@ export class World {
         this.time = new Clock();
         this.control = new Control();
         this.create(options);
-        this.setStartingRotation(options.startRotation);
     }
 
     public init(): void {
         this.scene.add(this.sphere);
         this.scene.add(this.lighting.ambientLight(this));
-        this.scene.add(this.lighting.directionalLight());
+        this.scene.add(this.lighting.directionalLight(this.properties.startRotation));
         document.querySelector('.country-list').innerHTML = this.properties.domNode;
         this.render();
     }
@@ -74,12 +73,6 @@ export class World {
             specular: new THREE.Color(0x333333),
             normalScale: new THREE.Vector2(0.5, 0.7)
         } as THREE.MeshBasicMaterialParameters);
-    }
-
-    private setStartingRotation(start: number): void {
-        this.sphere.rotation.y = start;
-        this.layer.lights.rotation.y = start;
-        this.scene.getObjectByName('overlay').rotation.y = start;
     }
 
     private globeGenerate(): THREE.SphereGeometry {

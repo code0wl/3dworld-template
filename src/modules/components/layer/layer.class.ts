@@ -13,12 +13,12 @@ export class Layer {
     }
 
     public earthLightsTexture(): THREE.Mesh {
-        const geometry = new THREE.SphereGeometry(15.2, 32, 32);
+        const geometry = new THREE.SphereGeometry(15.11, 32, 32);
 
         const material = new THREE.MeshBasicMaterial({
             map: THREE.ImageUtils.loadTexture('../../../static/images/planets/city_lights_4k.png'),
             transparent: true,
-            opacity: .37,
+            opacity: .3,
             lights: true
         });
 

@@ -1,3 +1,7 @@
+html {
+    background: black;
+}
+
 .country-list {
     height: 100%;
     overflow: auto;

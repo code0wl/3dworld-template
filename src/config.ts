@@ -1,9 +1,12 @@
 import { WorldOptions } from './modules/components/world/world.model';
+import * as moment from 'moment';
+
+const currentTime = Number(moment('00:00:00','HH:mm:ss').fromNow().replace(/[a-z]/g, ''));
 
 export const worldOptions: WorldOptions = {
     spinSpeed: .000086400,
     cloudsSpinSpeed: 0.0002,
-    startRotation: 10, //TODO: this is bad
+    startRotation: currentTime,
     globalLighting: 0x222222,
     domNode: `<div class="data-countries"></div>`, // extract to external module
     dataURL: 'static/js/data/data.json',

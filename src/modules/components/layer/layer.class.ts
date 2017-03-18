@@ -13,7 +13,7 @@ export class Layer {
     }
 
     public earthLightsTexture(): THREE.Mesh {
-        const geometry = new THREE.SphereGeometry(15.11, 32, 32);
+        const geometry = new THREE.SphereGeometry(15.04, 32, 32);
 
         const material = new THREE.MeshBasicMaterial({
             map: THREE.ImageUtils.loadTexture('../../../static/images/planets/city_lights_4k.png'),
@@ -32,7 +32,7 @@ export class Layer {
         const overlayMesh = new THREE.Mesh(overlayGeometry, new THREE.MeshPhongMaterial({
             map: new THREE.Texture(this.world.data.addCanvas()),
             transparent: true,
-            opacity: .37,
+            opacity: 1,
             lights: true
         }));
         overlayMesh.name = 'overlay';

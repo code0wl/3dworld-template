@@ -33,24 +33,24 @@ export class World {
         this.clouds = new Cloud();
         this.composer = new Composer();
         this.lighting = new Lighting();
-        this.hasBenchmark(options.benchmark);
         this.scene = new THREE.Scene();
         this.data = new DataFetch(this, options.dataURL);
         this.layer = new Layer(this);
         this.time = new Clock();
         this.control = new Control();
         this.create(options);
+        this.hasBenchmark(options.benchmark);
     }
 
     public init(): void {
         this.scene.add(this.sphere);
         this.scene.add(this.lighting.ambientLight(this));
-        this.scene.add(this.lighting.directionalLight(this.properties.startRotation));
+        this.scene.add(this.lighting.directionalLight());
         document.querySelector('.country-list').innerHTML = this.properties.domNode;
         this.render();
     }
 
-    private create(options) {
+    private create(options): void {
         this.sphere = new THREE.Mesh(this.globeGenerate(), this.decoratePlanet());
         this.sphere.name = options.name;
         this.sphere.add(this.clouds.cloudTexture());
@@ -87,6 +87,8 @@ export class World {
         this.camera.cameraControl.update();
 
         this.time.update();
+
+        this.lighting.updatePosition(this.properties.cloudsSpinSpeed);
 
         this.sphere.rotation.y += this.properties.spinSpeed;
         this.layer.lights.rotation.y += this.properties.spinSpeed;

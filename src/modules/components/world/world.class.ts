@@ -31,27 +31,31 @@ export class World {
         this.properties = options;
         this.camera = new Camera(options.width, options.height);
         this.clouds = new Cloud();
-        this.sphere = new THREE.Mesh(this.globeGenerate(), this.decoratePlanet());
-        this.sphere.name = options.name;
         this.composer = new Composer();
         this.lighting = new Lighting();
-        this.sphere.add(this.clouds.render());
         this.hasBenchmark(options.benchmark);
         this.scene = new THREE.Scene();
         this.data = new DataFetch(this, options.dataURL);
         this.layer = new Layer(this);
         this.time = new Clock();
         this.control = new Control();
+        this.create(options);
         this.setStartingRotation(options.startRotation);
     }
 
     public init(): void {
         this.scene.add(this.sphere);
-        this.scene.add(this.layer.earthLights);
         this.scene.add(this.lighting.ambientLight(this));
         this.scene.add(this.lighting.directionalLight());
         document.querySelector('.country-list').innerHTML = this.properties.domNode;
         this.render();
+    }
+
+    private create(options) {
+        this.sphere = new THREE.Mesh(this.globeGenerate(), this.decoratePlanet());
+        this.sphere.name = options.name;
+        this.sphere.add(this.clouds.cloudTexture());
+        this.scene.add(this.layer.earthLightsTexture());
     }
 
     private hasBenchmark(benchmark): void {
@@ -74,6 +78,7 @@ export class World {
 
     private setStartingRotation(start: number): void {
         this.sphere.rotation.y = start;
+        this.layer.lights.rotation.y = start;
         this.scene.getObjectByName('overlay').rotation.y = start;
     }
 
@@ -91,7 +96,7 @@ export class World {
         this.time.update();
 
         this.sphere.rotation.y += this.properties.spinSpeed;
-        this.layer.earthLights.rotation.y += this.properties.spinSpeed;
+        this.layer.lights.rotation.y += this.properties.spinSpeed;
         this.clouds.cloudMesh.rotation.y += this.properties.cloudsSpinSpeed;
 
         this.composer.renderer.render(this.scene, this.camera.camera);

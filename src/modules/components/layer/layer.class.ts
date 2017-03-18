@@ -4,6 +4,7 @@ import Vector3 = THREE.Vector3;
 
 export class Layer {
 
+    public lights: THREE.Mesh;
     private world: World;
 
     public constructor(world) {
@@ -11,7 +12,7 @@ export class Layer {
         this.overlay();
     }
 
-    public get earthLights(): THREE.Mesh {
+    public earthLightsTexture(): THREE.Mesh {
         const geometry = new THREE.SphereGeometry(15.2, 32, 32);
 
         const material = new THREE.MeshBasicMaterial({
@@ -20,9 +21,12 @@ export class Layer {
             opacity: .37,
             lights: true
         });
-        return new THREE.Mesh(geometry, material);
+
+        this.lights = new THREE.Mesh(geometry, material);
+        return this.lights;
     }
 
+    // data points
     private overlay(): void {
         const overlayGeometry = new THREE.SphereGeometry(15.1, 32, 32);
         const overlayMesh = new THREE.Mesh(overlayGeometry, new THREE.MeshPhongMaterial({

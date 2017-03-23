@@ -9,6 +9,7 @@ import { Camera } from '../camera/camera.class';
 import { Clock } from '../clock/clock.class';
 import { Control } from '../control/control.class';
 import Vector3 = THREE.Vector3;
+import DirectionalLight = THREE.DirectionalLight;
 
 export class World {
 
@@ -21,14 +22,16 @@ export class World {
     public composer: Composer;
     public sphere: THREE.Mesh;
     public clouds: Cloud;
-
     public properties: WorldOptions;
+
     private time: Clock;
     private lighting: Lighting;
     private globe: THREE.SphereGeometry;
+    private dataPoints: any;
 
     constructor(options: WorldOptions) {
         this.properties = options;
+
         this.camera = new Camera(options.width, options.height);
         this.clouds = new Cloud();
         this.composer = new Composer();
@@ -40,14 +43,22 @@ export class World {
         this.control = new Control();
         this.create(options);
         this.hasBenchmark(options.benchmark);
+        this.dataPoints = this.scene.getChildByName('overlay');
     }
 
     public init(): void {
         this.scene.add(this.sphere);
         this.scene.add(this.lighting.ambientLight(this));
         this.scene.add(this.lighting.directionalLight());
+        this.setWorldOrientation(this.properties.startRotation);
         document.querySelector('.country-list').innerHTML = this.properties.domNode;
         this.render();
+    }
+
+    private setWorldOrientation(rotation) {
+        this.sphere.rotation.y = rotation;
+        this.layer.lights.rotation.y = rotation;
+        this.dataPoints.rotation.y = rotation;
     }
 
     private create(options): void {
@@ -81,10 +92,9 @@ export class World {
     }
 
     private render(): void {
-        const obj = this.scene.getChildByName('overlay') as any;
-        obj.material.map.needsUpdate = true;
-        obj.rotation.y += this.properties.spinSpeed;
         this.camera.cameraControl.update();
+        this.dataPoints.material.map.needsUpdate = true;
+        this.dataPoints.rotation.y += this.properties.spinSpeed;
 
         this.time.update();
 

@@ -6,7 +6,6 @@ import { Benchmark } from '../benchmark/benchmark.class';
 import { DataFetch } from '../data/fetch.class';
 import { Composer } from '../shaders/composer.class';
 import { Camera } from '../camera/camera.class';
-import { Clock } from '../clock/clock.class';
 import { Control } from '../control/control.class';
 import Vector3 = THREE.Vector3;
 import DirectionalLight = THREE.DirectionalLight;
@@ -26,7 +25,6 @@ export class World {
     public clouds: Cloud;
     public properties: WorldOptions;
 
-    private time: Clock;
     private ui: UI;
     private lighting: Lighting;
     private globe: THREE.SphereGeometry;
@@ -41,7 +39,6 @@ export class World {
         this.camera = new Camera(options.width, options.height, this.scene);
         this.data = new DataFetch(this, options.dataURL);
         this.layer = new Layer(this);
-        this.time = new Clock();
         this.control = new Control();
         this.ui = new UI();
         this.create(options);
@@ -64,10 +61,10 @@ export class World {
     private detailsMode(): void {
         window.addEventListener('keydown', (e) => {
             if (e.keyCode === 68) {
-                this.camera.setDetailView();
+                this.camera.setDetailView([10, 40, 20]);
                 this.ui.showUI = true;
             } else if (e.keyCode === 78) {
-                this.camera.setNormalView();
+                this.camera.setNormalView([80, 36, 33]);
                 this.ui.showUI = false;
             }
             this.ui.showDetailedUI();
@@ -119,7 +116,7 @@ export class World {
         this.layer.lights.rotation.y += this.properties.spinSpeed;
         this.clouds.cloudMesh.rotation.y += this.properties.cloudsSpinSpeed;
 
-        this.time.update();
+        this.ui.update();
         this.benchmark.stats.update();
         this.camera.cameraControl.update();
 

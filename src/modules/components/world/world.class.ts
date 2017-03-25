@@ -11,6 +11,8 @@ import { Control } from '../control/control.class';
 import Vector3 = THREE.Vector3;
 import DirectionalLight = THREE.DirectionalLight;
 
+declare const window: Window;
+
 export class World {
     public layer: Layer;
     public camera: Camera;
@@ -30,11 +32,11 @@ export class World {
 
     constructor(options: WorldOptions) {
         this.properties = options;
-        this.camera = new Camera(options.width, options.height);
         this.clouds = new Cloud();
         this.composer = new Composer();
         this.lighting = new Lighting();
         this.scene = new THREE.Scene();
+        this.camera = new Camera(options.width, options.height, this.scene);
         this.data = new DataFetch(this, options.dataURL);
         this.layer = new Layer(this);
         this.time = new Clock();
@@ -53,6 +55,17 @@ export class World {
         this.camera.cameraControl.zoomSpeed = .1;
         document.querySelector('.country-list').innerHTML = this.properties.domNode;
         this.render();
+        this.detailsMode();
+    }
+
+    private detailsMode(): void {
+        window.addEventListener('keydown', (e) => {
+            if (e.keyCode === 68) {
+                this.camera.setDetailView();
+            } else if (e.keyCode === 78) {
+                this.camera.setNormalView();
+            }
+        });
     }
 
     private setWorldOrientation(rotation) {
@@ -94,7 +107,6 @@ export class World {
     private render(): void {
         this.dataPoints.material.map.needsUpdate = true;
         this.dataPoints.rotation.y += this.properties.spinSpeed;
-
         this.lighting.updatePosition(this.properties.cloudsSpinSpeed);
 
         this.sphere.rotation.y += this.properties.spinSpeed;

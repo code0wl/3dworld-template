@@ -33,8 +33,6 @@ export class DataFetch {
         this.canvas.width = 4096;
         this.canvas.height = 2048;
 
-
-
         this.fetchJSONFile(this.world.properties.dataURL, (data) => {
 
             const container: any = document.querySelector('.data-countries');
@@ -43,7 +41,7 @@ export class DataFetch {
                 x,
                 y;
 
-            Object.keys(data.earth).map((key) => {
+            Object.keys(data.earth).map(key => {
 
                 html += `<li> <h3> ${key} <span class="total-rev"> ${data.earth[key].TotalRevenue} </h3></span></li>`;
 
@@ -70,7 +68,10 @@ export class DataFetch {
             container.innerHTML = html;
 
         });
-
         return this.canvas;
     };
+
+    private updateData(): void {
+        //
+    }
 }

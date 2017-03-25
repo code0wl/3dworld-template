@@ -12,7 +12,6 @@ import Vector3 = THREE.Vector3;
 import DirectionalLight = THREE.DirectionalLight;
 
 export class World {
-
     public layer: Layer;
     public camera: Camera;
     public data: DataFetch;
@@ -31,7 +30,6 @@ export class World {
 
     constructor(options: WorldOptions) {
         this.properties = options;
-
         this.camera = new Camera(options.width, options.height);
         this.clouds = new Cloud();
         this.composer = new Composer();
@@ -51,6 +49,8 @@ export class World {
         this.scene.add(this.lighting.ambientLight(this));
         this.scene.add(this.lighting.directionalLight());
         this.setWorldOrientation(this.properties.startRotation);
+        this.camera.cameraControl.dampingFactor = 100;
+        this.camera.cameraControl.zoomSpeed = .1;
         document.querySelector('.country-list').innerHTML = this.properties.domNode;
         this.render();
     }
@@ -92,11 +92,8 @@ export class World {
     }
 
     private render(): void {
-        this.camera.cameraControl.update();
         this.dataPoints.material.map.needsUpdate = true;
         this.dataPoints.rotation.y += this.properties.spinSpeed;
-
-        this.time.update();
 
         this.lighting.updatePosition(this.properties.cloudsSpinSpeed);
 
@@ -104,12 +101,13 @@ export class World {
         this.layer.lights.rotation.y += this.properties.spinSpeed;
         this.clouds.cloudMesh.rotation.y += this.properties.cloudsSpinSpeed;
 
-        this.composer.renderer.render(this.scene, this.camera.camera);
-        this.camera.camera.lookAt(this.scene.position);
-
+        this.time.update();
         this.benchmark.stats.update();
+        this.camera.cameraControl.update();
+
         document.body.appendChild(this.composer.renderer.domElement);
         this.composer.renderer.autoClear = false;
+        this.composer.renderer.render(this.scene, this.camera.camera);
 
         requestAnimationFrame(() => {
             this.render();

@@ -21,12 +21,14 @@ export class Camera {
         this.camera.position.y = 36;
         this.camera.position.z = 33;
         this.cameraControl.target = new THREE.Vector3(0, 0, 0);
+        this.cameraControl.rotateLeft(0);
     }
 
     public setDetailView(): void {
-        this.camera.position.z = 5;
+        this.camera.position.z = 40;
         this.camera.position.y = 10;
-        this.cameraControl.target = new THREE.Vector3(6, 5, 25);
+        this.cameraControl.target = new THREE.Vector3(0, 0, 20);
+        this.cameraControl.rotateLeft(5.7);
     }
 
 }

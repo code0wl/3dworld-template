@@ -10,6 +10,7 @@ import { Clock } from '../clock/clock.class';
 import { Control } from '../control/control.class';
 import Vector3 = THREE.Vector3;
 import DirectionalLight = THREE.DirectionalLight;
+import { UI } from '../ui/ui.class';
 
 declare const window: Window;
 
@@ -26,6 +27,7 @@ export class World {
     public properties: WorldOptions;
 
     private time: Clock;
+    private ui: UI;
     private lighting: Lighting;
     private globe: THREE.SphereGeometry;
     private dataPoints: any;
@@ -41,6 +43,7 @@ export class World {
         this.layer = new Layer(this);
         this.time = new Clock();
         this.control = new Control();
+        this.ui = new UI();
         this.create(options);
         this.hasBenchmark(options.benchmark);
         this.dataPoints = this.scene.getChildByName('overlay');
@@ -62,9 +65,12 @@ export class World {
         window.addEventListener('keydown', (e) => {
             if (e.keyCode === 68) {
                 this.camera.setDetailView();
+                this.ui.showUI = true;
             } else if (e.keyCode === 78) {
                 this.camera.setNormalView();
+                this.ui.showUI = false;
             }
+            this.ui.showDetailedUI();
         });
     }
 

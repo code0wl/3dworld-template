@@ -31,7 +31,7 @@ export class DataFetch {
                     html += `<li> <h3> ${key} <span class="total-rev"> ${data.earth[key].TotalRevenue} </h3></span></li>`;
 
                     if (data.earth[key].Sales.length > 0) {
-                        html += `<ul>`;
+                        html += `<details><ul>`;
 
                         data.earth[key].Sales.map((key) => {
                             html += `<li> ${key.city} <span class="total-rev"> ${key.orderValue} </span><p> Lat: ${key.lat}, Long: ${key.lng} </p></li>`;
@@ -44,7 +44,7 @@ export class DataFetch {
                             this.context.fill();
                         });
 
-                        html += '</ul>';
+                        html += '</ul></details>';
                     }
 
                 });

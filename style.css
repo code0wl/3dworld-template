@@ -24,7 +24,7 @@ canvas:active {
 }
 
 .detailed-view ul {
-    padding: 0;
+    padding: 1rem;
     margin: 0;
 }
 
@@ -48,7 +48,7 @@ h3 {
     color: white;
     transition: all .5s;
     left: 0;
-    padding: 2rem;
+    padding: 1rem;
     margin: 0;
     background: black;
     top: 0;
@@ -60,8 +60,13 @@ h3 {
     list-style: none;
     padding: 1rem;
     background: rgba(0, 0, 0, .5);
-
 }
+
+.detailed-view ul ul:hover {
+    cursor: pointer;
+    background: rgba(255, 255, 255, .1);
+}
+
 
 .detailed-view.fadeInUp {
     opacity: 1;

@@ -53,7 +53,6 @@ export class World {
         this.setWorldOrientation(this.properties.startRotation);
         this.camera.cameraControl.dampingFactor = 100;
         this.camera.cameraControl.zoomSpeed = .1;
-        document.querySelector('.country-list').innerHTML = this.properties.domNode;
         this.render();
         this.detailsMode();
     }
@@ -61,7 +60,7 @@ export class World {
     private detailsMode(): void {
         window.addEventListener('keydown', (e) => {
             if (e.keyCode === 68) {
-                this.camera.setDetailView([10, 40, 20]);
+                this.camera.setDetailView([10, 40, 25]);
                 this.ui.showUI = true;
             } else if (e.keyCode === 78) {
                 this.camera.setNormalView([80, 36, 33]);

@@ -31,7 +31,6 @@ export class UI {
         this.detail = document.querySelector('.detailed-view');
         this.detail.classList.remove('fadeOutDown');
         this.detail.classList.add('fadeInUp', 'animated');
-        this.detail.innerText = 'Some content will come here to display information';
     }
 
     private removeUI(): void {

@@ -2,7 +2,6 @@ export interface WorldOptions {
     spinSpeed: number;
     cloudsSpinSpeed: number;
     globalLighting: number;
-    domNode: string;
     dataURL: string;
     startRotation: number;
     pollingInterval: number;

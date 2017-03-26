@@ -20,9 +20,9 @@ export class DataFetch {
                 return data.json();
             })
             .then((data) => {
-                const container: any = document.querySelector('.data-countries');
+                const container: any = document.querySelector('.detailed-view');
 
-                let html = '<details> <ul>',
+                let html = '<ul>',
                     x,
                     y;
 
@@ -49,7 +49,7 @@ export class DataFetch {
 
                 });
 
-                html += '</ul></details>';
+                html += '</ul>';
                 container.innerHTML = html;
 
             });

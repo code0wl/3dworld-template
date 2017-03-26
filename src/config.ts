@@ -10,7 +10,6 @@ export const worldOptions: WorldOptions = {
     cloudsSpinSpeed: 0.0002,
     startRotation: currentRotation,
     globalLighting: 0x222222,
-    domNode: `<div class="data-countries"></div>`, // extract to external module
     dataURL: 'static/js/data/data.json',
     pollingInterval: 30000,
     data_size_height: 4,

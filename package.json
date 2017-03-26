@@ -19,7 +19,8 @@
   "homepage": "https://github.com/Ositoozy/3dworld-template#readme",
   "dependencies": {
     "moment": "^2.17.1",
-    "rxjs": "^5.0.2"
+    "rxjs": "^5.0.2",
+    "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
     "@types/es6-shim": "^0.31.32",

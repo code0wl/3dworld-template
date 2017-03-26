@@ -31,8 +31,4 @@ export class Camera {
         this.cameraControl.rotateLeft(5.8);
     }
 
-    public update() {
-
-    }
-
 }

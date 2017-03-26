@@ -5,7 +5,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 module.exports = {
     context: path.resolve(__dirname, './src'),
     entry: {
-        app: './main.ts'
+        app: ['whatwg-fetch', './main.ts']
     },
     output: {filename: 'bundle.js'},
     module: {

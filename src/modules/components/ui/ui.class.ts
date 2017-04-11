@@ -12,11 +12,7 @@ export class UI {
     }
 
     public showDetailedUI(): void {
-        if (this.isShowing) {
-            this.renderUI();
-        } else {
-            this.removeUI();
-        }
+        this.isShowing ? this.renderUI() : this.removeUI();
     }
 
     public set showUI(show) {

@@ -29,7 +29,9 @@ export class UI {
     }
 
     private removeUI(): void {
-        this.detail.classList.remove('fadeInUp');
-        this.detail.classList.add('fadeOutDown');
+        if (this.detail) {
+            this.detail.classList.remove('fadeInUp');
+            this.detail.classList.add('fadeOutDown');
+        }
     }
 }

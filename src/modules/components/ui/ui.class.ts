@@ -5,7 +5,6 @@ export class UI {
     private time: Clock;
     private isShowing: boolean;
     private detail: any;
-    private data: any;
 
     constructor() {
         this.time = new Clock();

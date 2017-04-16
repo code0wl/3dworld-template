@@ -11,9 +11,7 @@ export class UI {
     }
     
     public showDetailedUI(): void {
-        if (this.detail) {
-            this.isShowing ? this.renderUI() : this.removeUI();
-        }
+        this.isShowing ? this.renderUI() : this.removeUI();
     }
     
     public set showUI(show) {
@@ -31,7 +29,9 @@ export class UI {
     }
     
     private removeUI(): void {
-        this.detail.classList.remove('fadeInUp');
-        this.detail.classList.add('fadeOutDown');
+        if (this.detail) {
+            this.detail.classList.remove('fadeInUp');
+            this.detail.classList.add('fadeOutDown');
+        }
     }
 }

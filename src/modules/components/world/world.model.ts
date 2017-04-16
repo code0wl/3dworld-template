@@ -10,5 +10,6 @@ export interface WorldOptions {
     data_size_height: number,
     data_size_width: number,
     height: number;
+    mode: Object;
     benchmark: boolean;
 }

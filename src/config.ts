@@ -17,5 +17,8 @@ export const worldOptions: WorldOptions = {
     data_size_width: 4,
     width: window.innerWidth,
     height: window.innerHeight,
-    benchmark: true
+    benchmark: true,
+    mode: {
+        flight: true
+    }
 };

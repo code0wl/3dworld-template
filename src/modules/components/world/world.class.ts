@@ -7,6 +7,7 @@ import {DataFetch} from '../data/fetch.class';
 import {Composer} from '../shaders/composer.class';
 import {Camera} from '../camera/camera.class';
 import {Control} from '../control/control.class';
+import {Visual} from '../visual/visual.class';
 import {UI} from '../ui/ui.class';
 import Vector3 = THREE.Vector3;
 import DirectionalLight = THREE.DirectionalLight;
@@ -25,6 +26,7 @@ export class World {
     public clouds: Cloud;
     public properties: WorldOptions;
     
+    private visual: Visual;
     private ui: UI;
     private lighting: Lighting;
     private globe: THREE.SphereGeometry;
@@ -40,9 +42,11 @@ export class World {
         this.data = new DataFetch(this, options.dataURL);
         this.layer = new Layer(this);
         this.control = new Control();
+        this.visual = new Visual();
         this.ui = new UI();
         this.create(options);
         this.hasBenchmark(options.benchmark);
+        this.mode(options.mode);
         this.dataPoints = this.scene.getChildByName('overlay');
     }
     
@@ -55,6 +59,12 @@ export class World {
         this.camera.cameraControl.zoomSpeed = .1;
         this.render();
         this.detailsMode();
+    }
+    
+    private mode(mode) {
+        if (mode.flight) {
+            this.visual.flight();
+        }
     }
     
     private detailsMode(): void {

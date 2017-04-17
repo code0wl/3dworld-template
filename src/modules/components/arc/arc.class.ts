@@ -1,7 +1,8 @@
 import Vector3 = THREE.Vector3;
+import Mesh = THREE.Mesh;
 
 export class ArcData {
-    
+    public markerCollection: Array<Mesh> = [];
     private scene: THREE.Scene;
     private circumference: number;
     
@@ -14,7 +15,7 @@ export class ArcData {
         this.renderCoordinates();
         const GCNY = this.convertLatLonToVec3(40.7, -73.6).multiplyScalar(this.circumference + .1);
         const NOLA = this.convertLatLonToVec3(30, -90).multiplyScalar(this.circumference + .1);
-        this.drawCurve(this.createSphereArc(GCNY, NOLA), 0x00FFFF);
+        this.drawCurve(this.createSphereArc(GCNY, NOLA));
     }
     
     private renderCoordinates() {
@@ -29,6 +30,7 @@ export class ArcData {
         marker.position.setX(contextPosition.x);
         marker.position.setY(contextPosition.y);
         marker.position.setZ(contextPosition.z);
+        this.markerCollection.push(marker);
         this.scene.add(marker);
     }
     
@@ -58,7 +60,7 @@ export class ArcData {
         return sphereArc;
     }
     
-    private drawCurve(curve, color) {
+    private drawCurve(curve) {
         const lineGeometry = new THREE.Geometry();
         lineGeometry.vertices = curve.getPoints(20);
         lineGeometry.computeLineDistances();
@@ -69,5 +71,4 @@ export class ArcData {
         const line = new THREE.Line(lineGeometry, lineMaterial);
         this.scene.add(line);
     }
-    
 }

@@ -25,15 +25,13 @@ export class UI {
     private renderUI(): void {
         this.detail = document.querySelector('.detailed-view');
         this.detail.classList.remove('fadeOutDown');
-        this.detail.classList.add('fadeInUp', 'animated');
-        this.detail.style.height = `100%`;
+        this.detail.classList.add('fadeInUp', 'animated', 'is-open');
     }
     
     private removeUI(): void {
         if (this.detail) {
-            this.detail.classList.remove('fadeInUp');
+            this.detail.classList.remove('fadeInUp', 'is-open');
             this.detail.classList.add('fadeOutDown');
-            this.detail.style.height = 0;
         }
     }
 }

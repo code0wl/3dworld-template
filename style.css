@@ -23,9 +23,11 @@ canvas:active {
     background: none;
 }
 
-.detailed-view ul {
-    padding: 1rem;
-    margin: 0;
+.detailed-view {
+    height: 0
+}
+
+.detailed-view.is-open {
     height: 100%;
 }
 
@@ -53,12 +55,12 @@ h3 {
     margin: 0;
     background: black;
     top: 0;
-    height: 100%;
     overflow: auto;
 }
 
 .detailed-view ul {
     list-style: none;
+    margin: 0;
     padding: 1rem;
     background: rgba(0, 0, 0, .5);
 }

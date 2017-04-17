@@ -11,17 +11,21 @@ export class ArcData {
     }
     
     public visualize() {
-        this.addMarker(20, -160, 0xFF0000); // Near Hawaii
-        this.addMarker(40.7, -73.6, 0x0000FF); // Garden City, NY
+        this.renderCoordinates();
         const GCNY = this.convertLatLonToVec3(40.7, -73.6).multiplyScalar(this.circumference + .5);
-        this.addMarker(30, -90, 0x00FF00); // New Orleans, LA
         const NOLA = this.convertLatLonToVec3(30, -90).multiplyScalar(this.circumference + .5);
         this.drawCurve(this.createSphereArc(GCNY, NOLA), 0x00FFFF);
     }
     
+    private renderCoordinates() {
+        this.addMarker(20, -160, 0xFF0000); // Near Hawaii
+        this.addMarker(40.7, -73.6, 0x0000FF); // Garden City, NY
+        this.addMarker(30, -90, 0x00FF00); // New Orleans, LA
+    }
+    
     private addMarker(lat, lon, colory) {
         const contextPosition = this.convertLatLonToVec3(lat, lon).multiplyScalar(this.circumference);
-        const marker: any = new THREE.Mesh(new THREE.SphereGeometry(1, 8, 4), new THREE.MeshBasicMaterial({color: colory}));
+        const marker: any = new THREE.Mesh(new THREE.SphereGeometry(1, 6, 1), new THREE.MeshBasicMaterial({color: colory}));
         marker.position.setX(contextPosition.x);
         marker.position.setY(contextPosition.y);
         marker.position.setZ(contextPosition.z);
@@ -56,11 +60,11 @@ export class ArcData {
     
     private drawCurve(curve, color) {
         const lineGeometry = new THREE.Geometry();
-        lineGeometry.vertices = curve.getPoints(1000);
+        lineGeometry.vertices = curve.getPoints(20);
         lineGeometry.computeLineDistances();
         
         const lineMaterial = new THREE.LineBasicMaterial();
-        lineMaterial.color = (typeof(color) === "undefined") ? new THREE.Color(0xFFFFFF) : new THREE.Color(color);
+        lineMaterial.color = new THREE.Color(color)
         
         const line = new THREE.Line(lineGeometry, lineMaterial);
         this.scene.add(line);

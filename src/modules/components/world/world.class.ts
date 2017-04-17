@@ -44,10 +44,10 @@ export class World {
         this.control = new Control();
         this.ui = new UI();
         this.create(options);
+        this.arcs = new ArcData(this.scene, options.circumference);
         this.hasBenchmark(options.benchmark);
         this.mode(options.mode);
         this.dataPoints = this.scene.getChildByName('overlay');
-        this.arcs = new ArcData(this.scene, options.circumference);
     }
     
     public init(): void {

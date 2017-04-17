@@ -11,7 +11,6 @@ export class ArcData {
     }
     
     public visualize() {
-        // render cities here with that
         this.addMarker(20, -160, 0xFF0000); // Near Hawaii
         this.addMarker(40.7, -73.6, 0x0000FF); // Garden City, NY
         const GCNY = this.convertLatLonToVec3(40.7, -73.6).multiplyScalar(this.circumference + .5);
@@ -57,7 +56,7 @@ export class ArcData {
     
     private drawCurve(curve, color) {
         const lineGeometry = new THREE.Geometry();
-        lineGeometry.vertices = curve.getPoints(100);
+        lineGeometry.vertices = curve.getPoints(1000);
         lineGeometry.computeLineDistances();
         
         const lineMaterial = new THREE.LineBasicMaterial();

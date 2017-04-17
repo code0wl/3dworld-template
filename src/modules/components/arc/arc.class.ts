@@ -12,20 +12,20 @@ export class ArcData {
     
     public visualize() {
         this.renderCoordinates();
-        const GCNY = this.convertLatLonToVec3(40.7, -73.6).multiplyScalar(this.circumference + .5);
-        const NOLA = this.convertLatLonToVec3(30, -90).multiplyScalar(this.circumference + .5);
+        const GCNY = this.convertLatLonToVec3(40.7, -73.6).multiplyScalar(this.circumference + .1);
+        const NOLA = this.convertLatLonToVec3(30, -90).multiplyScalar(this.circumference + .1);
         this.drawCurve(this.createSphereArc(GCNY, NOLA), 0x00FFFF);
     }
     
     private renderCoordinates() {
-        this.addMarker(20, -160, 0xFF0000); // Near Hawaii
-        this.addMarker(40.7, -73.6, 0x0000FF); // Garden City, NY
-        this.addMarker(30, -90, 0x00FF00); // New Orleans, LA
+        this.addMarker(20, -160, 0xFF0000);
+        this.addMarker(40.7, -73.6, 0x0000FF);
+        this.addMarker(30, -90, 0x00FF00);
     }
     
     private addMarker(lat, lon, colory) {
         const contextPosition = this.convertLatLonToVec3(lat, lon).multiplyScalar(this.circumference);
-        const marker: any = new THREE.Mesh(new THREE.SphereGeometry(1, 6, 1), new THREE.MeshBasicMaterial({color: colory}));
+        const marker: any = new THREE.Mesh(new THREE.SphereGeometry(.1, 30, .1), new THREE.MeshBasicMaterial({color: colory}));
         marker.position.setX(contextPosition.x);
         marker.position.setY(contextPosition.y);
         marker.position.setZ(contextPosition.z);
@@ -43,12 +43,12 @@ export class ArcData {
     
     private greatCircleFunction(P, Q) {
         const angle = P.angleTo(Q);
-        return (t) => {
-            const X = new THREE.Vector3().addVectors(
+        return t => {
+            const x = new THREE.Vector3().addVectors(
                 P.clone().multiplyScalar(Math.sin((1 - t) * angle)),
                 Q.clone().multiplyScalar(Math.sin(t * angle)))
             .divideScalar(Math.sin(angle));
-            return X;
+            return x;
         };
     }
     
@@ -64,7 +64,7 @@ export class ArcData {
         lineGeometry.computeLineDistances();
         
         const lineMaterial = new THREE.LineBasicMaterial();
-        lineMaterial.color = new THREE.Color(color)
+        lineMaterial.color = new THREE.Color(0xFFFFFF);
         
         const line = new THREE.Line(lineGeometry, lineMaterial);
         this.scene.add(line);

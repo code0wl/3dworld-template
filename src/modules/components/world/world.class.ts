@@ -7,7 +7,7 @@ import {DataFetch} from '../data/fetch.class';
 import {Composer} from '../shaders/composer.class';
 import {Camera} from '../camera/camera.class';
 import {Control} from '../control/control.class';
-import {Visual} from '../visual/visual.class';
+import {ArcData} from '../arc/arc.class';
 import {UI} from '../ui/ui.class';
 import Vector3 = THREE.Vector3;
 import DirectionalLight = THREE.DirectionalLight;
@@ -26,7 +26,7 @@ export class World {
     public clouds: Cloud;
     public properties: WorldOptions;
     
-    private visual: Visual;
+    private arcs: ArcData;
     private ui: UI;
     private lighting: Lighting;
     private globe: THREE.SphereGeometry;
@@ -42,7 +42,7 @@ export class World {
         this.data = new DataFetch(this, options.dataURL);
         this.layer = new Layer(this);
         this.control = new Control();
-        this.visual = new Visual();
+        this.arcs = new ArcData(this.scene);
         this.ui = new UI();
         this.create(options);
         this.hasBenchmark(options.benchmark);
@@ -63,7 +63,7 @@ export class World {
     
     private mode(mode) {
         if (mode.flight) {
-            this.visual.flight();
+            this.arcs.visualize();
         }
     }
     

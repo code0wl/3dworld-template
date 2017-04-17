@@ -2,12 +2,6 @@ declare const dat: any;
 
 export class Visual {
     
-    public stats: any;
-    
-    constructor() {
-        
-    }
-    
     public flight() {
         var FizzyText = function () {
             this.message = 'dat.gui';
@@ -20,7 +14,10 @@ export class Visual {
         gui.add(text, 'message');
         gui.add(text, 'speed', -5, 5);
         gui.add(text, 'displayOutline');
-        
+    }
+    
+    public shop() {
+        console.log('showing shops')
     }
     
 }

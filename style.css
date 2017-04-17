@@ -26,6 +26,7 @@ canvas:active {
 .detailed-view ul {
     padding: 1rem;
     margin: 0;
+    height: 100%;
 }
 
 .total-rev {

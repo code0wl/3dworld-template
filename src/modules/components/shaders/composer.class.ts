@@ -3,7 +3,9 @@ export class Composer {
     public renderer: THREE.WebGLRenderer;
 
     constructor() {
-        this.renderer = new THREE.WebGLRenderer();
+        this.renderer = new THREE.WebGLRenderer({
+            antialias: true
+        });
         this.prepareRenderer();
     }
 

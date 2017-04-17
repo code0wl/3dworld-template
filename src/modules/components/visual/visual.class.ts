@@ -2,22 +2,16 @@ declare const dat: any;
 
 export class Visual {
     
-    public flight() {
-        var FizzyText = function () {
-            this.message = 'dat.gui';
-            this.speed = 0.8;
-            this.displayOutline = false;
-        };
-        
-        var text = new FizzyText();
-        var gui = new dat.GUI();
-        gui.add(text, 'message');
-        gui.add(text, 'speed', -5, 5);
-        gui.add(text, 'displayOutline');
-    }
+    private linePositions: number;
+    private allTracks: Array<number>;
+    private minArcDistance: number;
+    private maxArcDistance: number;
     
-    public shop() {
-        console.log('showing shops')
+    private cur_arc_distance_miles = 0;
+    private changing_arc_distance_miles = 0;
+    
+    public flight() {
+        
     }
     
 }

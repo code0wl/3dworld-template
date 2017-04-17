@@ -42,12 +42,12 @@ export class World {
         this.data = new DataFetch(this, options.dataURL);
         this.layer = new Layer(this);
         this.control = new Control();
-        this.arcs = new ArcData(this.scene);
         this.ui = new UI();
         this.create(options);
         this.hasBenchmark(options.benchmark);
         this.mode(options.mode);
         this.dataPoints = this.scene.getChildByName('overlay');
+        this.arcs = new ArcData(this.scene, options.circumference);
     }
     
     public init(): void {

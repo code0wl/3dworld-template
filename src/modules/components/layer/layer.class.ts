@@ -16,7 +16,7 @@ export class Layer {
         const geometry = new THREE.SphereGeometry(15.04, 32, 32);
 
         const material = new THREE.MeshBasicMaterial({
-            map: THREE.ImageUtils.loadTexture('../../../static/images/planets/city_lights_4k.png'),
+            map: THREE.ImageUtils.loadTexture('../../../world/static/images/planets/city_lights_4k.png'),
             transparent: true,
             opacity: .3,
             lights: true

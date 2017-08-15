@@ -4,6 +4,7 @@
   "description": "sandbox",
   "main": "index.js",
   "scripts": {
+    "build": "webpack",
     "prestart": "npm install http-server",
     "start": "yarn &&  http-server -a localhost -p 8080"
   },

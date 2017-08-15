@@ -99,11 +99,11 @@ export class World {
 
     private decoratePlanet(): THREE.MeshPhongMaterial {
         return new THREE.MeshPhongMaterial({
-            map: THREE.ImageUtils.loadTexture('../../../static/images/planets/earthmap4k.jpg'),
-            bumpMap: THREE.ImageUtils.loadTexture('../../../static/images/planets/earthbump4k.jpg'),
+            map: THREE.ImageUtils.loadTexture('../../../world/static/images/planets/earthmap4k.jpg'),
+            bumpMap: THREE.ImageUtils.loadTexture('../../../world/static/images/planets/earthbump4k.jpg'),
             bumpScale: 5,
-            normalMap: THREE.ImageUtils.loadTexture('../../../static/images/planets/earth_normalmap_flat4k.jpg'),
-            specularMap: THREE.ImageUtils.loadTexture('../../../static/images/planets/earthspec4k.jpg'),
+            normalMap: THREE.ImageUtils.loadTexture('../../../world/static/images/planets/earth_normalmap_flat4k.jpg'),
+            specularMap: THREE.ImageUtils.loadTexture('../../../world/static/images/planets/earthspec4k.jpg'),
             specular: new THREE.Color(0x333333),
             normalScale: new THREE.Vector2(0.5, 0.7)
         } as THREE.MeshBasicMaterialParameters);

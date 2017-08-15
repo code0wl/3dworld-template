@@ -4,9 +4,8 @@
   "description": "sandbox",
   "main": "index.js",
   "scripts": {
-    "start:dev": "concurrently \"webpack -w --env=dev\" \"tsc -w src/server/server\" \"nodemon src/server/server\"",
     "prestart": "npm install http-server",
-    "start": "yarn && http-server -a localhost -p 8080"
+    "start": "yarn &&  http-server -a localhost -p 8080"
   },
   "author": "",
   "license": "ISC",
@@ -31,6 +30,7 @@
     "istanbul": "^0.4.5",
     "yarn": "*",
     "jasmine": "^2.5.3",
+    "nodemon": "*",
     "ts-loader": "^1.3.3",
     "typescript": "^2.1.4",
     "typings": "^2.1.0",

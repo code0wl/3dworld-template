@@ -1,4 +1,5 @@
 import DirectionalLight = THREE.DirectionalLight;
+
 export class Lighting {
 
     public light: THREE.AmbientLight;

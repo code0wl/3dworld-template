@@ -7,7 +7,7 @@
     "build": "webpack",
     "prestart": "npm install http-server",
     "typings": "typings install",
-    "start": "npm run typings &&  http-server -p 8080"
+    "start": "npm build &&  http-server -p 8080"
   },
   "author": "",
   "license": "ISC",

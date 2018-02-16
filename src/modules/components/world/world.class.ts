@@ -109,8 +109,6 @@ export class World {
 
     private render(): void {
 
-        this.sphere.rotation.y += this.properties.spinSpeed;
-        this.layer.lights.rotation.y += this.properties.spinSpeed;
         this.clouds.cloudMesh.rotation.y += this.properties.cloudsSpinSpeed;
 
         this.ui.update();

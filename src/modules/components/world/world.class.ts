@@ -119,9 +119,7 @@ export class World {
         this.composer.renderer.autoClear = false;
         this.composer.renderer.render(this.scene, this.camera.camera);
 
-        requestAnimationFrame(() => {
-            this.render();
-        });
+        requestAnimationFrame(this.render);
     }
 
 }

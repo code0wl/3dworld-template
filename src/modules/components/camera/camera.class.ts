@@ -1,12 +1,12 @@
 import { Control } from '../control/control.class';
-import Vector3 = THREE.Vector3;
+
 export class Camera {
 
     public camera: THREE.PerspectiveCamera;
     private control: Control;
     public cameraControl: THREE.OrbitControls;
 
-    constructor(width, height, mainScene) {
+    constructor(width, height) {
         this.control = new Control();
         this.camera = new THREE.PerspectiveCamera(25, width / height, .1, 10000);
         this.cameraControl = new THREE.OrbitControls(this.camera);

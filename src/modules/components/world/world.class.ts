@@ -33,7 +33,7 @@ export class World {
         this.composer = new Composer();
         this.lighting = new Lighting();
         this.scene = new THREE.Scene();
-        this.camera = new Camera(options.width, options.height, this.scene);
+        this.camera = new Camera(options.width, options.height);
         this.layer = new Layer(this);
         this.control = new Control();
         this.ui = new UI();

@@ -1,5 +1,4 @@
 import { WorldOptions } from './world.model';
-import { Cloud } from '../cloud/cloud.class';
 import { Layer } from '../layer/layer.class';
 import { Lighting } from '../lighting/lighting.class';
 import { Benchmark } from '../benchmark/benchmark.class';
@@ -108,8 +107,6 @@ export class World {
     }
 
     private render(): void {
-
-        this.clouds.cloudMesh.rotation.y += this.properties.cloudsSpinSpeed;
 
         this.ui.update();
         this.benchmark.stats.update();

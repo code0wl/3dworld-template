@@ -20,9 +20,9 @@ export class ArcData {
 
     private renderCoordinates() {
         this.markerCollection.push(
-            new Marker(20, -160, 0xFF0000, this.scene, this.circumference),
             new Marker(40.7, -73.6, 0x0000FF, this.scene, this.circumference),
-            new Marker(30, -90, 0x00FF00, this.scene, this.circumference)
+            new Marker(30, -90, 0x00FF00, this.scene, this.circumference),
+            new Marker(-40.1, 40.1, 0x00FF00, this.scene, this.circumference)
         );
     }
 

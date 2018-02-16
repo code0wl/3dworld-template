@@ -1,5 +1,4 @@
 import { WorldOptions } from './world.model';
-import { Cloud } from '../cloud/cloud.class';
 import { Layer } from '../layer/layer.class';
 import { Lighting } from '../lighting/lighting.class';
 import { Benchmark } from '../benchmark/benchmark.class';
@@ -18,7 +17,6 @@ export class World {
     public control: Control;
     public composer: Composer;
     public sphere: THREE.Mesh;
-    public clouds: Cloud;
     public properties: WorldOptions;
 
     private arcs: GlobeData;
@@ -29,7 +27,6 @@ export class World {
     constructor(options: WorldOptions) {
         new SideBar('some content');
         this.properties = options;
-        this.clouds = new Cloud();
         this.composer = new Composer();
         this.lighting = new Lighting();
         this.scene = new THREE.Scene();
@@ -80,7 +77,6 @@ export class World {
     private create(options): void {
         this.sphere = new THREE.Mesh(this.globeGenerate(), this.decoratePlanet());
         this.sphere.name = options.name;
-        this.sphere.add(this.clouds.cloudTexture());
         this.scene.add(this.layer.earthLightsTexture());
     }
 
@@ -108,10 +104,6 @@ export class World {
     }
 
     private render(): void {
-        this.sphere.rotation.y += this.properties.spinSpeed;
-        this.layer.lights.rotation.y += this.properties.spinSpeed;
-        this.clouds.cloudMesh.rotation.y += this.properties.cloudsSpinSpeed;
-
         this.ui.update();
         this.benchmark.stats.update();
         this.camera.cameraControl.update();

@@ -5,7 +5,7 @@ export class Cloud {
     public cloudTexture(): THREE.Mesh {
         const geometry = new THREE.SphereGeometry(15.2, 32, 32);
         const material = new THREE.MeshPhongMaterial({
-            map: THREE.ImageUtils.loadTexture('../../../world/static/images/planets/fair_clouds_4k.png'),
+            map: THREE.ImageUtils.loadTexture('../../../static/images/planets/fair_clouds_4k.png'),
             side: THREE.DoubleSide,
             opacity: 0.5,
             transparent: true,

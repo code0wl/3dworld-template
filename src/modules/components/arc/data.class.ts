@@ -1,7 +1,6 @@
 import { Marker } from '../plot/plot.class';
-import { convertLatLonToVec3, createSphereArc } from '../../utils/converters';
 
-export class ArcData {
+export class GlobeData {
     public markerCollection = [];
     private scene: THREE.Scene;
     private circumference: number;
@@ -13,9 +12,6 @@ export class ArcData {
 
     public visualize() {
         this.renderCoordinates();
-        const GCNY = convertLatLonToVec3(40.7, -73.6).multiplyScalar(this.circumference + .1);
-        const NOLA = convertLatLonToVec3(30, -90).multiplyScalar(this.circumference + .1);
-        this.drawCurve(createSphereArc(GCNY, NOLA));
     }
 
     private renderCoordinates() {

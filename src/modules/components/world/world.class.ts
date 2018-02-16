@@ -6,7 +6,7 @@ import { Benchmark } from '../benchmark/benchmark.class';
 import { Composer } from '../shaders/composer.class';
 import { Camera } from '../camera/camera.class';
 import { Control } from '../control/control.class';
-import { ArcData } from '../arc/arc.class';
+import { GlobeData } from '../arc/data.class';
 import { UI } from '../ui/ui.class';
 import { SideBar } from '../sidebar/sidebar';
 
@@ -21,7 +21,7 @@ export class World {
     public clouds: Cloud;
     public properties: WorldOptions;
 
-    private arcs: ArcData;
+    private arcs: GlobeData;
     private ui: UI;
     private lighting: Lighting;
     private globe: THREE.SphereGeometry;
@@ -38,15 +38,14 @@ export class World {
         this.control = new Control();
         this.ui = new UI();
         this.create(options);
-        this.arcs = new ArcData(this.scene, options.circumference);
+        this.arcs = new GlobeData(this.scene, options.circumference);
         this.hasBenchmark(options.benchmark);
         this.mode(options.mode);
     }
 
     public init(): void {
         this.scene.add(this.sphere);
-        this.scene.add(this.lighting.ambientLight(this));
-        this.scene.add(this.lighting.directionalLight());
+        this.scene.add(this.lighting.ambientLight());
         this.setWorldOrientation(this.properties.startRotation);
         this.camera.cameraControl.dampingFactor = 100;
         this.camera.cameraControl.zoomSpeed = .1;
@@ -109,7 +108,6 @@ export class World {
     }
 
     private render(): void {
-        this.lighting.updatePosition(this.properties.cloudsSpinSpeed);
 
         this.sphere.rotation.y += this.properties.spinSpeed;
         this.layer.lights.rotation.y += this.properties.spinSpeed;

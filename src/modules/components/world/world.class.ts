@@ -1,14 +1,14 @@
-import {WorldOptions} from './world.model';
-import {Cloud} from '../cloud/cloud.class';
-import {Layer} from '../layer/layer.class';
-import {Lighting} from '../lighting/lighting.class';
-import {Benchmark} from '../benchmark/benchmark.class';
-import {DataFetch} from '../data/fetch.class';
-import {Composer} from '../shaders/composer.class';
-import {Camera} from '../camera/camera.class';
-import {Control} from '../control/control.class';
-import {ArcData} from '../arc/arc.class';
-import {UI} from '../ui/ui.class';
+import { WorldOptions } from './world.model';
+import { Cloud } from '../cloud/cloud.class';
+import { Layer } from '../layer/layer.class';
+import { Lighting } from '../lighting/lighting.class';
+import { Benchmark } from '../benchmark/benchmark.class';
+import { DataFetch } from '../data/fetch.class';
+import { Composer } from '../shaders/composer.class';
+import { Camera } from '../camera/camera.class';
+import { Control } from '../control/control.class';
+import { ArcData } from '../arc/arc.class';
+import { UI } from '../ui/ui.class';
 
 declare const window: Window;
 

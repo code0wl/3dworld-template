@@ -1,5 +1,4 @@
 import { World } from '../world/world.class';
-import 'whatwg-fetch';
 
 export class DataFetch {
 

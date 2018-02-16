@@ -1,20 +1,26 @@
-const path = require('path');
-const webpack = require('webpack');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const path = require("path");
 
 module.exports = {
-    context: path.resolve(__dirname, './src'),
-    entry: {
-        app: ['whatwg-fetch', './main.ts']
+    entry: "./src/main.ts",
+    devtool: "inline-source-map",
+    resolve: {
+        extensions: [".js", ".ts"]
     },
-    output: {filename: 'bundle.js'},
+    output: {
+        filename: "[name].js"
+    },
     module: {
-        loaders: [{
-            test: /.ts$/,
-            loader: 'ts-loader'
-        }]
-    },
-    plugins: [
-        // new UglifyJSPlugin()
-    ]
+        rules: [
+            {
+                test: /\.ts$/,
+                loader: "awesome-typescript-loader",
+                exclude: [
+                    path.resolve(__dirname, "node_modules")
+                ],
+                options: {
+                    transpileOnly: true
+                }
+            }
+        ]
+    }
 };

@@ -3,19 +3,16 @@ import { Cloud } from '../cloud/cloud.class';
 import { Layer } from '../layer/layer.class';
 import { Lighting } from '../lighting/lighting.class';
 import { Benchmark } from '../benchmark/benchmark.class';
-import { DataFetch } from '../data/fetch.class';
 import { Composer } from '../shaders/composer.class';
 import { Camera } from '../camera/camera.class';
 import { Control } from '../control/control.class';
 import { ArcData } from '../arc/arc.class';
 import { UI } from '../ui/ui.class';
-
-declare const window: Window;
+import { SideBar } from '../sidebar/sidebar';
 
 export class World {
     public layer: Layer;
     public camera: Camera;
-    public data: DataFetch;
     public scene: THREE.Scene;
     public benchmark: any;
     public control: Control;
@@ -28,16 +25,15 @@ export class World {
     private ui: UI;
     private lighting: Lighting;
     private globe: THREE.SphereGeometry;
-    private dataPoints: any;
 
     constructor(options: WorldOptions) {
+        new SideBar('some content');
         this.properties = options;
         this.clouds = new Cloud();
         this.composer = new Composer();
         this.lighting = new Lighting();
         this.scene = new THREE.Scene();
         this.camera = new Camera(options.width, options.height, this.scene);
-        this.data = new DataFetch(this, options.dataURL);
         this.layer = new Layer(this);
         this.control = new Control();
         this.ui = new UI();
@@ -45,7 +41,6 @@ export class World {
         this.arcs = new ArcData(this.scene, options.circumference);
         this.hasBenchmark(options.benchmark);
         this.mode(options.mode);
-        this.dataPoints = this.scene.getChildByName('overlay');
     }
 
     public init(): void {
@@ -81,7 +76,6 @@ export class World {
     private setWorldOrientation(rotation) {
         this.sphere.rotation.y = rotation;
         this.layer.lights.rotation.y = rotation;
-        this.dataPoints.rotation.y = rotation;
     }
 
     private create(options): void {
@@ -115,8 +109,6 @@ export class World {
     }
 
     private render(): void {
-        this.dataPoints.material.map.needsUpdate = true;
-        this.dataPoints.rotation.y += this.properties.spinSpeed;
         this.lighting.updatePosition(this.properties.cloudsSpinSpeed);
 
         this.sphere.rotation.y += this.properties.spinSpeed;

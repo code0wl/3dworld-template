@@ -1,6 +1,6 @@
 import { World } from '../world/world.class';
 
-export class DataFetch {
+export class DataFetchDemo {
 
     public world: World;
     public canvas: HTMLCanvasElement = document.createElement('canvas');

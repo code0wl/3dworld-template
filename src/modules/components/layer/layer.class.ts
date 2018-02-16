@@ -1,6 +1,5 @@
-import MeshBasicMaterial = THREE.MeshBasicMaterial;
-import { World } from '../world/world.class';
 import Vector3 = THREE.Vector3;
+import { World } from '../world/world.class';
 
 export class Layer {
 
@@ -9,7 +8,6 @@ export class Layer {
 
     public constructor(world) {
         this.world = world;
-        this.overlay();
     }
 
     // implement light texture
@@ -25,20 +23,6 @@ export class Layer {
 
         this.lights = new THREE.Mesh(geometry, material);
         return this.lights;
-    }
-
-    // data points
-    private overlay(): void {
-        const overlayGeometry = new THREE.SphereGeometry(15.1, 32, 32);
-        const overlayMesh = new THREE.Mesh(overlayGeometry, new THREE.MeshPhongMaterial({
-            map: new THREE.Texture(this.world.data.addCanvas()),
-            transparent: true,
-            opacity: 1,
-            lights: true
-        }));
-        overlayMesh.name = 'overlay';
-
-        this.world.scene.add(overlayMesh);
     }
 
     public latLongToVector3(lat, lon, radius, height): Vector3 {

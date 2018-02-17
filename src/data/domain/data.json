@@ -1,76 +1,78 @@
 {
   "countries": [
     {
-      "NZ": {
-        "coordinatates": {
-          "lat": -41.28,
-          "lon": 159
-        },
-        "clients": [
-          {
-            "name": "westpac",
-            "agents": [
-              {
-                "name": "Irina"
-              },
-              {
-                "name": "Jahan"
-              },
-              {
-                "name": "Satyam"
-              }
-            ]
-          }
-        ]
+      "countryCode": "NZ",
+      "coordinates": {
+        "lat": -41.28,
+        "lon": 159
       },
-      "NL": {
-        "coordinatates": {
-          "lat": 52,
-          "lon": -11
-        },
-        "clients": [
-          {
-            "name": "Schiphol",
-            "agents": [
-              {
-                "name": "Oscar"
-              }
-            ]
-          }
-        ]
+      "clients": [
+        {
+          "name": "westpac",
+          "agents": [
+            {
+              "name": "Irina"
+            },
+            {
+              "name": "Jahan"
+            },
+            {
+              "name": "Satyam"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "countryCode": "NL",
+      "coordinates": {
+        "lat": 52,
+        "lon": -11
       },
-      "HK": {
-        "coordinatates": {
-          "lat": 22,
-          "lon": 97
-        },
-        "clients": [
-          {
-            "name": "HSBC",
-            "agents": [
-              {
-                "name": "Pedro"
-              }
-            ]
-          }
-        ]
+      "clients": [
+        {
+          "name": "Schiphol",
+          "agents": [
+            {
+              "name": "Oscar"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "countryCode": "HK",
+      "coordinates": {
+        "lat": 22,
+        "lon": 97
       },
-      "PT": {
-        "coordinatates": {
-          "lat": 22,
-          "lon": 97
-        },
-        "clients": [
-          {
-            "name": "HSBC",
-            "agents": [
-              {
-                "name": "Pedro"
-              }
-            ]
-          }
-        ]
-      }
+      "clients": [
+        {
+          "name": "HSBC",
+          "agents": [
+            {
+              "name": "Pedro"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "countryCode": "PT",
+      "coordinates": {
+        "lat": 22,
+        "lon": 97
+      },
+      "clients": [
+        {
+          "name": "HSBC",
+          "agents": [
+            {
+              "name": "Pedro"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

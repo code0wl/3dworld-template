@@ -9,7 +9,6 @@ export class Marker {
         marker.position.setY(contextPosition.y);
         marker.position.setZ(contextPosition.z);
         scene.add(marker);
-        console.log(marker);
     }
 
     public select(coordinate) {

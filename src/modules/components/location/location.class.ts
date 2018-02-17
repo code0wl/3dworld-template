@@ -1,6 +1,6 @@
 import { Marker } from '../plot/plot.class';
 
-export class GlobeData {
+export class LocationService {
     private scene: THREE.Scene;
     private circumference: number;
 

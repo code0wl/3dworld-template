@@ -5,10 +5,10 @@ import { Benchmark } from '../benchmark/benchmark.class';
 import { Composer } from '../shaders/composer.class';
 import { Camera } from '../camera/camera.class';
 import { Control } from '../control/control.class';
-import { GlobeData } from '../countries/data.class';
 import { UI } from '../ui/ui.class';
 import { SideBar } from '../sidebar/sidebar';
 import { Cloud } from '../cloud/clouds';
+import { LocationService } from '../location/location.class';
 
 export class World {
     public layer: Layer;
@@ -20,7 +20,7 @@ export class World {
     public sphere: THREE.Mesh;
     public properties: WorldOptions;
 
-    private arcs: GlobeData;
+    private arcs: LocationService;
     private ui: UI;
     private lighting: Lighting;
     private cloud: Cloud;
@@ -38,7 +38,7 @@ export class World {
         this.control = new Control();
         this.ui = new UI();
         this.create(options);
-        this.arcs = new GlobeData(this.scene, options.circumference);
+        this.arcs = new LocationService(this.scene, options.circumference);
         this.hasBenchmark(options.benchmark);
         this.mode(options.mode);
     }

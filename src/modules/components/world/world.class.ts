@@ -8,6 +8,7 @@ import { Control } from '../control/control.class';
 import { GlobeData } from '../arc/data.class';
 import { UI } from '../ui/ui.class';
 import { SideBar } from '../sidebar/sidebar';
+import { Cloud } from '../cloud/clouds';
 
 export class World {
     public layer: Layer;
@@ -22,6 +23,7 @@ export class World {
     private arcs: GlobeData;
     private ui: UI;
     private lighting: Lighting;
+    private cloud: Cloud;
     private globe: THREE.SphereGeometry;
 
     constructor(options: WorldOptions) {
@@ -30,6 +32,7 @@ export class World {
         this.composer = new Composer();
         this.lighting = new Lighting();
         this.scene = new THREE.Scene();
+        this.cloud = new Cloud();
         this.camera = new Camera(options.width, options.height);
         this.layer = new Layer(this);
         this.control = new Control();
@@ -76,6 +79,7 @@ export class World {
     private create(options): void {
         this.sphere = new THREE.Mesh(this.globeGenerate(), this.decoratePlanet());
         this.sphere.name = options.name;
+        this.sphere.add(this.cloud.cloudTexture());
     }
 
     private hasBenchmark(benchmark): void {
@@ -98,6 +102,8 @@ export class World {
     private render(): void {
         this.benchmark.stats.update();
         this.camera.cameraControl.update();
+
+        this.cloud.cloudMesh.rotation.y += this.properties.cloudsSpinSpeed;
 
         document.body.appendChild(this.composer.renderer.domElement);
         this.composer.renderer.autoClear = false;

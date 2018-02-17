@@ -48,37 +48,19 @@ export class World {
         this.camera.cameraControl.dampingFactor = 100;
         this.camera.cameraControl.zoomSpeed = .1;
         this.render();
-        this.detailsMode();
         document.addEventListener('mousemove', this.onDocumentMouseMove.bind(this), false);
     }
 
     onDocumentMouseMove(event) {
-        if (!this.sideBar.isOpen()) {
-            event.preventDefault();
-            this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-        }
+        event.preventDefault();
+        this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     }
 
     private mode(mode) {
         if (mode.flight) {
             this.locations.visualize();
         }
-    }
-
-    private detailsMode(): void {
-        window.addEventListener('keydown', (e) => {
-            if (e.keyCode === 68) {
-                this.camera.setDetailView([10, 40, 25]);
-                this.ui.showUI = true;
-                this.camera.cameraControls = false;
-            } else if (e.keyCode === 78) {
-                this.camera.setNormalView([80, 36, 33]);
-                this.ui.showUI = false;
-                this.camera.cameraControls = true;
-            }
-            this.ui.showDetailedUI();
-        });
     }
 
     private setWorldOrientation(rotation) {
@@ -119,10 +101,17 @@ export class World {
         if (intersects.length > 0) {
             const object = intersects[0].object;
             if (this.intersected != object && object.name === 'location') {
-                if (this.intersected) {
-                    this.intersected.material.emissive.setHex(this.intersected.currentHex);
+                if (!this.ui.showUI) {
+                    this.camera.setDetailView([10, 40, 25]); // make dynamic
+
+                    this.ui.showUI = true;
+                    this.camera.cameraControls = false;
+                } else {
+                    this.camera.setNormalView([80, 36, 33]); // make dynamic
+                    this.ui.showUI = false;
+                    this.camera.cameraControls = true;
                 }
-                console.log(object);
+                this.ui.showDetailedUI();
             }
         } else {
             if (this.intersected) {

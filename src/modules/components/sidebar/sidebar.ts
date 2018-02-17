@@ -1,5 +1,5 @@
 export class SideBar {
-
+    public isOpen: boolean;
     public sidebarComponent: HTMLDivElement;
 
     constructor(content: string) {

@@ -18,19 +18,7 @@ export class GlobeData {
         this.markerCollection.push(
             new Marker(40.7, -73.6, 0x0000FF, this.scene, this.circumference),
             new Marker(30, -90, 0x00FF00, this.scene, this.circumference),
-            new Marker(-40.1, 40.1, 0x00FF00, this.scene, this.circumference)
+            new Marker(-41.28, -54, 0x00FF00, this.scene, this.circumference)
         );
-    }
-
-    private drawCurve(curve) {
-        const lineGeometry = new THREE.Geometry();
-        lineGeometry.vertices = curve.getPoints(20);
-        lineGeometry.computeLineDistances();
-
-        const lineMaterial = new THREE.LineBasicMaterial();
-        lineMaterial.color = new THREE.Color(0xFFFFFF);
-
-        const line = new THREE.Line(lineGeometry, lineMaterial);
-        this.scene.add(line);
     }
 }

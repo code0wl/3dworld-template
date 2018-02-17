@@ -1,0 +1,12 @@
+{
+  "countries": [
+    {
+      "New Zealand": {
+        "coordinatates": {
+          "lat": 10,
+          "lon": 10
+        }
+      }
+    }
+  ]
+}

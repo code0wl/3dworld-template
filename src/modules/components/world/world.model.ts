@@ -1,5 +1,4 @@
 export interface WorldOptions {
-    spinSpeed: number;
     cloudsSpinSpeed: number;
     globalLighting: number;
     dataURL: string;

@@ -5,7 +5,23 @@
         "coordinatates": {
           "lat": 10,
           "lon": 10
-        }
+        },
+        "clients": [
+          {
+            "name": "westpac",
+            "agents": [
+              {
+                "name": "Irina"
+              },
+              {
+                "name": "Jahan"
+              },
+              {
+                "name": "Satyam"
+              }
+            ]
+          }
+        ]
       }
     }
   ]

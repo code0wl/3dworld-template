@@ -1,5 +1,4 @@
 import { WorldOptions } from './world.model';
-import { Layer } from '../layer/layer.class';
 import { Lighting } from '../lighting/lighting.class';
 import { Benchmark } from '../benchmark/benchmark.class';
 import { Composer } from '../shaders/composer.class';
@@ -10,7 +9,7 @@ import { Cloud } from '../cloud/clouds';
 import { LocationService } from '../location/location.class';
 
 export class World {
-    public layer: Layer;
+    public raycaster: THREE.Raycaster;
     public camera: Camera;
     public scene: THREE.Scene;
     public benchmark: any;
@@ -20,8 +19,10 @@ export class World {
 
     private arcs: LocationService;
     private ui: UI;
+    private intersected: any;
     private lighting: Lighting;
     private cloud: Cloud;
+    private mouse: any;
     private globe: THREE.SphereGeometry;
 
     constructor(options: WorldOptions) {
@@ -29,12 +30,14 @@ export class World {
         this.properties = options;
         this.composer = new Composer();
         this.lighting = new Lighting();
+        this.raycaster = new THREE.Raycaster();
         this.scene = new THREE.Scene();
         this.cloud = new Cloud();
         this.camera = new Camera(options.width, options.height);
-        this.layer = new Layer(this);
         this.ui = new UI();
+        this.intersected = false;
         this.create(options);
+        this.mouse = new THREE.Vector2();
         this.arcs = new LocationService(this.scene, options.circumference);
         this.hasBenchmark(options.benchmark);
         this.mode(options.mode);
@@ -99,6 +102,7 @@ export class World {
     }
 
     private render(): void {
+
         this.benchmark.stats.update();
         this.camera.cameraControl.update();
 
@@ -107,6 +111,27 @@ export class World {
         document.body.appendChild(this.composer.renderer.domElement);
         this.composer.renderer.autoClear = false;
         this.composer.renderer.render(this.scene, this.camera.camera);
+
+        this.raycaster.setFromCamera(this.mouse, this.camera.camera);
+        const intersects = this.raycaster.intersectObjects(this.scene.children);
+
+        if (intersects.length > 0) {
+            console.log('intersection!');
+            if (this.intersected != intersects[0].object) {
+
+                if (this.intersected) {
+                    this.intersected.material.emissive.setHex(this.intersected.currentHex);
+                }
+
+                this.intersected = intersects[0].object;
+                this.intersected.currentHex = this.intersected.material.emissive.getHex();
+            }
+        } else {
+            if (this.intersected) {
+                this.intersected.material.emissive.setHex(this.intersected.currentHex);
+            }
+            this.intersected = null;
+        }
 
         requestAnimationFrame(this.render.bind(this));
     }

@@ -4,7 +4,6 @@ import { Lighting } from '../lighting/lighting.class';
 import { Benchmark } from '../benchmark/benchmark.class';
 import { Composer } from '../shaders/composer.class';
 import { Camera } from '../camera/camera.class';
-import { Control } from '../control/control.class';
 import { UI } from '../ui/ui.class';
 import { SideBar } from '../sidebar/sidebar';
 import { Cloud } from '../cloud/clouds';
@@ -15,7 +14,6 @@ export class World {
     public camera: Camera;
     public scene: THREE.Scene;
     public benchmark: any;
-    public control: Control;
     public composer: Composer;
     public sphere: THREE.Mesh;
     public properties: WorldOptions;
@@ -35,7 +33,6 @@ export class World {
         this.cloud = new Cloud();
         this.camera = new Camera(options.width, options.height);
         this.layer = new Layer(this);
-        this.control = new Control();
         this.ui = new UI();
         this.create(options);
         this.arcs = new LocationService(this.scene, options.circumference);
@@ -64,9 +61,11 @@ export class World {
             if (e.keyCode === 68) {
                 this.camera.setDetailView([10, 40, 25]);
                 this.ui.showUI = true;
+                this.camera.cameraControls = false;
             } else if (e.keyCode === 78) {
                 this.camera.setNormalView([80, 36, 33]);
                 this.ui.showUI = false;
+                this.camera.cameraControls = true;
             }
             this.ui.showDetailedUI();
         });

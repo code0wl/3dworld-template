@@ -17,5 +17,6 @@ export class LocationService {
         const newZealand = new Marker(-41.28, 159, this.scene, this.circumference);
         const holland = new Marker(52, -11, this.scene, this.circumference);
         const portugal = new Marker(40, -25, this.scene, this.circumference);
+        const hongkong = new Marker(22, 97, this.scene, this.circumference);
     }
 }

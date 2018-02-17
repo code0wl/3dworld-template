@@ -1,10 +1,10 @@
 {
   "countries": [
     {
-      "New Zealand": {
+      "NZ": {
         "coordinatates": {
-          "lat": 10,
-          "lon": 10
+          "lat": -41.28,
+          "lon": 159
         },
         "clients": [
           {
@@ -18,6 +18,54 @@
               },
               {
                 "name": "Satyam"
+              }
+            ]
+          }
+        ]
+      },
+      "NL": {
+        "coordinatates": {
+          "lat": 52,
+          "lon": -11
+        },
+        "clients": [
+          {
+            "name": "Schiphol",
+            "agents": [
+              {
+                "name": "Oscar"
+              }
+            ]
+          }
+        ]
+      },
+      "HK": {
+        "coordinatates": {
+          "lat": 22,
+          "lon": 97
+        },
+        "clients": [
+          {
+            "name": "HSBC",
+            "agents": [
+              {
+                "name": "Pedro"
+              }
+            ]
+          }
+        ]
+      },
+      "PT": {
+        "coordinatates": {
+          "lat": 22,
+          "lon": 97
+        },
+        "clients": [
+          {
+            "name": "HSBC",
+            "agents": [
+              {
+                "name": "Pedro"
               }
             ]
           }

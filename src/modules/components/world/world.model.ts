@@ -6,8 +6,6 @@ export interface WorldOptions {
     pollingInterval: number;
     width: number;
     name: string;
-    data_size_height: number,
-    data_size_width: number,
     height: number;
     mode: Object;
     benchmark: boolean;

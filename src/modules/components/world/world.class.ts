@@ -71,13 +71,11 @@ export class World {
 
     private setWorldOrientation(rotation) {
         this.sphere.rotation.y = rotation;
-        this.layer.lights.rotation.y = rotation;
     }
 
     private create(options): void {
         this.sphere = new THREE.Mesh(this.globeGenerate(), this.decoratePlanet());
         this.sphere.name = options.name;
-        this.scene.add(this.layer.earthLightsTexture());
     }
 
     private hasBenchmark(benchmark): void {
@@ -88,13 +86,7 @@ export class World {
 
     private decoratePlanet(): THREE.MeshPhongMaterial {
         return new THREE.MeshPhongMaterial({
-            map: THREE.ImageUtils.loadTexture('../../../static/images/planets/earthmap4k.jpg'),
-            bumpMap: THREE.ImageUtils.loadTexture('../../../static/images/planets/earthbump4k.jpg'),
-            bumpScale: 5,
-            normalMap: THREE.ImageUtils.loadTexture('../../../static/images/planets/earth_normalmap_flat4k.jpg'),
-            specularMap: THREE.ImageUtils.loadTexture('../../../static/images/planets/earthspec4k.jpg'),
-            specular: new THREE.Color(0x333333),
-            normalScale: new THREE.Vector2(0.5, 0.7)
+            map: THREE.ImageUtils.loadTexture('../../../static/images/planets/black10k.jpg'),
         } as THREE.MeshBasicMaterialParameters);
     }
 
@@ -104,7 +96,6 @@ export class World {
     }
 
     private render(): void {
-        this.ui.update();
         this.benchmark.stats.update();
         this.camera.cameraControl.update();
 

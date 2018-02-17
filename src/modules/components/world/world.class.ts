@@ -1,6 +1,5 @@
 import { WorldOptions } from './world.model';
 import { Lighting } from '../lighting/lighting.class';
-import { Benchmark } from '../benchmark/benchmark.class';
 import { Composer } from '../shaders/composer.class';
 import { Camera } from '../camera/camera.class';
 import { UI } from '../ui/ui.class';
@@ -12,13 +11,13 @@ export class World {
     public raycaster: THREE.Raycaster;
     public camera: Camera;
     public scene: THREE.Scene;
-    public benchmark: any;
     public composer: Composer;
     public sphere: THREE.Mesh;
     public properties: WorldOptions;
 
-    private arcs: LocationService;
+    private locations: LocationService;
     private ui: UI;
+    private sideBar: SideBar;
     private intersected: any;
     private lighting: Lighting;
     private cloud: Cloud;
@@ -26,7 +25,7 @@ export class World {
     private globe: THREE.SphereGeometry;
 
     constructor(options: WorldOptions) {
-        new SideBar('some content');
+        this.sideBar = new SideBar('some content');
         this.properties = options;
         this.composer = new Composer();
         this.lighting = new Lighting();
@@ -38,8 +37,7 @@ export class World {
         this.intersected = false;
         this.create(options);
         this.mouse = new THREE.Vector2();
-        this.arcs = new LocationService(this.scene, options.circumference);
-        this.hasBenchmark(options.benchmark);
+        this.locations = new LocationService(this.scene, options.circumference);
         this.mode(options.mode);
     }
 
@@ -51,11 +49,20 @@ export class World {
         this.camera.cameraControl.zoomSpeed = .1;
         this.render();
         this.detailsMode();
+        document.addEventListener('mousemove', this.onDocumentMouseMove.bind(this), false);
+    }
+
+    onDocumentMouseMove(event) {
+        if (!this.sideBar.isOpen()) {
+            event.preventDefault();
+            this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        }
     }
 
     private mode(mode) {
         if (mode.flight) {
-            this.arcs.visualize();
+            this.locations.visualize();
         }
     }
 
@@ -84,12 +91,6 @@ export class World {
         this.sphere.add(this.cloud.cloudTexture());
     }
 
-    private hasBenchmark(benchmark): void {
-        if (benchmark) {
-            this.benchmark = new Benchmark();
-        }
-    }
-
     private decoratePlanet(): THREE.MeshPhongMaterial {
         return new THREE.MeshPhongMaterial({
             map: THREE.ImageUtils.loadTexture('../../../static/images/planets/black10k.jpg'),
@@ -103,7 +104,6 @@ export class World {
 
     private render(): void {
 
-        this.benchmark.stats.update();
         this.camera.cameraControl.update();
 
         this.cloud.cloudMesh.rotation.y += this.properties.cloudsSpinSpeed;
@@ -113,18 +113,16 @@ export class World {
         this.composer.renderer.render(this.scene, this.camera.camera);
 
         this.raycaster.setFromCamera(this.mouse, this.camera.camera);
-        const intersects = this.raycaster.intersectObjects(this.scene.children);
+
+        var intersects = this.raycaster.intersectObjects(this.scene.children);
 
         if (intersects.length > 0) {
-            console.log('intersection!');
-            if (this.intersected != intersects[0].object) {
-
+            const object = intersects[0].object;
+            if (this.intersected != object && object.name === 'location') {
                 if (this.intersected) {
                     this.intersected.material.emissive.setHex(this.intersected.currentHex);
                 }
-
-                this.intersected = intersects[0].object;
-                this.intersected.currentHex = this.intersected.material.emissive.getHex();
+                console.log(object);
             }
         } else {
             if (this.intersected) {
@@ -132,6 +130,7 @@ export class World {
             }
             this.intersected = null;
         }
+
 
         requestAnimationFrame(this.render.bind(this));
     }

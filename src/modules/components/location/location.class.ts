@@ -1,6 +1,7 @@
-import { Marker } from '../plot/plot.class';
+import { Marker } from '../marker/marker.class';
 
 export class LocationService {
+    public markers: Marker[] = [];
     private scene: THREE.Scene;
     private circumference: number;
 
@@ -14,11 +15,11 @@ export class LocationService {
     }
 
     private async renderCoordinates() {
-        fetch("src/data/domain/data.json")
+        fetch('src/data/domain/data.json')
             .then(data => data.json())
             .then((payload) => {
                 payload.countries.map(country => {
-                    new Marker(country.coordinates.lat, country.coordinates.lon, this.scene, this.circumference);
+                    this.markers.push(new Marker(country.coordinates.lat, country.coordinates.lon, this.scene, this.circumference));
                 });
             });
     }

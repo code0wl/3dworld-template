@@ -1,18 +1,10 @@
 import { WorldOptions } from './modules/components/world/world.model';
-import * as moment from 'moment';
-import Vector3 = THREE.Vector3;
-
-const currentTime = Number(moment('00:00:00', 'HH:mm:ss').fromNow().replace(/[a-z]/g, ''));
-const fullRotation = 6;
-const currentRotation = -(fullRotation / (currentTime / fullRotation));
 
 export const worldOptions: WorldOptions = {
-    spinSpeed: .000086400,
     cloudsSpinSpeed: 0.0002,
-    startRotation: currentRotation,
+    startRotation: 6,
     globalLighting: 0x222222,
     circumference: 15,
-    dataURL: 'static/js/data/data.json',
     pollingInterval: 30000,
     data_size_height: 4,
     name: 'earth',

@@ -5,7 +5,7 @@ import { Benchmark } from '../benchmark/benchmark.class';
 import { Composer } from '../shaders/composer.class';
 import { Camera } from '../camera/camera.class';
 import { Control } from '../control/control.class';
-import { GlobeData } from '../arc/data.class';
+import { GlobeData } from '../countries/data.class';
 import { UI } from '../ui/ui.class';
 import { SideBar } from '../sidebar/sidebar';
 import { Cloud } from '../cloud/clouds';

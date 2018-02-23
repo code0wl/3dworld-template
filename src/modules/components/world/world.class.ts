@@ -23,6 +23,7 @@ export class World {
     private cloud: Cloud;
     private mouse: any;
     private globe: THREE.SphereGeometry;
+    private projector: THREE.Projector;
 
     constructor(options: WorldOptions) {
         this.sideBar = new SideBar('some content');
@@ -36,6 +37,7 @@ export class World {
         this.ui = new UI();
         this.intersected = false;
         this.create(options);
+        this.projector = new THREE.Projector();
         this.mouse = new THREE.Vector2();
         this.locations = new LocationService(this.scene, options.circumference);
         this.mode(options.mode);
@@ -84,6 +86,18 @@ export class World {
         return this.globe;
     }
 
+    private zoomIn(coordinates) {
+        this.camera.setDetailView(coordinates); // make dynamic
+        this.ui.showUI = true;
+        this.camera.cameraControls = false;
+    }
+
+    private zoomOut(coordinates) {
+        this.camera.setNormalView(coordinates); // make dynamic
+        this.ui.showUI = false;
+        this.camera.cameraControls = true;
+    }
+
     private render(): void {
 
         this.camera.cameraControl.update();
@@ -96,20 +110,15 @@ export class World {
 
         this.raycaster.setFromCamera(this.mouse, this.camera.camera);
 
-        var intersects = this.raycaster.intersectObjects(this.scene.children);
+        const intersects = this.raycaster.intersectObjects(this.scene.children);
 
         if (intersects.length > 0) {
             const object = intersects[0].object;
             if (this.intersected != object && object.name === 'location') {
                 if (!this.ui.showUI) {
-                    this.camera.setDetailView([10, 40, 25]); // make dynamic
-
-                    this.ui.showUI = true;
-                    this.camera.cameraControls = false;
+                    this.zoomIn([10, 40, 25]);
                 } else {
-                    this.camera.setNormalView([80, 36, 33]); // make dynamic
-                    this.ui.showUI = false;
-                    this.camera.cameraControls = true;
+                    this.zoomOut([80, 36, 33]);
                 }
                 this.ui.showDetailedUI();
             }

@@ -27,7 +27,7 @@ export class Camera {
     public setDetailView(coors: Array<number>): void {
         this.camera.position.y = coors[0];
         this.camera.position.z = coors[1];
-        this.cameraControl.target = new THREE.Vector3(0, 0, coors[2]);
+        this.cameraControl.target = new THREE.Vector3(0, 0, 0);
         this.cameraControl.rotateLeft(-7.5);
     }
 

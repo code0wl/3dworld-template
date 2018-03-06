@@ -86,6 +86,7 @@ export class World {
         return this.globe;
     }
 
+    // extract to UI class
     private zoomIn(coordinates) {
         this.camera.setDetailView(coordinates); // make dynamic
         this.ui.showUI = true;

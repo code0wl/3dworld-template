@@ -117,10 +117,10 @@ export class World {
             if (this.intersected != object && object.name === 'location') {
 
                 if (!this.ui.showUI) {
-                    
-                    this.zoomIn([10, 40, 25]); // todo get coors
 
-            }
+                    this.zoomIn(object.position);
+
+                }
 
                 this.ui.showDetailedUI(object[0]);
             }

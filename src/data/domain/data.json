@@ -76,10 +76,12 @@
                     "name": "Schiphol",
                     "agents": [
                         {
-                            "name": "Oscar"
+                            "name": "Oscar",
+                            "picture": "/static/images/agents/oz.png"
                         },
                         {
-                            "name": "Merten"
+                            "name": "Merten",
+                            "picture": "/static/images/agents/13berg.png"
                         }
                     ]
                 }
@@ -96,7 +98,12 @@
                     "name": "HSBC",
                     "agents": [
                         {
-                            "name": "Pedro"
+                            "name": "Pedro",
+                            "picture": "/static/images/agents/ped.png"
+                        },
+                        {
+                            "name": "Olivier",
+                            "picture": "/static/images/agents/oli.png"
                         }
                     ]
                 }
@@ -110,14 +117,16 @@
             },
             "clients": [
                 {
-                    "name": "HSBC",
+                    "name": "Portugal Office",
                     "agents": [
                         {
-                            "name": "Pedro"
+                            "name": "Pedro",
+                            "picture": "/static/images/agents/ped.png"
                         },
                         {
-                          "name": "Olivier"
-                      }
+                            "name": "Olivier",
+                            "picture": "/static/images/agents/oli.png"
+                        }
                     ]
                 }
             ]

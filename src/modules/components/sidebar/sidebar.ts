@@ -14,6 +14,7 @@ export class SideBar {
         content.agents.forEach(agent => {
             const listItem = document.createElement('li');
             listItem.textContent = agent.name;
+            listItem.classList.add('agent');
             agentList.appendChild(listItem);
         });
 
@@ -21,7 +22,7 @@ export class SideBar {
 
         sidebarComponent.classList.add('detailed-view');
 
-        document.body.appendChild(sidebarComponent);
+        document.querySelector('main.world').appendChild(sidebarComponent);
     }
 
 }

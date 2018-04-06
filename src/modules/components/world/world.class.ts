@@ -120,7 +120,7 @@ export class World {
                     
                     this.zoomIn([10, 40, 25]); // todo get coors
 
-                }
+            }
 
                 this.ui.showDetailedUI(object[0]);
             }
@@ -144,7 +144,7 @@ export class World {
 
         this.cloud.cloudMesh.rotation.y += this.properties.cloudsSpinSpeed;
 
-        document.body.appendChild(this.composer.renderer.domElement);
+        document.querySelector('main.world').appendChild(this.composer.renderer.domElement);
         this.composer.renderer.autoClear = false;
         this.composer.renderer.render(this.scene, this.camera.camera);
 

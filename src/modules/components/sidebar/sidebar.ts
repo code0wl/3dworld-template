@@ -35,9 +35,7 @@ export class SideBar {
 
     removeBar() {
         this.sidebarComponent.classList.add('animated', 'fadeOutLeft');
-        setTimeout(() => {
-            document.querySelector('main.world').removeChild(this.sidebarComponent);
-        }, 500);
+        setTimeout(() => document.querySelector('main.world').removeChild(this.sidebarComponent), 500);
         this.world.zoomOut([1, 2, 3]);
     }
 

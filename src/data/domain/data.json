@@ -53,13 +53,16 @@
                     "name": "Westpac",
                     "agents": [
                         {
-                            "name": "Irina"
+                            "name": "Irina",
+                            "picture": "/static/images/agents/iri.png"
                         },
                         {
-                            "name": "Jahan"
+                            "name": "Jahan",
+                            "picture": "/static/images/agents/jay.png"
                         },
                         {
-                            "name": "Satyam"
+                            "name": "Satyam",
+                            "picture": "/static/images/agents/sat.png"
                         }
                     ]
                 }

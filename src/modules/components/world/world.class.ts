@@ -148,7 +148,7 @@ export class World {
         this.composer.renderer.autoClear = false;
         this.composer.renderer.render(this.scene, this.camera.camera);
 
-        this.checkIntersections()
+        this.checkIntersections();
 
         requestAnimationFrame(this.render.bind(this));
     }

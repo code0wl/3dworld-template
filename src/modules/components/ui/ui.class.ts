@@ -17,14 +17,14 @@ export class UI {
 
     private renderUI(): void {
         this.detail = document.querySelector('.detailed-view');
-        this.detail.classList.remove('fadeOutDown');
-        this.detail.classList.add('fadeInUp', 'animated', 'is-open');
+        this.detail.classList.remove('fadeOutLeft');
+        this.detail.classList.add('fadeInLeft', 'animated', 'is-open');
     }
 
     private removeUI(): void {
         if (this.detail) {
-            this.detail.classList.remove('fadeInUp', 'is-open');
-            this.detail.classList.add('fadeOutDown');
+            this.detail.classList.remove('fadeInLeft', 'is-open');
+            this.detail.classList.add('fadeOutLeft');
         }
     }
 }

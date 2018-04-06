@@ -4,6 +4,7 @@ body {
     cursor: grab;
     padding: 0;
     margin: 0;
+    font-family: 'Roboto', sans-serif;
 }
 
 canvas {
@@ -14,12 +15,9 @@ canvas:active {
     cursor: -webkit-grabbing !important;
 }
 
-.detailed-view {
-    height: 0
-}
-
 .detailed-view.is-open {
     height: 100%;
+    background: #262b33;
 }
 
 .total-rev {
@@ -37,6 +35,7 @@ h3 {
 
 .detailed-view {
     opacity: 0;
+    height: 0;
     position: absolute;
     z-index: 10;
     color: white;
@@ -44,7 +43,6 @@ h3 {
     left: 0;
     padding: 1rem;
     margin: 0;
-    background: black;
     top: 0;
     overflow: auto;
 }
@@ -53,7 +51,6 @@ h3 {
     list-style: none;
     margin: 0;
     padding: 1rem;
-    background: rgba(0, 0, 0, .5);
 }
 
 .detailed-view ul ul:hover {

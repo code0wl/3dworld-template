@@ -1,4 +1,5 @@
 import { SideBar } from "../sidebar/sidebar";
+import { World } from "../world/world.class";
 
 export class UI {
 
@@ -6,8 +7,10 @@ export class UI {
     private detail: any;
     private sideBar: SideBar;
 
+    constructor(private world: World) {}
+
     public showDetailedUI(content): void {
-        this.sideBar = new SideBar(content);
+        this.sideBar = new SideBar(this.world, content);
         this.isShowing ? this.renderUI() : this.removeUI();
     }
 

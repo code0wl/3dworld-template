@@ -34,13 +34,13 @@ export class World {
         this.scene = new THREE.Scene();
         this.cloud = new Cloud();
         this.camera = new Camera(options.width, options.height);
-        this.ui = new UI();
         this.intersected = false;
         this.create(options);
         this.projector = new THREE.Projector();
         this.mouse = new THREE.Vector2();
         this.locations = new LocationService(this.scene, options.circumference);
         this.mode(options.mode);
+        this.ui = new UI(this);
     }
 
     public init(): void {
@@ -98,7 +98,7 @@ export class World {
         this.camera.cameraControls = false;
     }
 
-    private zoomOut(coordinates) {
+    public zoomOut(coordinates) {
         this.camera.setNormalView(coordinates); // make dynamic
         this.ui.showUI = false;
         this.camera.cameraControls = true;

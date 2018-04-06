@@ -1,13 +1,20 @@
+import { World } from "../world/world.class";
+
 export class SideBar {
-    public isOpen: boolean;
     public sidebarComponent: HTMLDivElement;
+    private world: World;
 
-    constructor(content) {
-
-        const sidebarComponent = document.createElement('div');
+    constructor(world, content) {
+        this.world = world;
+        this.sidebarComponent = document.createElement('div');
         const header = document.createElement('h4');
+        const close = document.createElement('span');
+        close.textContent = 'x';
+        close.classList.add('close');
         header.textContent = content.name;
-        sidebarComponent.appendChild(header);
+        this.sidebarComponent.appendChild(header);
+
+        close.addEventListener('click', this.removeBar.bind(this));
 
         const agentList = document.createElement('ul');
 
@@ -18,11 +25,20 @@ export class SideBar {
             agentList.appendChild(listItem);
         });
 
-        sidebarComponent.appendChild(agentList);
+        this.sidebarComponent.appendChild(agentList);
+        this.sidebarComponent.appendChild(close);
 
-        sidebarComponent.classList.add('detailed-view');
+        this.sidebarComponent.classList.add('detailed-view');
 
-        document.querySelector('main.world').appendChild(sidebarComponent);
+        document.querySelector('main.world').appendChild(this.sidebarComponent);
+    }
+
+    removeBar() {
+        this.sidebarComponent.classList.add('animated', 'fadeOutLeft');
+        setTimeout(() => {
+            document.querySelector('main.world').removeChild(this.sidebarComponent);
+        }, 500);
+        this.world.zoomOut([1, 2, 3]);
     }
 
 }

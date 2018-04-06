@@ -3,7 +3,6 @@ import { Lighting } from '../lighting/lighting.class';
 import { Composer } from '../shaders/composer.class';
 import { Camera } from '../camera/camera.class';
 import { UI } from '../ui/ui.class';
-import { SideBar } from '../sidebar/sidebar';
 import { Cloud } from '../cloud/clouds';
 import { LocationService } from '../location/location.class';
 import { WorldTexture } from '../texture/texture';
@@ -18,7 +17,6 @@ export class World {
 
     private locations: LocationService;
     private ui: UI;
-    private sideBar: SideBar;
     private intersected: any;
     private lighting: Lighting;
     private cloud: Cloud;
@@ -29,7 +27,6 @@ export class World {
     private hasClicked: boolean = false;
 
     constructor(options: WorldOptions) {
-        this.sideBar = new SideBar('some content');
         this.properties = options;
         this.composer = new Composer();
         this.lighting = new Lighting();
@@ -120,12 +117,8 @@ export class World {
             if (this.intersected != object && object.name === 'location') {
 
                 if (!this.ui.showUI) {
-
-                    this.zoomIn([10, 40, 25]);
-
-                } else {
-
-                    this.zoomOut([80, 36, 33]);
+                    
+                    this.zoomIn([10, 40, 25]); // todo get coors
 
                 }
 

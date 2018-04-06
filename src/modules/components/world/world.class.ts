@@ -26,6 +26,7 @@ export class World {
     private texture: WorldTexture;
     private globe: THREE.SphereGeometry;
     private projector: THREE.Projector;
+    private hasClicked: boolean = false;
 
     constructor(options: WorldOptions) {
         this.sideBar = new SideBar('some content');
@@ -53,9 +54,19 @@ export class World {
         this.camera.cameraControl.zoomSpeed = .1;
         this.render();
         document.addEventListener('mousemove', this.onDocumentMouseMove.bind(this), false);
+        document.addEventListener('mousedown', this.onDocumentClicked.bind(this), false);
     }
 
-    onDocumentMouseMove(event) {
+    private onDocumentClicked(event) {
+        event.preventDefault();
+        this.hasClicked = true;
+
+        setTimeout(() => {
+            this.hasClicked = !this.hasClicked;
+        }, 1000);
+    }
+
+    private onDocumentMouseMove(event) {
         event.preventDefault();
         this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
         this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -96,6 +107,44 @@ export class World {
         this.camera.cameraControls = true;
     }
 
+    private checkIntersections() {
+
+        this.raycaster.setFromCamera(this.mouse, this.camera.camera);
+
+        const intersects = this.raycaster.intersectObjects(this.scene.children);
+
+        if (intersects.length > 0 && this.hasClicked) {
+
+            const object = intersects[0].object;
+
+            if (this.intersected != object && object.name === 'location') {
+
+                if (!this.ui.showUI) {
+
+                    this.zoomIn([10, 40, 25]);
+
+                } else {
+
+                    this.zoomOut([80, 36, 33]);
+
+                }
+
+                this.ui.showDetailedUI();
+            }
+
+        } else {
+
+            if (this.intersected) {
+
+                this.intersected.material.emissive.setHex(this.intersected.currentHex);
+
+            }
+
+            this.intersected = null;
+
+        }
+    }
+
     private render(): void {
 
         this.camera.cameraControl.update();
@@ -106,27 +155,7 @@ export class World {
         this.composer.renderer.autoClear = false;
         this.composer.renderer.render(this.scene, this.camera.camera);
 
-        this.raycaster.setFromCamera(this.mouse, this.camera.camera);
-
-        const intersects = this.raycaster.intersectObjects(this.scene.children);
-
-        if (intersects.length > 0) {
-            const object = intersects[0].object;
-            if (this.intersected != object && object.name === 'location') {
-                if (!this.ui.showUI) {
-                    this.zoomIn([10, 40, 25]);
-                } else {
-                    this.zoomOut([80, 36, 33]);
-                }
-                this.ui.showDetailedUI();
-            }
-        } else {
-            if (this.intersected) {
-                this.intersected.material.emissive.setHex(this.intersected.currentHex);
-            }
-            this.intersected = null;
-        }
-
+        this.checkIntersections()
 
         requestAnimationFrame(this.render.bind(this));
     }

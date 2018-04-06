@@ -13,7 +13,7 @@ export class SideBar {
 
         content.agents.forEach(agent => {
             const listItem = document.createElement('li');
-            listItem.textContent = agent.name;
+            listItem.innerHTML = `<img src="${agent.picture}"> ${agent.name}`;
             listItem.classList.add('agent');
             agentList.appendChild(listItem);
         });

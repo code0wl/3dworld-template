@@ -6,6 +6,8 @@ html, body {
 main.world {
     background: #000000;
     cursor: grab;
+    overflow: hidden;
+    height: 100vh;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -20,12 +22,15 @@ canvas {
     cursor: -webkit-grab !important;
 }
 
+.detailed-view img {
+    width: 50px;
+}
+
 canvas:active {
     cursor: -webkit-grabbing !important;
 }
 
 .detailed-view.is-open {
-    height: 100%;
     background: #262b33;
 }
 
@@ -37,13 +42,13 @@ h3 {
 }
 
 .detailed-view {
-    height: 0;
     position: absolute;
     z-index: 10;
     color: white;
     left: 0;
     padding: 1rem 3rem;
     margin: 0;
+    bottom: 0;
     top: 0;
     overflow: auto;
 }
@@ -56,5 +61,4 @@ h3 {
 
 .agent {
     padding: 1rem 0;
-
 }

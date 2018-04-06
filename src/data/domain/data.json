@@ -8,7 +8,7 @@
       },
       "clients": [
         {
-          "name": "westpac",
+          "name": "Westpac",
           "agents": [
             {
               "name": "Irina"
@@ -20,6 +20,59 @@
               "name": "Satyam"
             }
           ]
+        },
+        {
+          "name": "Schiphol",
+          "agents": [
+            {
+              "name": "Oscar"
+            },
+            {
+              "name": "Merten"
+            }
+          ]
+        }
+      ],
+      "agents": [
+        {
+          "name": "Oscar",
+          "picture": "some pic",
+          "description": "some description"
+        },
+        {
+          "name": "Merten",
+          "picture": "some pic",
+          "description": "some description"
+        },
+        {
+          "name": "Satyam",
+          "picture": "some pic",
+          "description": "some description"
+        },
+        {
+          "name": "Olivier",
+          "picture": "some pic",
+          "description": "some description"
+        },
+        {
+          "name": "Irina",
+          "picture": "some pic",
+          "description": "some description"
+        },
+        {
+          "name": "Pedro",
+          "picture": "some pic",
+          "description": "some description"
+        },
+        {
+          "name": "Zahan",
+          "picture": "some pic",
+          "description": "some description"
+        },
+        {
+          "name": "Merten",
+          "picture": "some pic",
+          "description": "some description"
         }
       ]
     },

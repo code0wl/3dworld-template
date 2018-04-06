@@ -6,6 +6,7 @@ import { UI } from '../ui/ui.class';
 import { SideBar } from '../sidebar/sidebar';
 import { Cloud } from '../cloud/clouds';
 import { LocationService } from '../location/location.class';
+import { WorldTexture } from '../texture/texture';
 
 export class World {
     public raycaster: THREE.Raycaster;
@@ -22,6 +23,7 @@ export class World {
     private lighting: Lighting;
     private cloud: Cloud;
     private mouse: any;
+    private texture: WorldTexture;
     private globe: THREE.SphereGeometry;
     private projector: THREE.Projector;
 
@@ -70,15 +72,10 @@ export class World {
     }
 
     private create(options): void {
-        this.sphere = new THREE.Mesh(this.globeGenerate(), this.decoratePlanet());
+        const texture = new WorldTexture();
+        this.sphere = new THREE.Mesh(this.globeGenerate(), texture.applyTexture('../../../static/images/planets/black10k.jpg'));
         this.sphere.name = options.name;
         this.sphere.add(this.cloud.cloudTexture());
-    }
-
-    private decoratePlanet(): THREE.MeshPhongMaterial {
-        return new THREE.MeshPhongMaterial({
-            map: THREE.ImageUtils.loadTexture('../../../static/images/planets/black10k.jpg'),
-        } as THREE.MeshBasicMaterialParameters);
     }
 
     private globeGenerate(): THREE.SphereGeometry {

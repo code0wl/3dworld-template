@@ -1,3 +1,5 @@
+import Vector3 = THREE.Vector3;
+
 export function convertLatLonToVec3(lat, lon) {
     lat = lat * Math.PI / 180.0;
     lon = -lon * Math.PI / 180.0;
@@ -22,4 +24,15 @@ export function greatCircleFunction(P, Q) {
             .divideScalar(Math.sin(angle));
         return x;
     };
+}
+
+export function latLongToVector3(lat, lon, radius, height): Vector3 {
+    const phi = (lat) * Math.PI / 180;
+    const theta = (lon - 180) * Math.PI / 180;
+
+    const x = -(radius + height) * Math.cos(phi) * Math.cos(theta);
+    const y = (radius + height) * Math.sin(phi);
+    const z = (radius + height) * Math.cos(phi) * Math.sin(theta);
+
+    return new THREE.Vector3(x, y, z);
 }

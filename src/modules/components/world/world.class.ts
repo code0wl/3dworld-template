@@ -1,106 +1,89 @@
 import { WorldOptions } from './world.model';
-import { Cloud } from '../cloud/cloud.class';
-import { Layer } from '../layer/layer.class';
 import { Lighting } from '../lighting/lighting.class';
-import { Benchmark } from '../benchmark/benchmark.class';
 import { Composer } from '../shaders/composer.class';
 import { Camera } from '../camera/camera.class';
-import { Control } from '../control/control.class';
-import { ArcData } from '../arc/arc.class';
 import { UI } from '../ui/ui.class';
-import { SideBar } from '../sidebar/sidebar';
+import { Cloud } from '../cloud/clouds';
+import { LocationService } from '../location/location.class';
+import { WorldTexture } from '../texture/texture';
 
 export class World {
-    public layer: Layer;
+    public raycaster: THREE.Raycaster;
     public camera: Camera;
     public scene: THREE.Scene;
-    public benchmark: any;
-    public control: Control;
     public composer: Composer;
     public sphere: THREE.Mesh;
-    public clouds: Cloud;
     public properties: WorldOptions;
 
-    private arcs: ArcData;
+    private locations: LocationService;
     private ui: UI;
+    private intersected: any;
     private lighting: Lighting;
+    private cloud: Cloud;
+    private mouse: any;
+    private texture: WorldTexture;
     private globe: THREE.SphereGeometry;
+    private projector: THREE.Projector;
+    private hasClicked: boolean = false;
 
     constructor(options: WorldOptions) {
-        new SideBar('some content');
         this.properties = options;
-        this.clouds = new Cloud();
         this.composer = new Composer();
         this.lighting = new Lighting();
+        this.raycaster = new THREE.Raycaster();
         this.scene = new THREE.Scene();
+        this.cloud = new Cloud();
         this.camera = new Camera(options.width, options.height);
-        this.layer = new Layer(this);
-        this.control = new Control();
-        this.ui = new UI();
+        this.intersected = false;
         this.create(options);
-        this.arcs = new ArcData(this.scene, options.circumference);
-        this.hasBenchmark(options.benchmark);
+        this.projector = new THREE.Projector();
+        this.mouse = new THREE.Vector2();
+        this.locations = new LocationService(this.scene, options.circumference);
         this.mode(options.mode);
+        this.ui = new UI(this);
     }
 
     public init(): void {
         this.scene.add(this.sphere);
-        this.scene.add(this.lighting.ambientLight(this));
-        this.scene.add(this.lighting.directionalLight());
+        this.scene.add(this.lighting.ambientLight());
         this.setWorldOrientation(this.properties.startRotation);
         this.camera.cameraControl.dampingFactor = 100;
         this.camera.cameraControl.zoomSpeed = .1;
         this.render();
-        this.detailsMode();
+        document.addEventListener('mousemove', this.onDocumentMouseMove.bind(this), false);
+        document.addEventListener('mousedown', this.onDocumentClicked.bind(this), false);
+    }
+
+    private onDocumentClicked(event) {
+        event.preventDefault();
+        this.hasClicked = true;
+
+        setTimeout(() => {
+            this.hasClicked = !this.hasClicked;
+        }, 500);
+    }
+
+    private onDocumentMouseMove(event) {
+        event.preventDefault();
+        this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     }
 
     private mode(mode) {
         if (mode.flight) {
-            this.arcs.visualize();
+            this.locations.visualize();
         }
-    }
-
-    private detailsMode(): void {
-        window.addEventListener('keydown', (e) => {
-            if (e.keyCode === 68) {
-                this.camera.setDetailView([10, 40, 25]);
-                this.ui.showUI = true;
-            } else if (e.keyCode === 78) {
-                this.camera.setNormalView([80, 36, 33]);
-                this.ui.showUI = false;
-            }
-            this.ui.showDetailedUI();
-        });
     }
 
     private setWorldOrientation(rotation) {
         this.sphere.rotation.y = rotation;
-        this.layer.lights.rotation.y = rotation;
     }
 
     private create(options): void {
-        this.sphere = new THREE.Mesh(this.globeGenerate(), this.decoratePlanet());
+        const texture = new WorldTexture();
+        this.sphere = new THREE.Mesh(this.globeGenerate(), texture.applyTexture('../../../static/images/planets/black10k.jpg'));
         this.sphere.name = options.name;
-        this.sphere.add(this.clouds.cloudTexture());
-        this.scene.add(this.layer.earthLightsTexture());
-    }
-
-    private hasBenchmark(benchmark): void {
-        if (benchmark) {
-            this.benchmark = new Benchmark();
-        }
-    }
-
-    private decoratePlanet(): THREE.MeshPhongMaterial {
-        return new THREE.MeshPhongMaterial({
-            map: THREE.ImageUtils.loadTexture('../../../static/images/planets/earthmap4k.jpg'),
-            bumpMap: THREE.ImageUtils.loadTexture('../../../static/images/planets/earthbump4k.jpg'),
-            bumpScale: 5,
-            normalMap: THREE.ImageUtils.loadTexture('../../../static/images/planets/earth_normalmap_flat4k.jpg'),
-            specularMap: THREE.ImageUtils.loadTexture('../../../static/images/planets/earthspec4k.jpg'),
-            specular: new THREE.Color(0x333333),
-            normalScale: new THREE.Vector2(0.5, 0.7)
-        } as THREE.MeshBasicMaterialParameters);
+        this.sphere.add(this.cloud.cloudTexture());
     }
 
     private globeGenerate(): THREE.SphereGeometry {
@@ -108,24 +91,66 @@ export class World {
         return this.globe;
     }
 
+    // extract to UI class
+    private zoomIn(coordinates) {
+        this.camera.setDetailView(coordinates); // make dynamic
+        this.ui.showUI = true;
+        this.camera.cameraControls = false;
+    }
+
+    public zoomOut(coordinates) {
+        this.camera.setNormalView(coordinates); // make dynamic
+        this.ui.showUI = false;
+        this.camera.cameraControls = true;
+    }
+
+    private checkIntersections() {
+
+        this.raycaster.setFromCamera(this.mouse, this.camera.camera);
+
+        const intersects = this.raycaster.intersectObjects(this.scene.children);
+
+        if (intersects.length > 0 && this.hasClicked) {
+
+            const object = intersects[0].object;
+
+            if (this.intersected != object && object.name === 'location') {
+
+                if (!this.ui.showUI) {
+                    
+                    this.zoomIn([10, 40, 25]); // todo get coors
+
+            }
+
+                this.ui.showDetailedUI(object[0]);
+            }
+
+        } else {
+
+            if (this.intersected) {
+
+                this.intersected.material.emissive.setHex(this.intersected.currentHex);
+                this.zoomOut(0); // todo get coors
+            }
+
+            this.intersected = null;
+
+        }
+    }
+
     private render(): void {
-        this.lighting.updatePosition(this.properties.cloudsSpinSpeed);
 
-        this.sphere.rotation.y += this.properties.spinSpeed;
-        this.layer.lights.rotation.y += this.properties.spinSpeed;
-        this.clouds.cloudMesh.rotation.y += this.properties.cloudsSpinSpeed;
-
-        this.ui.update();
-        this.benchmark.stats.update();
         this.camera.cameraControl.update();
 
-        document.body.appendChild(this.composer.renderer.domElement);
+        this.cloud.cloudMesh.rotation.y += this.properties.cloudsSpinSpeed;
+
+        document.querySelector('main.world').appendChild(this.composer.renderer.domElement);
         this.composer.renderer.autoClear = false;
         this.composer.renderer.render(this.scene, this.camera.camera);
 
-        requestAnimationFrame(() => {
-            this.render();
-        });
+        this.checkIntersections();
+
+        requestAnimationFrame(this.render.bind(this));
     }
 
 }

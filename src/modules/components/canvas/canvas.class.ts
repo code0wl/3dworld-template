@@ -11,7 +11,7 @@ export class Canvas {
     }
 
     private renderCanvas() {
-        document.body.appendChild(this.canvas);
+        document.querySelector('main.world').appendChild(this.canvas);
     }
 
 }

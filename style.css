@@ -1,8 +1,20 @@
-html,
-body {
-    background: black;
-    cursor: grab;
+html, body {
     padding: 0;
+    margin: 0;
+}
+
+main.world {
+    background: #000000;
+    cursor: grab;
+    overflow: hidden;
+    height: 100vh;
+    font-family: 'Roboto', sans-serif;
+}
+
+h4 {
+    font-size: 3rem;
+    font-weight: 100;
+    padding: 2rem 0;
     margin: 0;
 }
 
@@ -10,31 +22,16 @@ canvas {
     cursor: -webkit-grab !important;
 }
 
+.detailed-view img {
+    width: 50px;
+}
+
 canvas:active {
     cursor: -webkit-grabbing !important;
 }
 
-.clock {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    color: darkgreen;
-    z-index: 9;
-    background: none;
-}
-
-.detailed-view {
-    height: 0
-}
-
 .detailed-view.is-open {
-    height: 100%;
-}
-
-.total-rev {
-    float: right;
-    color: lightgreen;
-    padding-left: 20px;
+    background: #262b33;
 }
 
 h3 {
@@ -45,15 +42,13 @@ h3 {
 }
 
 .detailed-view {
-    opacity: 0;
     position: absolute;
     z-index: 10;
     color: white;
-    transition: all .5s;
     left: 0;
-    padding: 1rem;
+    padding: 1rem 3rem;
     margin: 0;
-    background: black;
+    bottom: 0;
     top: 0;
     overflow: auto;
 }
@@ -61,16 +56,9 @@ h3 {
 .detailed-view ul {
     list-style: none;
     margin: 0;
-    padding: 1rem;
-    background: rgba(0, 0, 0, .5);
+    padding: 0;
 }
 
-.detailed-view ul ul:hover {
-    cursor: pointer;
-    background: rgba(255, 255, 255, .1);
-}
-
-
-.detailed-view.fadeInUp {
-    opacity: 1;
+.agent {
+    padding: 1rem 0;
 }

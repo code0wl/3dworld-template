@@ -1,14 +1,13 @@
 import { SideBar } from "../sidebar/sidebar";
 
-
 export class UI {
 
     private isShowing: boolean;
     private detail: any;
     private sideBar: SideBar;
 
-    public showDetailedUI(): void {
-        this.sideBar = new SideBar('content');
+    public showDetailedUI(content): void {
+        this.sideBar = new SideBar(content);
         this.isShowing ? this.renderUI() : this.removeUI();
     }
 

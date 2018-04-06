@@ -1,131 +1,126 @@
 {
-  "countries": [
-    {
-      "countryCode": "NZ",
-      "coordinates": {
-        "lat": -41.28,
-        "lon": 159
-      },
-      "clients": [
+    "agents": [
         {
-          "name": "Westpac",
-          "agents": [
-            {
-              "name": "Irina"
+            "name": "Oscar",
+            "picture": "some pic",
+            "description": "some description"
+        },
+        {
+            "name": "Merten",
+            "picture": "some pic",
+            "description": "some description"
+        },
+        {
+            "name": "Satyam",
+            "picture": "some pic",
+            "description": "some description"
+        },
+        {
+            "name": "Olivier",
+            "picture": "some pic",
+            "description": "some description"
+        },
+        {
+            "name": "Irina",
+            "picture": "some pic",
+            "description": "some description"
+        },
+        {
+            "name": "Pedro",
+            "picture": "some pic",
+            "description": "some description"
+        },
+        {
+            "name": "Zahan",
+            "picture": "some pic",
+            "description": "some description"
+        },
+        {
+            "name": "Merten",
+            "picture": "some pic",
+            "description": "some description"
+        }
+    ],
+    "countries": [
+        {
+            "countryCode": "NZ",
+            "coordinates": {
+                "lat": -41.28,
+                "lon": 159
             },
-            {
-              "name": "Jahan"
+            "clients": [
+                {
+                    "name": "Westpac",
+                    "agents": [
+                        {
+                            "name": "Irina"
+                        },
+                        {
+                            "name": "Jahan"
+                        },
+                        {
+                            "name": "Satyam"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "countryCode": "NL",
+            "coordinates": {
+                "lat": 52,
+                "lon": -11
             },
-            {
-              "name": "Satyam"
-            }
-          ]
+            "clients": [
+                {
+                    "name": "Schiphol",
+                    "agents": [
+                        {
+                            "name": "Oscar"
+                        },
+                        {
+                            "name": "Merten"
+                        }
+                    ]
+                }
+            ]
         },
         {
-          "name": "Schiphol",
-          "agents": [
-            {
-              "name": "Oscar"
+            "countryCode": "HK",
+            "coordinates": {
+                "lat": 22,
+                "lon": 97
             },
-            {
-              "name": "Merten"
-            }
-          ]
+            "clients": [
+                {
+                    "name": "HSBC",
+                    "agents": [
+                        {
+                            "name": "Pedro"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "countryCode": "PT",
+            "coordinates": {
+                "lat": 41.1579,
+                "lon": -23.9
+            },
+            "clients": [
+                {
+                    "name": "HSBC",
+                    "agents": [
+                        {
+                            "name": "Pedro"
+                        },
+                        {
+                          "name": "Olivier"
+                      }
+                    ]
+                }
+            ]
         }
-      ],
-      "agents": [
-        {
-          "name": "Oscar",
-          "picture": "some pic",
-          "description": "some description"
-        },
-        {
-          "name": "Merten",
-          "picture": "some pic",
-          "description": "some description"
-        },
-        {
-          "name": "Satyam",
-          "picture": "some pic",
-          "description": "some description"
-        },
-        {
-          "name": "Olivier",
-          "picture": "some pic",
-          "description": "some description"
-        },
-        {
-          "name": "Irina",
-          "picture": "some pic",
-          "description": "some description"
-        },
-        {
-          "name": "Pedro",
-          "picture": "some pic",
-          "description": "some description"
-        },
-        {
-          "name": "Zahan",
-          "picture": "some pic",
-          "description": "some description"
-        },
-        {
-          "name": "Merten",
-          "picture": "some pic",
-          "description": "some description"
-        }
-      ]
-    },
-    {
-      "countryCode": "NL",
-      "coordinates": {
-        "lat": 52,
-        "lon": -11
-      },
-      "clients": [
-        {
-          "name": "Schiphol",
-          "agents": [
-            {
-              "name": "Oscar"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "countryCode": "HK",
-      "coordinates": {
-        "lat": 22,
-        "lon": 97
-      },
-      "clients": [
-        {
-          "name": "HSBC",
-          "agents": [
-            {
-              "name": "Pedro"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "countryCode": "PT",
-      "coordinates": {
-        "lat": 41.1579,
-        "lon": -23.9
-      },
-      "clients": [
-        {
-          "name": "HSBC",
-          "agents": [
-            {
-              "name": "Pedro"
-            }
-          ]
-        }
-      ]
-    }
-  ]
+    ]
 }

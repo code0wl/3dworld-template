@@ -60,7 +60,7 @@ export class World {
 
         setTimeout(() => {
             this.hasClicked = !this.hasClicked;
-        }, 1000);
+        }, 500);
     }
 
     private onDocumentMouseMove(event) {
@@ -118,11 +118,12 @@ export class World {
 
                 if (!this.ui.showUI) {
                     
+                    console.log(object);
                     this.zoomIn([10, 40, 25]); // todo get coors
 
                 }
 
-                this.ui.showDetailedUI();
+                this.ui.showDetailedUI(object[0]);
             }
 
         } else {

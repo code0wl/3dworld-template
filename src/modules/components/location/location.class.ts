@@ -19,7 +19,7 @@ export class LocationService {
             .then(data => data.json())
             .then((payload) => {
                 payload.countries.map(country => {
-                    this.markers.push(new Marker(country.coordinates.lat, country.coordinates.lon, this.scene, this.circumference, {payload: country.clients}));
+                    this.markers.push(new Marker(country.coordinates.lat, country.coordinates.lon, this.scene, this.circumference, country.clients));
                 });
             });
     }

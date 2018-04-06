@@ -118,7 +118,6 @@ export class World {
 
                 if (!this.ui.showUI) {
                     
-                    console.log(object);
                     this.zoomIn([10, 40, 25]); // todo get coors
 
                 }
@@ -131,7 +130,7 @@ export class World {
             if (this.intersected) {
 
                 this.intersected.material.emissive.setHex(this.intersected.currentHex);
-
+                this.zoomOut(0); // todo get coors
             }
 
             this.intersected = null;

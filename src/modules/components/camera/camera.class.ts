@@ -8,12 +8,6 @@ export class Camera {
 
         this.cameraControl = new THREE.OrbitControls(this.camera);
 
-        this.cameraControl.enablePan = false;
-		this.cameraControl.enableDamping = true;
-        this.cameraControl.rotateSpeed = 0.3;
-        this.cameraControl.autoRotate = true;
-        this.cameraControl.autoRotateSpeed = .2;
-
         this.setNormalView();
         this.camera.name = 'main-camera';
     }

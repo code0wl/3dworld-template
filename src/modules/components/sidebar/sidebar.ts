@@ -2,10 +2,15 @@ import { World } from "../world/world.class";
 
 export class SideBar {
     public sidebarComponent: HTMLDivElement;
+
     private world: World;
 
     constructor(world, content) {
         this.world = world;
+        this.createSideBar(content);
+    }
+
+    createSideBar(content) {
         this.sidebarComponent = document.createElement('div');
         const header = document.createElement('h4');
         const close = document.createElement('span');
@@ -36,7 +41,8 @@ export class SideBar {
     removeBar() {
         this.sidebarComponent.classList.add('animated', 'fadeOutLeft');
         setTimeout(() => document.querySelector('main.world').removeChild(this.sidebarComponent), 500);
-        this.world.zoomOut([1, 2, 3]);
+        document.querySelector('main.world').focus();
+        this.world.zoomOut();
     }
 
 }

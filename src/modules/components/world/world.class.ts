@@ -82,7 +82,8 @@ export class World {
         const earthDiffTexture = new THREE.MeshPhongMaterial({
             emissive: new THREE.TextureLoader().load('../../../../static/globe/PlanetEarth_EMISSION.jpg'),
             shininess: 5,
-            specular: new THREE.TextureLoader().load('../../../../static/globe/PlanetEarth_REFLECTION.jpg'),
+            reflectivity: 0.2,
+            envMap: new THREE.TextureLoader().load('../../../../static/globe/PlanetEarth_REFLECTION.jpg'),
             bumpMap: new THREE.TextureLoader().load('../../../../static/globe/PlanetEarth_BUMP.jpg'),
             map: new THREE.TextureLoader().load('../../../../static/globe/PlanetEarth_DIFFUSE.jpg'),
             bumpScale: 0.3,
@@ -154,9 +155,7 @@ export class World {
     }
 
     private render(): void {
-
         this.camera.cameraControl.update();
-        console.info(this.camera.camera.position);
 
         document.querySelector('main.world').appendChild(this.composer.renderer.domElement);
         this.composer.renderer.autoClear = false;

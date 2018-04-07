@@ -5,9 +5,15 @@ export class Camera {
 
     constructor(width, height) {
         this.camera = new THREE.PerspectiveCamera(25, width / height, .1, 10000);
+
         this.cameraControl = new THREE.OrbitControls(this.camera);
-        this.cameraControl.minDistance = 55;
-        this.cameraControl.maxDistance = 80;
+
+        this.cameraControl.enablePan = false;
+		this.cameraControl.enableDamping = true;
+        this.cameraControl.rotateSpeed = 0.3;
+        this.cameraControl.autoRotate = true;
+        this.cameraControl.autoRotateSpeed = .2;
+
         this.setNormalView();
         this.camera.name = 'main-camera';
     }
@@ -20,30 +26,26 @@ export class Camera {
         this.camera.position.x = 4;
         this.camera.position.y = 28;
         this.camera.position.z = 47;
-
-        this.animateToPosition(0, this.camera.position.x);
+        this.cameraControl.autoRotate = true;
+        this.cameraControl.autoRotateSpeed = .2;
     }
 
     public setDetailView(coors: Array<number>): void {
         this.camera.position.y = coors[0];
         this.camera.position.z = coors[1];
         this.cameraControl.rotateLeft(-7.5);
+        this.cameraControl.autoRotate = false;
     }
 
-    private animateToPosition(start, end) {
-        do {
-
-            console.log(start);
-
-            if (start >= end) {
-                start -= .0001;
-            }
-
-            start += .0001;
-
-            this.camera.position.x = start;
-
-        } while (start !== end);
+    private panCamera(coordinates) {
+        const rotateStart = new THREE.Vector2();
+        const rotateEnd = new THREE.Vector2();
+        const rotateDelta = new THREE.Vector2();
+        const panStart = new THREE.Vector3();
+        const panDelta = new THREE.Vector3();
+        const phiDelta = 0;
+        const thetaDelta = 0;
+        const lastPosition = new THREE.Vector3();
     }
 
 }

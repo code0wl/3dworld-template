@@ -22,7 +22,7 @@ export class World {
     private cloud: Cloud;
     private mouse: any;
     private texture: WorldTexture;
-    private globe: THREE.SphereGeometry;
+    private globe: any;
     private projector: THREE.Projector;
     private hasClicked: boolean = false;
 
@@ -35,23 +35,25 @@ export class World {
         this.cloud = new Cloud();
         this.camera = new Camera(options.width, options.height);
         this.intersected = false;
-        this.create(options);
         this.projector = new THREE.Projector();
         this.mouse = new THREE.Vector2();
         this.locations = new LocationService(this.scene, options.circumference);
         this.mode(options.mode);
         this.ui = new UI(this);
+        this.globeGenerate();
     }
 
     public init(): void {
         this.scene.add(this.sphere);
         this.scene.add(this.lighting.ambientLight());
-        this.setWorldOrientation(this.properties.startRotation);
+        this.scene.add(this.lighting.directionalLight());
         this.camera.cameraControl.dampingFactor = 100;
         this.camera.cameraControl.zoomSpeed = .1;
-        this.render();
+
         document.addEventListener('mousemove', this.onDocumentMouseMove.bind(this), false);
         document.addEventListener('mousedown', this.onDocumentClicked.bind(this), false);
+
+        this.render();
     }
 
     private onDocumentClicked(event) {
@@ -75,20 +77,37 @@ export class World {
         }
     }
 
-    private setWorldOrientation(rotation) {
-        this.sphere.rotation.y = rotation;
-    }
+    private globeGenerate() {
 
-    private create(options): void {
-        const texture = new WorldTexture();
-        this.sphere = new THREE.Mesh(this.globeGenerate(), texture.applyTexture('../../../static/images/planets/black10k.jpg'));
-        this.sphere.name = options.name;
-        this.sphere.add(this.cloud.cloudTexture());
-    }
+        const earthDiffTexture = new THREE.MeshPhongMaterial({
+            emissive: new THREE.TextureLoader().load('../../../../static/globe/PlanetEarth_EMISSION.jpg'),
+            shininess: 5,
+            specular: new THREE.TextureLoader().load('../../../../static/globe/PlanetEarth_REFLECTION.jpg'),
+            bumpMap: new THREE.TextureLoader().load('../../../../static/globe/PlanetEarth_BUMP.jpg'),
+            map: new THREE.TextureLoader().load('../../../../static/globe/PlanetEarth_DIFFUSE.jpg'),
+            bumpScale: 0.3,
+        } as any);
 
-    private globeGenerate(): THREE.SphereGeometry {
-        this.globe = new THREE.SphereGeometry(15, 32, 32);
-        return this.globe;
+        const loadingManager = new THREE.LoadingManager(() => {
+            this.scene.add(this.globe);
+        });
+
+        const loader = new THREE.ColladaLoader(loadingManager);
+
+        loader.load('../../../../static/globe/Earth.dae', (collada) => {
+
+            collada.scene.traverse(function (node) {
+                if (node.isMesh) {
+                    node.material = earthDiffTexture;
+                    Object.assign(node.scale, { x: 15, y: 15, z: 15 });
+
+                }
+            });
+
+            this.globe = collada.scene;
+
+        });
+
     }
 
     // extract to UI class
@@ -141,8 +160,6 @@ export class World {
     private render(): void {
 
         this.camera.cameraControl.update();
-
-        this.cloud.cloudMesh.rotation.y += this.properties.cloudsSpinSpeed;
 
         document.querySelector('main.world').appendChild(this.composer.renderer.domElement);
         this.composer.renderer.autoClear = false;

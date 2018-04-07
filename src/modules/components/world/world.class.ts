@@ -117,10 +117,12 @@ export class World {
         this.camera.cameraControls = false;
     }
 
-    public zoomOut(coordinates) {
-        this.camera.setNormalView(coordinates); // make dynamic
+    public zoomOut() {
+        console.log('resetting world');
+        this.camera.setNormalView();
         this.ui.showUI = false;
         this.camera.cameraControls = true;
+        this.intersected = null;
     }
 
     private checkIntersections() {
@@ -133,13 +135,9 @@ export class World {
 
             const object = intersects[0].object;
 
-            if (this.intersected != object && object.name === 'location') {
+            if (this.intersected != object && object.name === 'location' && !this.ui.showUI) {
 
-                if (!this.ui.showUI) {
-
-                    this.zoomIn(object.position);
-
-                }
+                this.zoomIn(object.position);
 
                 this.ui.showDetailedUI(object[0]);
             }
@@ -147,12 +145,10 @@ export class World {
         } else {
 
             if (this.intersected) {
-
                 this.intersected.material.emissive.setHex(this.intersected.currentHex);
-                this.zoomOut(0); // todo get coors
+                this.zoomOut();
+                console.log('intersected')
             }
-
-            this.intersected = null;
 
         }
     }
@@ -160,6 +156,7 @@ export class World {
     private render(): void {
 
         this.camera.cameraControl.update();
+        console.info(this.camera.camera.position);
 
         document.querySelector('main.world').appendChild(this.composer.renderer.domElement);
         this.composer.renderer.autoClear = false;

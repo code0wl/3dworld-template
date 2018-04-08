@@ -1,6 +1,7 @@
 import { convertLatLonToVec3 } from '../../utils/converters';
 
 export class Marker {
+
     constructor(lat: number, lon: number, scene: THREE.Scene, circumference: number, payload) {
         const contextPosition = convertLatLonToVec3(lat, lon += -90).multiplyScalar(circumference);
 

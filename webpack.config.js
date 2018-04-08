@@ -7,7 +7,7 @@ module.exports = {
         extensions: [".js", ".ts"]
     },
     output: {
-        filename: "[name].js"
+        filename: "build.js"
     },
     module: {
         rules: [

@@ -15,7 +15,7 @@ export class LocationService {
     }
 
     private renderCoordinates() {
-        fetch('src/data/domain/data.json')
+        fetch('../../../../static/data/domain/data.json')
             .then(data => data.json())
             .then((payload) => {
                 payload.countries.map(country => {

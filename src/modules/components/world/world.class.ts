@@ -6,6 +6,7 @@ import { UI } from '../ui/ui.class';
 import { Cloud } from '../cloud/clouds';
 import { LocationService } from '../location/location.class';
 import { WorldTexture } from '../texture/texture';
+import { TweenLite } from 'gsap';
 
 export class World {
     public raycaster: THREE.Raycaster;
@@ -41,6 +42,7 @@ export class World {
         this.mode(options.mode);
         this.ui = new UI(this);
         this.globeGenerate();
+
     }
 
     public init(): void {
@@ -150,9 +152,9 @@ export class World {
     }
 
     private render(): void {
-        this.camera.camera.updateProjectionMatrix();
+        this.camera.camera.updateProjectionMatrix();        
         this.camera.cameraControl.update();
-
+        
         document.querySelector('main.world').appendChild(this.composer.renderer.domElement);
         this.composer.renderer.autoClear = false;
         this.composer.renderer.render(this.scene, this.camera.camera);
@@ -160,8 +162,6 @@ export class World {
         this.checkIntersections();
 
         requestAnimationFrame(this.render.bind(this));
-
-        this.camera.tween.update();
     }
 
 }

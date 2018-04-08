@@ -46,7 +46,7 @@
             "countryCode": "NZ",
             "coordinates": {
                 "lat": -41.28,
-                "lon": 159
+                "lon": 174
             },
             "clients": [
                 {
@@ -72,7 +72,7 @@
             "countryCode": "NL",
             "coordinates": {
                 "lat": 52,
-                "lon": -11
+                "lon": 5
             },
             "clients": [
                 {
@@ -94,7 +94,7 @@
             "countryCode": "HK",
             "coordinates": {
                 "lat": 22,
-                "lon": 97
+                "lon": 114
             },
             "clients": [
                 {
@@ -116,7 +116,7 @@
             "countryCode": "PT",
             "coordinates": {
                 "lat": 41.1579,
-                "lon": -23.9
+                "lon": -9
             },
             "clients": [
                 {

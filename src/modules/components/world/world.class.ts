@@ -101,7 +101,6 @@ export class World {
                 if (node.isMesh) {
                     node.material = earthDiffTexture;
                     Object.assign(node.scale, { x: 15, y: 15, z: 15 });
-
                 }
             });
 
@@ -119,7 +118,6 @@ export class World {
     }
 
     public zoomOut() {
-        console.log('resetting world');
         this.camera.setNormalView();
         this.ui.showUI = false;
         this.camera.cameraControls = true;
@@ -148,7 +146,6 @@ export class World {
             if (this.intersected) {
                 this.intersected.material.emissive.setHex(this.intersected.currentHex);
                 this.zoomOut();
-                console.log('intersected')
             }
 
         }
@@ -156,7 +153,6 @@ export class World {
 
     private render(): void {
         this.camera.cameraControl.update();
-
         document.querySelector('main.world').appendChild(this.composer.renderer.domElement);
         this.composer.renderer.autoClear = false;
         this.composer.renderer.render(this.scene, this.camera.camera);

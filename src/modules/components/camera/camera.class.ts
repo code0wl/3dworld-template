@@ -20,14 +20,13 @@ export class Camera {
         this.camera.position.x = 4;
         this.camera.position.y = 28;
         this.camera.position.z = 47;
-        this.cameraControl.autoRotate = true;
-        this.cameraControl.autoRotateSpeed = .2;
     }
 
     public setDetailView(coors: Array<number>): void {
-        this.camera.position.y = coors[0];
-        this.camera.position.z = coors[1];
-        this.cameraControl.rotateLeft(-7.5);
+        this.camera.position.x = coors[0];
+        this.camera.position.y = coors[1];
+        this.camera.position.z = 20;
+
         this.cameraControl.autoRotate = false;
     }
 

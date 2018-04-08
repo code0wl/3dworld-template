@@ -7,7 +7,9 @@ export class SideBar {
 
     constructor(world, content) {
         this.world = world;
-        this.createSideBar(content);
+        if (!document.querySelector('.detailed-view')) {
+            this.createSideBar(content);
+        }
     }
 
     createSideBar(content) {

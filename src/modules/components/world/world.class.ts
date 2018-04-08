@@ -114,13 +114,11 @@ export class World {
     private zoomIn(coordinates) {
         this.camera.setDetailView(coordinates);
         this.ui.showUI = true;
-        // this.camera.cameraControls = false;
     }
 
     public zoomOut() {
         this.camera.setNormalView();
         this.ui.showUI = false;
-        this.camera.cameraControls = true;
         this.intersected = null;
     }
 
@@ -152,7 +150,9 @@ export class World {
     }
 
     private render(): void {
+        this.camera.camera.updateProjectionMatrix();
         this.camera.cameraControl.update();
+
         document.querySelector('main.world').appendChild(this.composer.renderer.domElement);
         this.composer.renderer.autoClear = false;
         this.composer.renderer.render(this.scene, this.camera.camera);
@@ -160,6 +160,8 @@ export class World {
         this.checkIntersections();
 
         requestAnimationFrame(this.render.bind(this));
+
+        this.camera.tween.update();
     }
 
 }

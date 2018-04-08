@@ -112,9 +112,9 @@ export class World {
 
     // extract to UI class
     private zoomIn(coordinates) {
-        this.camera.setDetailView(coordinates); // make dynamic
+        this.camera.setDetailView(coordinates);
         this.ui.showUI = true;
-        this.camera.cameraControls = false;
+        // this.camera.cameraControls = false;
     }
 
     public zoomOut() {

@@ -54,15 +54,15 @@
                     "agents": [
                         {
                             "name": "Irina",
-                            "picture": "/static/images/agents/iri.png"
+                            "picture": "static/images/agents/iri.png"
                         },
                         {
                             "name": "Jahan",
-                            "picture": "/static/images/agents/jay.png"
+                            "picture": "static/images/agents/jay.png"
                         },
                         {
                             "name": "Satyam",
-                            "picture": "/static/images/agents/sat.png"
+                            "picture": "static/images/agents/sat.png"
                         }
                     ]
                 }
@@ -80,11 +80,11 @@
                     "agents": [
                         {
                             "name": "Oscar",
-                            "picture": "/static/images/agents/oz.png"
+                            "picture": "static/images/agents/oz.png"
                         },
                         {
                             "name": "Merten",
-                            "picture": "/static/images/agents/13berg.png"
+                            "picture": "static/images/agents/13berg.png"
                         }
                     ]
                 }
@@ -102,11 +102,11 @@
                     "agents": [
                         {
                             "name": "Pedro",
-                            "picture": "/static/images/agents/ped.png"
+                            "picture": "static/images/agents/ped.png"
                         },
                         {
                             "name": "Olivier",
-                            "picture": "/static/images/agents/oli.png"
+                            "picture": "static/images/agents/oli.png"
                         }
                     ]
                 }
@@ -124,11 +124,11 @@
                     "agents": [
                         {
                             "name": "Pedro",
-                            "picture": "/static/images/agents/ped.png"
+                            "picture": "static/images/agents/ped.png"
                         },
                         {
                             "name": "Olivier",
-                            "picture": "/static/images/agents/oli.png"
+                            "picture": "static/images/agents/oli.png"
                         }
                     ]
                 }

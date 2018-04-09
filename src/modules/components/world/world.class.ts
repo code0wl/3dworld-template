@@ -3,7 +3,6 @@ import { Lighting } from '../lighting/lighting.class';
 import { Composer } from '../shaders/composer.class';
 import { Camera } from '../camera/camera.class';
 import { UI } from '../ui/ui.class';
-import { Cloud } from '../cloud/clouds';
 import { LocationService } from '../location/location.class';
 import { WorldTexture } from '../texture/texture';
 import { TweenLite } from 'gsap';
@@ -20,7 +19,6 @@ export class World {
     private ui: UI;
     private intersected: any;
     private lighting: Lighting;
-    private cloud: Cloud;
     private mouse: any;
     private texture: WorldTexture;
     private globe: any;
@@ -33,7 +31,6 @@ export class World {
         this.lighting = new Lighting();
         this.raycaster = new THREE.Raycaster();
         this.scene = new THREE.Scene();
-        this.cloud = new Cloud();
         this.camera = new Camera(options.width, options.height);
         this.intersected = false;
         this.projector = new THREE.Projector();
@@ -54,6 +51,9 @@ export class World {
 
         document.addEventListener('mousemove', this.onDocumentMouseMove.bind(this), false);
         document.addEventListener('mousedown', this.onDocumentClicked.bind(this), false);
+
+        document.addEventListener('touchmove', this.onDocumentMouseMove.bind(this), false);
+        document.addEventListener('touchstart', this.onDocumentClicked.bind(this), false);
 
         this.render();
     }
@@ -82,12 +82,12 @@ export class World {
     private globeGenerate() {
 
         const earthDiffTexture = new THREE.MeshPhongMaterial({
-            emissive: new THREE.TextureLoader().load('../../../../static/globe/PlanetEarth_EMISSION.jpg'),
+            emissive: new THREE.TextureLoader().load('static/globe/PlanetEarth_EMISSION.jpg'),
             shininess: 5,
             reflectivity: 0.2,
-            envMap: new THREE.TextureLoader().load('../../../../static/globe/PlanetEarth_REFLECTION.jpg'),
-            bumpMap: new THREE.TextureLoader().load('../../../../static/globe/PlanetEarth_BUMP.jpg'),
-            map: new THREE.TextureLoader().load('../../../../static/globe/PlanetEarth_DIFFUSE.jpg'),
+            envMap: new THREE.TextureLoader().load('static/globe/PlanetEarth_REFLECTION.jpg'),
+            bumpMap: new THREE.TextureLoader().load('static/globe/PlanetEarth_BUMP.jpg'),
+            map: new THREE.TextureLoader().load('static/globe/PlanetEarth_DIFFUSE.jpg'),
             bumpScale: 0.3,
         } as any);
 
@@ -97,7 +97,7 @@ export class World {
 
         const loader = new THREE.ColladaLoader(loadingManager);
 
-        loader.load('../../../../static/globe/Earth.dae', (collada) => {
+        loader.load('static/globe/Earth.dae', (collada) => {
 
             collada.scene.traverse(function (node) {
                 if (node.isMesh) {

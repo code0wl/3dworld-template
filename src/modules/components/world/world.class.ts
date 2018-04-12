@@ -21,9 +21,12 @@ export class World {
     private lighting: Lighting;
     private mouse: any;
     private texture: WorldTexture;
-    private globe: any;
+    private globe: THREE.Scene;
     private projector: THREE.Projector;
     private hasClicked: boolean = false;
+    private velocityX: number = 0;
+    private velocityY: number = 0;
+    private decay: number = 0.03;
 
     constructor(options: WorldOptions) {
         this.properties = options;
@@ -33,7 +36,7 @@ export class World {
         this.scene = new THREE.Scene();
         this.camera = new Camera(options.width, options.height);
         this.intersected = false;
-        this.projector = new THREE.Projector();
+        // this.projector = new THREE.Projector();
         this.mouse = new THREE.Vector2();
         this.locations = new LocationService(this.scene, options.circumference);
         this.mode(options.mode);
@@ -43,34 +46,56 @@ export class World {
     }
 
     public init(): void {
-        this.scene.add(this.sphere);
+        // this.scene.add(this.sphere);
         this.scene.add(this.lighting.ambientLight());
         this.scene.add(this.lighting.directionalLight());
-        this.camera.cameraControl.dampingFactor = 100;
-        this.camera.cameraControl.zoomSpeed = .1;
+        // this.camera.cameraControl.dampingFactor = 100;
+        // this.camera.cameraControl.zoomSpeed = .1;
 
-        document.addEventListener('mousemove', this.onDocumentMouseMove.bind(this), false);
-        document.addEventListener('mousedown', this.onDocumentClicked.bind(this), false);
+        let down: boolean = false;
+        let dragged: boolean = false;
 
-        document.addEventListener('touchmove', this.onDocumentMouseMove.bind(this), false);
-        document.addEventListener('touchstart', this.onDocumentClicked.bind(this), false);
+        document.addEventListener('mousedown', (event: MouseEvent) => {
+            down = true;
+            this.velocityX = 0;
+            this.velocityY = 0;
+        });
+        document.addEventListener('mousemove', (event: MouseEvent) => {
+            if (down) {
+                dragged = true;
+                this.velocityX = event.movementX;
+                this.velocityY = event.movementY;
+            }
+            this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        });
+        document.addEventListener('mouseup', (event: MouseEvent) => {
+            if (down && !dragged) {
+                this.hasClicked = true;
+            }
+            down = false;
+            dragged = false;
+        });
+
+        // document.addEventListener('touchmove', this.onDocumentMouseMove.bind(this), false);
+        // document.addEventListener('touchstart', this.onDocumentClicked.bind(this), false);
+
 
         this.render();
     }
 
     private onDocumentClicked(event) {
-        event.preventDefault();
-        this.hasClicked = true;
-
-        setTimeout(() => {
-            this.hasClicked = !this.hasClicked;
-        }, 500);
+        // event.preventDefault();
+        // this.hasClicked = true;
+        //
+        // setTimeout(() => {
+        //     this.hasClicked = !this.hasClicked;
+        // }, 500);
     }
 
     private onDocumentMouseMove(event) {
-        event.preventDefault();
-        this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        // event.preventDefault();
+
     }
 
     private mode(mode) {
@@ -88,18 +113,17 @@ export class World {
             envMap: new THREE.TextureLoader().load('static/globe/PlanetEarth_REFLECTION.jpg'),
             bumpMap: new THREE.TextureLoader().load('static/globe/PlanetEarth_BUMP.jpg'),
             map: new THREE.TextureLoader().load('static/globe/PlanetEarth_DIFFUSE.jpg'),
-            bumpScale: 0.3,
+            bumpScale: 0.001,
         } as any);
 
-        const loadingManager = new THREE.LoadingManager(() => {
-            this.scene.add(this.globe);
-        });
+        // const loadingManager = new THREE.LoadingManager(() => {
+        //
+        // });
 
-        const loader = new THREE.ColladaLoader(loadingManager);
+        const loader = new THREE.ColladaLoader();
 
         loader.load('static/globe/Earth.dae', (collada) => {
-
-            collada.scene.traverse(function (node) {
+            collada.scene.traverse(function (node: any) {
                 if (node.isMesh) {
                     node.material = earthDiffTexture;
                     Object.assign(node.scale, { x: 15, y: 15, z: 15 });
@@ -107,9 +131,11 @@ export class World {
             });
 
             this.globe = collada.scene;
+            // tilt the globe 23.5 degrees (0.4101524 radians)
+            this.globe.rotateX(0.4101524);
 
+            this.scene.add(this.globe);
         });
-
     }
 
     // extract to UI class
@@ -152,12 +178,21 @@ export class World {
     }
 
     private render(): void {
-        this.camera.camera.updateProjectionMatrix();        
-        this.camera.cameraControl.update();
-        
-        document.querySelector('main.world').appendChild(this.composer.renderer.domElement);
+        const rotateX: number = (Math.PI / 1000) * this.velocityY;
+        const rotateY: number = (Math.PI / 1000) * this.velocityX;
+        this.velocityX -= this.velocityX * this.decay;
+        this.velocityY -= this.velocityY * this.decay;
+
+        // this.scene.rotateX(rotateX);
+        this.scene.rotateY(rotateY);
+
+        this.camera.camera.updateProjectionMatrix();
+        // this.camera.cameraControl.update();
+
         this.composer.renderer.autoClear = false;
         this.composer.renderer.render(this.scene, this.camera.camera);
+
+        document.querySelector('main.world').appendChild(this.composer.renderer.domElement);
 
         this.checkIntersections();
 

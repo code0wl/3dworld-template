@@ -25,7 +25,7 @@ export class World {
     private hasClicked: boolean = false;
     private velocityX: number = 0;
     private velocityY: number = 0;
-    private decay: number = 0.03;
+    private friction: number = 0.07;
 
     constructor(options: WorldOptions) {
         this.options = options;
@@ -180,8 +180,8 @@ export class World {
     private render(): void {
         const rotateX: number = (Math.PI / 1000) * this.velocityY;
         const rotateY: number = (Math.PI / 1000) * this.velocityX;
-        this.velocityX -= this.velocityX * this.decay;
-        this.velocityY -= this.velocityY * this.decay;
+        this.velocityX -= this.velocityX * this.friction;
+        this.velocityY -= this.velocityY * this.friction;
 
         // this.scene.rotateX(rotateX);
         this.scene.rotateY(rotateY);

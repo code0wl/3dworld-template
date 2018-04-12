@@ -8,8 +8,7 @@ export class Marker {
     private timeTip: HTMLElement;
 
     constructor(private name: string, private lat: number, private lon: number, scene: THREE.Scene, circumference: number, private payload: any, private timezone: string) {
-        this.mesh = new THREE.Mesh(new THREE.SphereGeometry(.2, .2, .2), new THREE.MeshBasicMaterial({ color: '#68d853', name: name }));
-
+        this.mesh = new THREE.Mesh(new THREE.SphereGeometry(.2, .2, .2), new THREE.MeshPhongMaterial({ color: '#e63908', specular: 0x009900, name: name, shininess: 30 }));
         const position = convertLatLonToVec3(lat, lon - 180, circumference + 0.5);
         this.mesh.position.setX(position.x);
         this.mesh.position.setY(position.y);

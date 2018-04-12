@@ -6,6 +6,7 @@ import { UI } from '../ui/ui.class';
 import { LocationService } from '../location/location.class';
 import { WorldTexture } from '../texture/texture';
 import { TweenLite } from 'gsap';
+import {Marker, TYPE_LOCATION} from "../marker/marker.class";
 
 export class World {
     public raycaster: THREE.Raycaster;
@@ -13,36 +14,30 @@ export class World {
     public scene: THREE.Scene;
     public composer: Composer;
     public sphere: THREE.Mesh;
-    public properties: WorldOptions;
+    public options: WorldOptions;
 
     private locations: LocationService;
     private ui: UI;
-    private intersected: any;
+    private intersected: Marker;
     private lighting: Lighting;
     private mouse: any;
-    private texture: WorldTexture;
     private globe: THREE.Scene;
-    private projector: THREE.Projector;
     private hasClicked: boolean = false;
     private velocityX: number = 0;
     private velocityY: number = 0;
     private decay: number = 0.03;
 
     constructor(options: WorldOptions) {
-        this.properties = options;
+        this.options = options;
         this.composer = new Composer();
         this.lighting = new Lighting();
         this.raycaster = new THREE.Raycaster();
         this.scene = new THREE.Scene();
         this.camera = new Camera(options.width, options.height);
-        this.intersected = false;
-        // this.projector = new THREE.Projector();
         this.mouse = new THREE.Vector2();
-        this.locations = new LocationService(this.scene, options.circumference);
         this.mode(options.mode);
         this.ui = new UI(this);
         this.globeGenerate();
-
     }
 
     public init(): void {
@@ -66,8 +61,9 @@ export class World {
                 this.velocityX = event.movementX;
                 this.velocityY = event.movementY;
             }
-            this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            this.mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+            this.mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+            this.checkIntersections(event);
         });
         document.addEventListener('mouseup', (event: MouseEvent) => {
             if (down && !dragged) {
@@ -80,6 +76,7 @@ export class World {
         // document.addEventListener('touchmove', this.onDocumentMouseMove.bind(this), false);
         // document.addEventListener('touchstart', this.onDocumentClicked.bind(this), false);
 
+        document.querySelector('main.world').appendChild(this.composer.renderer.domElement);
 
         this.render();
     }
@@ -99,9 +96,9 @@ export class World {
     }
 
     private mode(mode) {
-        if (mode.flight) {
-            this.locations.visualize();
-        }
+        // if (mode.flight) {
+        //     this.locations.visualize();
+        // }
     }
 
     private globeGenerate() {
@@ -131,10 +128,13 @@ export class World {
             });
 
             this.globe = collada.scene;
+            this.locations = new LocationService(this.globe, this.options.circumference);
             // tilt the globe 23.5 degrees (0.4101524 radians)
             this.globe.rotateX(0.4101524);
 
             this.scene.add(this.globe);
+
+            this.locations.visualize();
         });
     }
 
@@ -150,30 +150,30 @@ export class World {
         this.intersected = null;
     }
 
-    private checkIntersections() {
+    private checkIntersections(event: MouseEvent) {
+        if (!this.globe) {
+            return;
+        }
 
         this.raycaster.setFromCamera(this.mouse, this.camera.camera);
 
-        const intersects = this.raycaster.intersectObjects(this.scene.children);
+        const intersects = this.raycaster.intersectObjects(this.globe.children);
 
-        if (intersects.length > 0 && this.hasClicked) {
-
+        if (intersects.length > 0) {
             const object = intersects[0].object;
-
-            if (this.intersected != object && object.name === 'location' && !this.ui.showUI) {
-
-                this.zoomIn(object.position);
-
-                this.ui.showDetailedUI(object[0]);
+            if (object.type === TYPE_LOCATION && this.locations.markers.has(object.name)) {
+                const marker = this.locations.markers.get(object.name);
+                // if (marker != this.intersected) {
+                this.intersected = marker;
+                marker.over(event);
+                // }
+                return;
             }
+        }
 
-        } else {
-
-            if (this.intersected) {
-                this.intersected.material.emissive.setHex(this.intersected.currentHex);
-                this.zoomOut();
-            }
-
+        if (this.intersected) {
+            this.intersected.out();
+            this.intersected = null;
         }
     }
 
@@ -191,10 +191,6 @@ export class World {
 
         this.composer.renderer.autoClear = false;
         this.composer.renderer.render(this.scene, this.camera.camera);
-
-        document.querySelector('main.world').appendChild(this.composer.renderer.domElement);
-
-        this.checkIntersections();
 
         requestAnimationFrame(this.render.bind(this));
     }

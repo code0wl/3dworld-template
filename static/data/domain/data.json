@@ -43,10 +43,12 @@
     ],
     "countries": [
         {
+            "name": "New Zealand",
+            "timezone": "Pacific/Auckland",
             "countryCode": "NZ",
             "coordinates": {
-                "lat": -41.28,
-                "lon": 174
+                "lat": -36.848461,
+                "lon": 174.763336
             },
             "clients": [
                 {
@@ -69,10 +71,12 @@
             ]
         },
         {
+            "name": "Netherlands",
+            "timezone": "Europe/Amsterdam",
             "countryCode": "NL",
             "coordinates": {
-                "lat": 52,
-                "lon": 5
+                "lat": 52.370216,
+                "lon": 4.895168
             },
             "clients": [
                 {
@@ -91,10 +95,12 @@
             ]
         },
         {
+            "name": "Hong Kong",
+            "timezone": "Asia/Hong_Kong",
             "countryCode": "HK",
             "coordinates": {
-                "lat": 22,
-                "lon": 114
+                "lat": 22.286394,
+                "lon": 114.149139
             },
             "clients": [
                 {
@@ -113,10 +119,12 @@
             ]
         },
         {
+            "name": "Portugal",
+            "timezone": "Europe/Lisbon",
             "countryCode": "PT",
             "coordinates": {
-                "lat": 41.1579,
-                "lon": -9
+                "lat": 38.736946,
+                "lon": -9.142685
             },
             "clients": [
                 {

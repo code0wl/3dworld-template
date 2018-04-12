@@ -7,14 +7,12 @@ export class Camera {
     public timeline: any;
 
     constructor(width, height) {
-
         this.camera = new THREE.PerspectiveCamera(25, width / height, .1, 10000);
+        this.camera.name = 'main-camera';
 
         // this.cameraControl = new THREE.OrbitControls(this.camera);
 
         this.setNormalView();
-        this.camera.name = 'main-camera';
-
     }
 
     set cameraControls(state: boolean) {

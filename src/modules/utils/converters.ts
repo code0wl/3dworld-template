@@ -1,12 +1,18 @@
-import Vector3 = THREE.Vector3;
 
-export function convertLatLonToVec3(lat, lon) {
-    lat = lat * Math.PI / 180.0;
-    lon = -lon * Math.PI / 180.0;
+const RADIAN = Math.PI / 180.0;
+
+export function convertLatLonToVec3(lat: number, lon: number, radius: number): THREE.Vector3 {
+    lat *= RADIAN;
+    lon *= RADIAN;
+
+    // x = -(cos(lat) * sin(-lon))
+    // y = cos(lat) * cos(-lon)
+    // z = sin(lat)
+
     return new THREE.Vector3(
-        Math.cos(lat) * Math.cos(lon),
-        Math.sin(lat),
-        Math.cos(lat) * Math.sin(lon));
+        radius * Math.cos(lat) * Math.sin(-lon),
+        radius * Math.cos(lat) * Math.cos(-lon),
+        radius * Math.sin(lat));
 }
 
 export function createSphereArc(P, Q) {
@@ -26,7 +32,7 @@ export function greatCircleFunction(P, Q) {
     };
 }
 
-export function latLongToVector3(lat, lon, radius, height): Vector3 {
+export function latLongToVector3(lat, lon, radius, height): THREE.Vector3 {
     const phi = (lat) * Math.PI / 180;
     const theta = (lon - 180) * Math.PI / 180;
 

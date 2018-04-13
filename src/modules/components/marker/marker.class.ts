@@ -19,6 +19,14 @@ export class Marker {
         scene.add(this.mesh);
     }
 
+    public get meta(): any {
+        return this.payload;
+    }
+
+    public get position(): THREE.Vector3 {
+        return this.mesh.position;
+    }
+
     private updateTime() {
         if (!this.timeTip) {
             return;

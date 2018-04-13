@@ -1,5 +1,6 @@
 import { SideBar } from "../sidebar/sidebar";
 import { World } from "../world/world.class";
+import {Marker} from "../marker/marker.class";
 
 export class UI {
 
@@ -9,7 +10,8 @@ export class UI {
 
     constructor(private world: World) {}
 
-    public showDetailedUI(content): void {
+    public showDetailedUI(marker: Marker): void {
+        const content = marker.meta;
         this.sideBar = new SideBar(this.world, content);
         this.isShowing ? this.renderUI() : this.removeUI();
     }

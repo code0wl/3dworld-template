@@ -68,6 +68,10 @@ export class World {
         document.addEventListener('mouseup', (event: MouseEvent) => {
             if (down && !dragged) {
                 this.hasClicked = true;
+                if (this.intersected) {
+                    this.zoomIn(this.intersected);
+                    this.ui.showDetailedUI(this.intersected);
+                }
             }
             down = false;
             dragged = false;
@@ -82,16 +86,9 @@ export class World {
     }
 
     private onDocumentClicked(event) {
-        // event.preventDefault();
-        // this.hasClicked = true;
-        //
-        // setTimeout(() => {
-        //     this.hasClicked = !this.hasClicked;
-        // }, 500);
     }
 
     private onDocumentMouseMove(event) {
-        // event.preventDefault();
 
     }
 
@@ -139,8 +136,9 @@ export class World {
     }
 
     // extract to UI class
-    private zoomIn(coordinates) {
-        this.camera.setDetailView(coordinates);
+    private zoomIn(marker: Marker) {
+        console.log(marker.position);
+        this.camera.setDetailView(marker.position);
         this.ui.showUI = true;
     }
 
@@ -163,10 +161,12 @@ export class World {
             const object = intersects[0].object;
             if (object.type === TYPE_LOCATION && this.locations.markers.has(object.name)) {
                 const marker = this.locations.markers.get(object.name);
-                // if (marker != this.intersected) {
+                if (marker != this.intersected) {
+                    console.log(object);
+                }
                 this.intersected = marker;
                 marker.over(event);
-                // }
+
                 return;
             }
         }

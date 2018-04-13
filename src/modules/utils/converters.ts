@@ -5,10 +5,6 @@ export function convertLatLonToVec3(lat: number, lon: number, radius: number): T
     lat *= RADIAN;
     lon *= RADIAN;
 
-    // x = -(cos(lat) * sin(-lon))
-    // y = cos(lat) * cos(-lon)
-    // z = sin(lat)
-
     return new THREE.Vector3(
         radius * Math.cos(lat) * Math.sin(-lon),
         radius * Math.cos(lat) * Math.cos(-lon),

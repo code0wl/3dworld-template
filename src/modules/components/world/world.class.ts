@@ -14,7 +14,6 @@ export class World {
     public scene: THREE.Scene;
     public composer: Composer;
     public sphere: THREE.Mesh;
-    public options: WorldOptions;
 
     private locations: LocationService;
     private ui: UI;
@@ -27,8 +26,7 @@ export class World {
     private velocityY: number = 0;
     private friction: number = 0.07;
 
-    constructor(options: WorldOptions) {
-        this.options = options;
+    constructor(private options: WorldOptions, private container: HTMLElement) {
         this.composer = new Composer();
         this.lighting = new Lighting();
         this.raycaster = new THREE.Raycaster();
@@ -41,31 +39,26 @@ export class World {
     }
 
     public init(): void {
-        // this.scene.add(this.sphere);
         this.scene.add(this.lighting.ambientLight());
         this.scene.add(this.lighting.directionalLight());
-        // this.camera.cameraControl.dampingFactor = 100;
-        // this.camera.cameraControl.zoomSpeed = .1;
 
         let down: boolean = false;
         let dragged: boolean = false;
 
-        document.addEventListener('mousedown', (event: MouseEvent) => {
+        this.container.addEventListener('mousedown', (event: MouseEvent) => {
             down = true;
             this.velocityX = 0;
             this.velocityY = 0;
         });
-        document.addEventListener('mousemove', (event: MouseEvent) => {
+        this.container.addEventListener('mousemove', (event: MouseEvent) => {
             if (down) {
                 dragged = true;
                 this.velocityX = event.movementX;
                 this.velocityY = event.movementY;
             }
-            this.mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-            this.mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
             this.checkIntersections(event);
         });
-        document.addEventListener('mouseup', (event: MouseEvent) => {
+        this.container.addEventListener('mouseup', (event: MouseEvent) => {
             if (down && !dragged) {
                 this.hasClicked = true;
             }
@@ -73,32 +66,9 @@ export class World {
             dragged = false;
         });
 
-        // document.addEventListener('touchmove', this.onDocumentMouseMove.bind(this), false);
-        // document.addEventListener('touchstart', this.onDocumentClicked.bind(this), false);
-
-        document.querySelector('main.world').appendChild(this.composer.renderer.domElement);
+        this.container.appendChild(this.composer.renderer.domElement);
 
         this.render();
-    }
-
-    private onDocumentClicked(event) {
-        // event.preventDefault();
-        // this.hasClicked = true;
-        //
-        // setTimeout(() => {
-        //     this.hasClicked = !this.hasClicked;
-        // }, 500);
-    }
-
-    private onDocumentMouseMove(event) {
-        // event.preventDefault();
-
-    }
-
-    private mode(mode) {
-        // if (mode.flight) {
-        //     this.locations.visualize();
-        // }
     }
 
     private globeGenerate() {
@@ -112,10 +82,6 @@ export class World {
             map: new THREE.TextureLoader().load('static/globe/PlanetEarth_DIFFUSE.jpg'),
             bumpScale: 0.001,
         } as any);
-
-        // const loadingManager = new THREE.LoadingManager(() => {
-        //
-        // });
 
         const loader = new THREE.ColladaLoader();
 
@@ -154,6 +120,9 @@ export class World {
         if (!this.globe) {
             return;
         }
+
+        this.mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+        this.mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
         this.raycaster.setFromCamera(this.mouse, this.camera.camera);
 

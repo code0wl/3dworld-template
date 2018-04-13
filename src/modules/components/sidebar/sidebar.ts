@@ -6,10 +6,13 @@ export class SideBar {
     private world: World;
 
     constructor(world, content) {
+
         this.world = world;
+
         if (!document.querySelector('.detailed-view')) {
             this.createSideBar(content);
         }
+
     }
 
     createSideBar(content) {

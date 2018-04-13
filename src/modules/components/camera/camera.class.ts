@@ -4,7 +4,7 @@ export class Camera {
 
     public camera: THREE.PerspectiveCamera;
     public cameraControl: THREE.OrbitControls;
-    public timeline: any;
+    public timeline: TweenLite;
 
     constructor(width, height) {
         this.camera = new THREE.PerspectiveCamera(25, width / height, .1, 10000);
@@ -18,21 +18,24 @@ export class Camera {
     }
 
     set cameraControls(state: boolean) {
+
         this.cameraControl.enabled = state;
+
     }
 
     public setNormalView(): void {
-        this.camera.position.set(0, 0, 80);
 
+        this.camera.position.set(0, 0, 80);
+        this.cameraControl.target = new THREE.Vector3(0, 0, 0);
         this.zoom = { level: 5, end: 1 };
 
-        this.cameraControl.target = new THREE.Vector3(0, 0, 0);
     }
 
     public setDetailView({ x, y, z }): void {
-        console.log(x, y, z);
+
         this.cameraControl.target = new THREE.Vector3(x, y, z);
         this.zoom = { level: 1, end: 10 };
+
     }
 
     private set zoom({ level, end }) {
@@ -41,8 +44,11 @@ export class Camera {
         this.timeline = TweenLite.to(zoom, 1, { level: end, onUpdate: updateZoom.bind(this), ease: Circ.easeOut, })
 
         function updateZoom() {
+
             this.camera.zoom = zoom.level;
+
         }
+
     }
 
 }

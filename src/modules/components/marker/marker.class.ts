@@ -42,43 +42,55 @@ export class Marker {
         return this.mesh.position;
     }
 
-    private updateTime() {
+    private updateTime(): void {
+
         if (!this.timeTip) {
             return;
         }
+
         const time = (new Date()).toLocaleString([], {
             timeZone: this.timezone,
             year: 'numeric', month: 'numeric', day: 'numeric',
             hour: 'numeric', minute: 'numeric', second: 'numeric',
         });
+
         this.timeTip.innerHTML = `${this.name}<br/>${time}`;
+
         setTimeout(() => this.updateTime(), 1000);
+
     }
 
-    private updatePosition(event: MouseEvent) {
+    private updatePosition(event: MouseEvent): void {
+
         if (!this.timeTip) {
             return;
         }
         this.timeTip.style.left = `${event.clientX + 20}px`;
         this.timeTip.style.top = `${event.clientY - 28}px`;
+
     }
 
-    private over(event: MouseEvent) {
+    private over(event: MouseEvent): void {
+
         if (this.timeTip) {
             this.updatePosition(event);
-            return
+            return;
         }
+
         this.timeTip = document.createElement("div");
         this.timeTip.className = "time-tip";
         this.updateTime();
         this.updatePosition(event);
 
-        document.body.appendChild(this.timeTip)
+        this.container.appendChild(this.timeTip);
+
     }
 
-    private out() {
-        document.body.removeChild(this.timeTip);
+    private out(): void {
+
+        this.container.removeChild(this.timeTip);
         this.timeTip = null;
+
     }
 
 }

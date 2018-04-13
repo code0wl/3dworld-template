@@ -17,6 +17,7 @@ export class LocationService {
         fetch('static/data/domain/data.json')
             .then(data => data.json())
             .then((payload) => {
+
                 payload.countries.map(country => {
                     const marker = new Marker(
                         this.container,
@@ -28,6 +29,7 @@ export class LocationService {
                         country.clients,
                         country.timezone,
                     );
+
                     this.markers.set(country.name, marker);
                 });
             });

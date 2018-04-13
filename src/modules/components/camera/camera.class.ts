@@ -4,6 +4,7 @@ export class Camera {
 
     public camera: THREE.PerspectiveCamera;
     public cameraControl: any;
+    public rotate: boolean;
     public timeline: TweenLite;
 
     constructor(width, height) {
@@ -28,15 +29,17 @@ export class Camera {
         this.camera.position.set(0, 0, 80);
         this.cameraControl.target = new THREE.Vector3(0, 0, 0);
         this.zoom = { level: 5, end: 1 };
-        this.cameraControl.noRotate = false;
+        
+        this.cameraControl.noRotate = true;
+        this.rotate = true;
 
     }
 
     public setDetailView({ x, y, z }): void {
 
         this.cameraControl.target = new THREE.Vector3(x, y, z);
-        this.cameraControl.noRotate = true;
         this.zoom = { level: 1, end: 10 };
+        this.rotate = false;
 
     }
 

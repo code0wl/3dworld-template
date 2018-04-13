@@ -175,10 +175,12 @@ export class World {
         const rotateX: number = (Math.PI / 1000) * this.velocityY;
         const rotateY: number = (Math.PI / 1000) * this.velocityX;
 
-        if (!this.camera.cameraControl.noRotate) {
+        if (this.camera.rotate) {
+
             this.velocityX -= this.velocityX * this.friction;
             this.velocityY -= this.velocityY * this.friction;
             this.scene.rotateY(rotateY);
+
         }
 
         this.camera.camera.updateProjectionMatrix();

@@ -12,7 +12,7 @@ export class UI {
 
     public showDetailedUI(marker: Marker): void {
         const content = marker.meta;
-        this.sideBar = new SideBar(this.world, content);
+        this.sideBar = new SideBar(this.world, content[0]);
         this.isShowing ? this.renderUI() : this.removeUI();
     }
 

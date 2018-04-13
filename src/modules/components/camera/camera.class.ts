@@ -3,7 +3,7 @@ import { TweenLite, Circ } from 'gsap';
 export class Camera {
 
     public camera: THREE.PerspectiveCamera;
-    public cameraControl: THREE.OrbitControls;
+    public cameraControl: any;
     public timeline: TweenLite;
 
     constructor(width, height) {
@@ -11,7 +11,7 @@ export class Camera {
         this.camera.name = 'main-camera';
 
         this.cameraControl = new THREE.OrbitControls(this.camera);
-        this.cameraControl.enableRotate = false;
+        
         this.cameraControl.enableKeys = false;
 
         this.setNormalView();
@@ -28,12 +28,14 @@ export class Camera {
         this.camera.position.set(0, 0, 80);
         this.cameraControl.target = new THREE.Vector3(0, 0, 0);
         this.zoom = { level: 5, end: 1 };
+        this.cameraControl.noRotate = false;
 
     }
 
     public setDetailView({ x, y, z }): void {
 
         this.cameraControl.target = new THREE.Vector3(x, y, z);
+        this.cameraControl.noRotate = true;
         this.zoom = { level: 1, end: 10 };
 
     }

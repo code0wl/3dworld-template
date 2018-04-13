@@ -63,6 +63,7 @@ export class World {
             }
             this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
             this.mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+
             this.checkIntersections(event);
         });
 
@@ -78,8 +79,10 @@ export class World {
 
                 }
             }
+
             down = false;
             dragged = false;
+
         });
 
         this.options.container.appendChild(this.composer.renderer.domElement);
@@ -148,6 +151,7 @@ export class World {
             const object = intersects[0].object;
 
             if (object.type === TYPE_LOCATION && this.locations.markers.has(object.name)) {
+
                 const marker = this.locations.markers.get(object.name);
 
                 if (marker != this.intersected) {
@@ -170,10 +174,12 @@ export class World {
     private render(): void {
         const rotateX: number = (Math.PI / 1000) * this.velocityY;
         const rotateY: number = (Math.PI / 1000) * this.velocityX;
-        this.velocityX -= this.velocityX * this.friction;
-        this.velocityY -= this.velocityY * this.friction;
 
-        this.scene.rotateY(rotateY);
+        if (!this.camera.cameraControl.noRotate) {
+            this.velocityX -= this.velocityX * this.friction;
+            this.velocityY -= this.velocityY * this.friction;
+            this.scene.rotateY(rotateY);
+        }
 
         this.camera.camera.updateProjectionMatrix();
         this.camera.cameraControl.update();

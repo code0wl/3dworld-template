@@ -8,14 +8,16 @@ export class Camera {
     public timeline: TweenLite;
 
     constructor(width, height) {
+
         this.camera = new THREE.PerspectiveCamera(25, width / height, .1, 10000);
         this.camera.name = 'main-camera';
 
         this.cameraControl = new THREE.OrbitControls(this.camera);
-        
+
         this.cameraControl.enableKeys = false;
 
         this.setNormalView();
+
     }
 
     set cameraControls(state: boolean) {
@@ -29,7 +31,7 @@ export class Camera {
         this.camera.position.set(0, 0, 80);
         this.cameraControl.target = new THREE.Vector3(0, 0, 0);
         this.zoom = { level: 5, end: 1 };
-        
+
         this.cameraControl.noRotate = true;
         this.rotate = true;
 

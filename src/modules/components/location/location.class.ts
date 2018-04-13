@@ -2,12 +2,11 @@ import { Marker } from '../marker/marker.class';
 
 export class LocationService {
     public markers: Map<string, Marker> = new Map();
-    private scene: THREE.Scene;
-    private circumference: number;
 
-    constructor(scene, circumference) {
-        this.scene = scene;
-        this.circumference = circumference;
+    constructor(
+        private container,
+        private scene,
+        private circumference) {
     }
 
     public visualize() {
@@ -20,6 +19,7 @@ export class LocationService {
             .then((payload) => {
                 payload.countries.map(country => {
                     const marker = new Marker(
+                        this.container,
                         country.name,
                         country.coordinates.lat,
                         country.coordinates.lon,

@@ -37,7 +37,7 @@ export class World {
         this.scene = new THREE.Scene();
         this.camera = new Camera(options.width, options.height);
         this.mouse = new THREE.Vector2();
-        this.ui = new UI(this);
+        this.ui = new UI(this); // refactor
         this.globeGenerate();
     }
 
@@ -120,7 +120,7 @@ export class World {
 
             this.globe = collada.scene;
 
-            this.locations = new LocationService(this.globe, this.options.circumference);
+            this.locations = new LocationService(this.options.container, this.globe, this.options.circumference);
 
             this.scene.add(this.globe);
 

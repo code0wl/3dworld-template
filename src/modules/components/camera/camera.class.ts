@@ -4,18 +4,27 @@ import { TrackballControls } from 'three';
 export class Camera {
 
     public camera: THREE.PerspectiveCamera;
-    public cameraControl: THREE.TrackballControls;
+    public cameraControl: THREE.OrbitControls;
     public timeline: TweenLite;
 
     constructor(width, height) {
 
+        const restrictAxis = Math.PI / 2;
+
         this.camera = new THREE.PerspectiveCamera(25, width / height, .1, 10000);
 
-        this.cameraControl = new THREE.TrackballControls(this.camera);
+        this.cameraControl = new THREE.OrbitControls(this.camera);
 
         this.setNormalView();
 
         this.camera.name = 'main-camera';
+
+        this.cameraControl.rotateSpeed = 0.07;
+        this.cameraControl.enableDamping = true;
+        this.cameraControl.dampingFactor = .05;
+
+        this.cameraControl.minPolarAngle = restrictAxis;
+        this.cameraControl.maxPolarAngle = restrictAxis;
 
     }
 

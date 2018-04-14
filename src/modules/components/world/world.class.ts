@@ -53,8 +53,8 @@ export class World {
         this.camera.cameraControl.dampingFactor = 100;
         this.camera.cameraControl.zoomSpeed = .1;
 
-        document.addEventListener('mouseup', this.onDocumentMouseMove.bind(this), false);
-        document.addEventListener('mousedown', this.onDocumentClicked.bind(this), false);
+        this.properties.container.addEventListener('mouseup', this.onDocumentMouseMove.bind(this), false);
+        this.properties.container.addEventListener('mousedown', this.onDocumentClicked.bind(this), false);
 
         this.render();
     }
@@ -103,7 +103,7 @@ export class World {
 
             this.globe = collada.scene;
 
-            this.locations = new LocationService(this.properties.container, this.globe, this.options.circumference);
+            this.locations = new LocationService(this.scene, this.properties.circumference);
 
             this.scene.add(this.globe);
 
@@ -153,9 +153,9 @@ export class World {
     }
 
     private render(): void {
-        this.camera.camera.updateProjectionMatrix();        
+        this.camera.camera.updateProjectionMatrix();
         this.camera.cameraControl.update();
-        
+
         document.querySelector('main.world').appendChild(this.composer.renderer.domElement);
         this.composer.renderer.autoClear = false;
         this.composer.renderer.render(this.scene, this.camera.camera);

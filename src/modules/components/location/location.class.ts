@@ -2,13 +2,8 @@ import { Marker } from '../marker/marker.class';
 
 export class LocationService {
     public markers: Marker[] = [];
-    private scene: THREE.Scene;
-    private circumference: number;
 
-    constructor(scene, circumference) {
-        this.scene = scene;
-        this.circumference = circumference;
-    }
+    constructor(private scene, private circumference) { }
 
     public visualize() {
         this.renderCoordinates();

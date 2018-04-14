@@ -1,12 +1,13 @@
 import { World } from "../world/world.class";
+import { WorldOptions } from "../world/world.model";
 
 export class SideBar {
+    
     public sidebarComponent: HTMLDivElement;
 
-    private world: World;
+    private props: WorldOptions;
 
-    constructor(world, content) {
-        this.world = world;
+    constructor(private world: World, content) {
         this.createSideBar(content);
     }
 
@@ -35,7 +36,7 @@ export class SideBar {
 
         this.sidebarComponent.classList.add('detailed-view');
 
-        document.querySelector('main.world').appendChild(this.sidebarComponent);
+        this.world.properties.container.appendChild(this.sidebarComponent);
     }
 
     removeBar() {

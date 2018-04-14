@@ -1,6 +1,7 @@
 import { Marker } from '../marker/marker.class';
 
 export class LocationService {
+
     public markers: Marker[] = [];
 
     constructor(private scene, private circumference) { }

@@ -5,8 +5,8 @@ import { Camera } from '../camera/camera.class';
 import { UI } from '../ui/ui.class';
 import { Cloud } from '../cloud/clouds';
 import { LocationService } from '../location/location.class';
-import { WorldTexture } from '../texture/texture';
 import { TweenLite } from 'gsap';
+import { Vector2 } from 'three';
 
 export class World {
     public raycaster: THREE.Raycaster;
@@ -21,8 +21,7 @@ export class World {
     private intersected: any;
     private lighting: Lighting;
     private cloud: Cloud;
-    private mouse: any;
-    private texture: WorldTexture;
+    private mouse: Vector2;
     private globe: any;
     private projector: THREE.Projector;
     private hasClicked: boolean = false;
@@ -87,9 +86,9 @@ export class World {
 
         const loader: THREE.ColladaLoader = new THREE.ColladaLoader();
 
-        loader.load('../../../../static/globe/Earth.dae', (collada) => {
+        loader.load('../../../../static/globe/Earth.dae', collada => {
 
-            collada.scene.traverse(function (node) {
+            collada.scene.traverse(function (node: any) {
                 if (node.isMesh) {
                     node.material = earthDiffTexture;
                     Object.assign(node.scale, { x: 15, y: 15, z: 15 });
@@ -140,8 +139,9 @@ export class World {
         } else {
 
             if (this.intersected) {
-                this.intersected.material.emissive.setHex(this.intersected.currentHex);
+
                 this.zoomOut();
+
             }
 
         }

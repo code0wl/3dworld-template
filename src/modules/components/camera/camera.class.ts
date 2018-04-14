@@ -3,7 +3,7 @@ import { TweenLite, Circ } from 'gsap';
 export class Camera {
 
     public camera: THREE.PerspectiveCamera;
-    public cameraControl: THREE.OrbitControls;
+    public cameraControl: any;
     public timeline: any;
 
     constructor(width, height) {
@@ -18,7 +18,9 @@ export class Camera {
     }
 
     set cameraControls(state: boolean) {
+
         this.cameraControl.enabled = state;
+
     }
 
     public setNormalView(): void {

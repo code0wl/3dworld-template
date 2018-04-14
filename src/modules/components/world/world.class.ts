@@ -50,11 +50,14 @@ export class World {
         this.scene.add(this.sphere);
         this.scene.add(this.lighting.ambientLight());
         this.scene.add(this.lighting.directionalLight());
+
         this.camera.cameraControl.dampingFactor = 100;
         this.camera.cameraControl.zoomSpeed = .1;
 
         this.properties.container.addEventListener('mouseup', this.onDocumentMouseMove.bind(this), false);
         this.properties.container.addEventListener('mousedown', this.onDocumentClicked.bind(this), false);
+
+        this.properties.container.appendChild(this.composer.renderer.domElement);
 
         this.render();
     }
@@ -62,10 +65,6 @@ export class World {
     private onDocumentClicked(event) {
         event.preventDefault();
         this.hasClicked = true;
-
-        setTimeout(() => {
-            this.hasClicked = !this.hasClicked;
-        }, 500);
     }
 
     private onDocumentMouseMove(event) {
@@ -86,11 +85,7 @@ export class World {
             bumpScale: 0.3,
         } as any);
 
-        const loadingManager = new THREE.LoadingManager(() => {
-            this.scene.add(this.globe);
-        });
-
-        const loader: THREE.ColladaLoader = new THREE.ColladaLoader(loadingManager);
+        const loader: THREE.ColladaLoader = new THREE.ColladaLoader();
 
         loader.load('../../../../static/globe/Earth.dae', (collada) => {
 
@@ -156,7 +151,7 @@ export class World {
         this.camera.camera.updateProjectionMatrix();
         this.camera.cameraControl.update();
 
-        document.querySelector('main.world').appendChild(this.composer.renderer.domElement);
+        this.properties.container.appendChild(this.composer.renderer.domElement);
         this.composer.renderer.autoClear = false;
         this.composer.renderer.render(this.scene, this.camera.camera);
 

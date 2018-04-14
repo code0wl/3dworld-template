@@ -51,7 +51,7 @@ export class World {
         this.scene.add(this.lighting.directionalLight());
 
         this.properties.container.addEventListener('mousemove', this.onDocumentMouseMove.bind(this));
-        this.properties.container.addEventListener('mousedown', this.onDocumentClicked.bind(this));
+        this.properties.container.addEventListener('mouseup', this.onDocumentClicked.bind(this));
 
         this.properties.container.appendChild(this.composer.renderer.domElement);
 
@@ -61,6 +61,8 @@ export class World {
     private onDocumentClicked(event) {
         event.preventDefault();
         this.hasClicked = true;
+
+        setTimeout(() => this.hasClicked = false, 100);
     }
 
     private onDocumentMouseMove(event) {

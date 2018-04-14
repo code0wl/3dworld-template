@@ -27,22 +27,23 @@ export class World {
     private projector: THREE.Projector;
     private hasClicked: boolean = false;
 
+    // extract to control class
+    private velocityX: number = 0;
+    private velocityY: number = 0;
+    private friction: number = 0.07;
+
     constructor(options: WorldOptions) {
         this.properties = options;
         this.composer = new Composer();
         this.lighting = new Lighting();
         this.raycaster = new THREE.Raycaster();
         this.scene = new THREE.Scene();
-        this.cloud = new Cloud();
         this.camera = new Camera(options.width, options.height);
         this.intersected = false;
         this.projector = new THREE.Projector();
         this.mouse = new THREE.Vector2();
-        this.locations = new LocationService(this.scene, options.circumference);
-        this.mode(options.mode);
         this.ui = new UI(this);
         this.globeGenerate();
-
     }
 
     public init(): void {
@@ -52,7 +53,7 @@ export class World {
         this.camera.cameraControl.dampingFactor = 100;
         this.camera.cameraControl.zoomSpeed = .1;
 
-        document.addEventListener('mousemove', this.onDocumentMouseMove.bind(this), false);
+        document.addEventListener('mouseup', this.onDocumentMouseMove.bind(this), false);
         document.addEventListener('mousedown', this.onDocumentClicked.bind(this), false);
 
         this.render();
@@ -73,12 +74,6 @@ export class World {
         this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     }
 
-    private mode(mode) {
-        if (mode.flight) {
-            this.locations.visualize();
-        }
-    }
-
     private globeGenerate() {
 
         const earthDiffTexture = new THREE.MeshPhongMaterial({
@@ -95,7 +90,7 @@ export class World {
             this.scene.add(this.globe);
         });
 
-        const loader = new THREE.ColladaLoader(loadingManager);
+        const loader: THREE.ColladaLoader = new THREE.ColladaLoader(loadingManager);
 
         loader.load('../../../../static/globe/Earth.dae', (collada) => {
 
@@ -107,6 +102,12 @@ export class World {
             });
 
             this.globe = collada.scene;
+
+            this.locations = new LocationService(this.properties.container, this.globe, this.options.circumference);
+
+            this.scene.add(this.globe);
+
+            this.locations.visualize();
 
         });
 

@@ -1,18 +1,20 @@
 import { TweenLite, Circ } from 'gsap';
+import { TrackballControls } from 'three';
 
 export class Camera {
 
     public camera: THREE.PerspectiveCamera;
-    public cameraControl: any;
-    public timeline: any;
+    public cameraControl: THREE.TrackballControls;
+    public timeline: TweenLite;
 
     constructor(width, height) {
 
         this.camera = new THREE.PerspectiveCamera(25, width / height, .1, 10000);
 
-        this.cameraControl = new THREE.OrbitControls(this.camera);
+        this.cameraControl = new THREE.TrackballControls(this.camera);
 
         this.setNormalView();
+
         this.camera.name = 'main-camera';
 
     }
@@ -31,7 +33,6 @@ export class Camera {
 
         this.cameraControl.target = new THREE.Vector3(0, 0, 0);
 
-        this.cameraControl.autoRotateSpeed = .2;
         this.cameraControl.noRotate = false;
     }
 

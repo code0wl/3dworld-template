@@ -126,7 +126,8 @@ export class World {
 
             const object = intersects[0].object;
 
-            if (this.intersected != object && object.name === 'location' && !this.ui.showUI) {
+            if (this.intersected != object && object.name === 'location' && !this.ui.isShowing) {
+                console.log('zooming in')
 
                 this.zoomIn(object.position);
 

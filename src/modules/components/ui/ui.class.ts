@@ -3,11 +3,12 @@ import { World } from "../world/world.class";
 
 export class UI {
 
-    private isShowing: boolean;
+    public isShowing: boolean;
+
     private detail: any;
     private sideBar: SideBar;
 
-    constructor(private world: World) {}
+    constructor(private world: World) { }
 
     public showDetailedUI(content): void {
         this.sideBar = new SideBar(this.world, content);
@@ -15,11 +16,13 @@ export class UI {
     }
 
     public set showUI(show) {
+
         this.isShowing = show;
+
     }
 
     private renderUI(): void {
-        this.detail = document.querySelector('.detailed-view');
+        this.detail = this.world.properties.container.querySelector('.detailed-view');
         this.detail.classList.remove('fadeOutLeft');
         this.detail.classList.add('fadeInLeft', 'animated', 'is-open');
     }

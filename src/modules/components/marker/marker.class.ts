@@ -70,7 +70,7 @@ export class Marker {
 
     }
 
-    private over(event: MouseEvent): void {
+    public over(event: MouseEvent): void {
 
         if (this.timeTip) {
             this.updatePosition(event);
@@ -86,7 +86,7 @@ export class Marker {
 
     }
 
-    private out(): void {
+    public out(): void {
 
         this.container.removeChild(this.timeTip);
         this.timeTip = null;

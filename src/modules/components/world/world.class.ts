@@ -143,6 +143,8 @@ export class World {
 
     private checkIntersections(event: MouseEvent) {
 
+        if (!this.globe) return;
+
         this.raycaster.setFromCamera(this.mouse, this.camera.camera);
 
         const intersects = this.raycaster.intersectObjects(this.globe.children);
@@ -172,6 +174,7 @@ export class World {
     }
 
     private render(): void {
+
         const rotateX: number = (Math.PI / 1000) * this.velocityY;
         const rotateY: number = (Math.PI / 1000) * this.velocityX;
 
